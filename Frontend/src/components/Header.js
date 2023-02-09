@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useEffect } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
 export default function NavBar() {
-    const [navbar, setNavbar] = useState(false);
         const activeTab = useSelector((state)=>state.activeTab)
-        console.log(activeTab);
+        const history = useLocation();
         const dispatch = useDispatch();
         const changeTab=(value)=>{
             dispatch({type:"changeTab",payload:value})
         }
+        useEffect(()=>{
+            const path = history.pathname.slice(1);
+            const homeRoute = path.split('/')[0];
+            dispatch({type:"changeTab",payload:homeRoute})
+          },[dispatch,history.pathname])
     return (
         <nav className="w-full shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -17,53 +22,16 @@ export default function NavBar() {
                         <Link to="/" onClick={()=>{changeTab("")}}>
                             <h2 className="text-2xl font-bold">SimplyBook</h2>
                         </Link>
-                        <div className="md:hidden">
-                            <button
-                                className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
-                                onClick={() => setNavbar(!navbar)}
-                            >
-                                {navbar ? (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                    </svg>
-                                )}
-                            </button>
-                        </div>
                     </div>
                 </div>
+                <input style={{height:"2rem"}} className="w-1/2 border-b-2 border-gray"  />
                 <div>
                     <div
-                        className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-                            navbar ? "block" : "hidden"
-                        }`}
+                        className='flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0'
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
-                            <Link to="/signin" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color:activeTab==="Login" ? "red":"black"}} onClick={()=>{changeTab("Login")}}>Login/SignUp</Link>
-                            <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="Contact" ? "red":"black"}} onClick={()=>{changeTab("Contact")}}>Contact</Link>
+                            <Link to="/signin" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color:activeTab==="signin" ? "red":"black"}} onClick={()=>{changeTab("signin")}}>Login/SignUp</Link>
+                            <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red":"black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
                         </ul>
                     </div>
                 </div>
