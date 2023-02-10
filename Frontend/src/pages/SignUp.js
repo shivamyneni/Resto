@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/Header';
 
-function SignUp() {
+export default function SignUp() {
   return (
     <div style={{height:"100%"}}>
         <Header />
@@ -9,5 +9,3 @@ function SignUp() {
     </div>
   )
 }
-
-export default SignUp

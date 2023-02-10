@@ -6,7 +6,8 @@ import {
 import SignIn from './pages/SignIn'
 import Contact from './pages/Contact';
 import About from './pages/About';
-function App() {
+
+export default function App() {
   return (
     <div className="App">
       <Routes>
@@ -17,5 +18,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

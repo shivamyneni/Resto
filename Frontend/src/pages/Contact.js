@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header';
-function Contact() {
+
+export default function Contact() {
   return (
     <div>
         <Header />
@@ -8,5 +9,3 @@ function Contact() {
     </div>
   )
 }
-
-export default Contact

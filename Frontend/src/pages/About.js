@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header';
-function About() {
+
+export default function About() {
   return (
     <div>
         <Header />
@@ -8,5 +9,3 @@ function About() {
     </div>
   )
 }
-
-export default About

@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header';
-function Signin() {
+
+export default function Signin() {
   return (
     <div style={{height:"100%"}}>
       <Header />
@@ -8,5 +9,3 @@ function Signin() {
     </div>
   )
 }
-
-export default Signin

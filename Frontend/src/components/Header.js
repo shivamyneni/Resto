@@ -3,17 +3,18 @@ import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 
 export default function NavBar() {
-        const activeTab = useSelector((state)=>state.activeTab)
-        const history = useLocation();
-        const dispatch = useDispatch();
-        const changeTab=(value)=>{
-            dispatch({type:"changeTab",payload:value})
-        }
-        useEffect(()=>{
-            const path = history.pathname.slice(1);
-            const homeRoute = path.split('/')[0];
-            dispatch({type:"changeTab",payload:homeRoute})
-          },[dispatch,history.pathname])
+    const activeTab = useSelector((state)=>state.activeTab)
+    const history = useLocation();
+    const dispatch = useDispatch();
+    const changeTab=(value)=>{
+        dispatch({type:"changeTab",payload:value})
+    }
+    useEffect(()=>{
+        const path = history.pathname.slice(1);
+        const homeRoute = path.split('/')[0];
+        dispatch({type:"changeTab",payload:homeRoute})
+    }, [dispatch, history.pathname])
+
     return (
         <nav className="w-full shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
