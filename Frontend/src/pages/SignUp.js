@@ -8,40 +8,50 @@ export default function SignUp() {
         <div style={{ height: "100%" }}>
             <Header />
             <div>Sign Up</div>
-            <div className="w-25 items-center justify-between mx-auto">
-
+            <br />
+            <br />
+            <div className="w-25 items-center justify-between mx-auto" style={{ height: "100%" }}>
                 <form>
                     <TextField
                         type="text"
                         name="username"
-                        floatingLabelText="user name"
+                        label="username"
                     />
+                    <br />
+                    <br />
                     <TextField
                         type="text"
                         name="email"
-                        floatingLabelText="email"
+                        label="email"
                     />
+                    <br />
+                    <br />
                     <TextField
                         type="password"
                         name="password"
-                        floatingLabelText="password"
+                        label="password"
                     />
+                    <br />
+                    <br />
                     <TextField
                         type="password"
                         name="pwconfirm"
-                        floatingLabelText="confirm password"
+                        label="confirm password"
                     />
                     <br />
+                    <br />
                     <Button
-                        className="w-50"
                         primary={true}
                         type="submit"
                         label="submit"
-                    />
+                        variant="contained"
+                    >Submit</Button>
                 </form>
+                <br />
                 <p>
-                    Aleady have an account? <br />
-                    <a href="/">Log in here</a>
+                    Aleady have an account?
+                    <br />
+                    <a href="/signin">Sign in here</a>
                 </p>
             </div>
         </div>
