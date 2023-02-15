@@ -53,13 +53,28 @@ export default function SignUp() {
 
 
     }
-    const [email, setEmail] = useState('')
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword,setConfirmPassword]=useState('');
     return (
     <div className='h-screen'>
         <Header />
-        <form className='flex flex-col items-center justify-center h-3/4'>                                                                                            
+        <form className='flex flex-col items-center justify-center h-3/4'>
+        <div>
+            <label htmlFor="text">
+                Name
+            </label>
+            <input
+                type="text"
+                label="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="Enter name"
+                className='p-1 m-1'
+            />
+        </div>
         <div>
             <label htmlFor="email-address">
                 Email address
@@ -69,8 +84,9 @@ export default function SignUp() {
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}  
-                required                                    
-                placeholder="Enter email"                                
+                required
+                placeholder="Enter email"
+                className='p-1 m-1'
             />
         </div>
         <div>
@@ -83,7 +99,8 @@ export default function SignUp() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} 
                 required                                 
-                placeholder="Enter password"              
+                placeholder="Enter password"
+                className='p-1 m-1'         
             />
         </div>
         <div>
@@ -96,17 +113,17 @@ export default function SignUp() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)} 
                 required                                 
-                placeholder="Re-enter password"              
+                placeholder="Re-enter password"
+                className='p-1 m-1'  
             />
         </div>                                              
         <button
-            className='border-2'
+            className='border-2 m-1'
             type="submit" 
             onClick={onSubmit}                        
-        > 
-            Sign Up                                
+        >Sign Up                                
         </button>  
-        <p className="text-sm text-black text-center">
+        <p className="text-sm text-black text-center m-2">
             Already have an account? {' '}
             <Link to="/signin">
                 Sign In
