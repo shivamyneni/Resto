@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import Header from '../../components/Header';
 import { useNavigate,Link } from 'react-router-dom';
-import { getAuth, signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword,FacebookAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, FacebookAuthProvider } from "firebase/auth";
+
 export default function SignUp() {
     const auth = getAuth();
     const googleprovider = new GoogleAuthProvider();
@@ -89,6 +90,7 @@ export default function SignUp() {
             <label htmlFor="password">
                 Confirm Password
             </label>
+            <br/>
             <input
                 type="password"
                 label="Password"

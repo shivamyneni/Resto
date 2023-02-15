@@ -3,7 +3,8 @@ import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
-const SignIn = () => {
+
+export default function SignIn() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -69,5 +70,3 @@ const SignIn = () => {
         </div>
     )
 }
- 
-export default SignIn
