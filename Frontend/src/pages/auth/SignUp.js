@@ -90,7 +90,6 @@ export default function SignUp() {
             <label htmlFor="password">
                 Confirm Password
             </label>
-            <br/>
             <input
                 type="password"
                 label="Password"
