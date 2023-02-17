@@ -60,7 +60,7 @@ export default function SignUp() {
     return (
     <div className='h-screen'>
         <Header />
-        <form className='flex flex-col items-center justify-center h-3/4'>
+        <form className='flex flex-col items-center justify-center h-3/5'>
         <div>
             <label htmlFor="text">
                 Name
