@@ -17,7 +17,7 @@ function UserInfo() {
     <div className='h-screen'>
         <Header />
         <div className='flex flex-col items-center justify-center h-screen'>
-          <text>Create your profile here for Better Experience.....</text>
+          <h4>Create your profile here for Better Experience.....</h4>
           <form className='bg-white shadow-md rounded-lg p-8'>
   <div className='mb-6'>
     <label className='block text-gray-700 font-bold mb-2' htmlFor='username'>

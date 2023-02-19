@@ -22,48 +22,50 @@ const SignIn = () => {
     }
     return(
         <div className='h-screen'> 
-            <Header />                                                                                                  
-            <form className='flex flex-col items-center justify-center h-full'>                                              
-                <div>
-                    <label htmlFor="email-address">
-                        Email address
-                    </label>
-                    <input
-                        id="email-address"
-                        name="email"
-                        type="email"                                    
-                        required                                                                                
-                        placeholder="Email address"
-                        onChange={(e)=>setEmail(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">
-                        Password
-                    </label>
-                    <input
-                        id="password"
-                        name="password"
-                        type="password"                                    
-                        required                                                                                
-                        placeholder="Password"
-                        onChange={(e)=>setPassword(e.target.value)}
-                    />
-                </div>                
-                <div>
-                    <button
-                      className='border-2'
-                      onClick={onLogin}>      
-                        Login                                                                  
-                    </button>
-                </div>         
-                <p className="text-sm text-black text-center">
-                  No account yet? {' '}
-                  <Link to="/signup">
-                      Sign up
-                  </Link>
-                </p>                       
-            </form>                    
+            <Header />     
+            <div className='flex flex-col items-center justify-center h-screen'>                                                                                           
+                <form className='bg-white shadow-md rounded-lg p-8'>                                              
+                    <div className='mb-6'>
+                        <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">
+                            Email address
+                        </label>
+                        <input
+                            id="email-address"
+                            name="email"
+                            type="email"                                    
+                            required                                                                                
+                            placeholder="Email address"
+                            onChange={(e)=>setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className='mb-6'>
+                        <label className='block text-gray-700 font-bold mb-2' htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"                                    
+                            required                                                                                
+                            placeholder="Password"
+                            onChange={(e)=>setPassword(e.target.value)}
+                        />
+                    </div>                
+                    <div>
+                        <button
+                        className='border-2'
+                        onClick={onLogin}>      
+                            Login                                                                  
+                        </button>
+                    </div>         
+                    <p className="text-sm text-black text-center">
+                    No account yet? {' '}
+                    <Link to="/signup">
+                        Sign up
+                    </Link>
+                    </p>                       
+                </form>  
+            </div>                    
         </div>
     )
 }
