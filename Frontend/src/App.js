@@ -8,7 +8,8 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
-function App() {
+
+export default function App() {
   return (
     <div className="App">
       <Routes>
@@ -21,5 +22,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
