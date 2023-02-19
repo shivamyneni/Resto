@@ -1,7 +1,10 @@
 const express = require('express');
+const cors = require('cors')
 const connectDB = require('./config/db.js');
 
 const app = express();
+
+app.use(cors())
 
 // Connect Database
 const mongoose = require('mongoose')
@@ -17,7 +20,6 @@ mongoose.connection.on('error', (err)=>{
 //using json middleware to parse req
 app.use(express.json())
 //defining routes
-app.use(express.json())
 app.use(require("./routes/auth"))
 
 // app.get('/', (req, res) => res.send('Hello world!'));

@@ -14,16 +14,13 @@ const userSchema = new mongoose.Schema({
         required: true 
     },
     isOwner:{
-        type: Boolean,
-        required: true
+        type: Boolean
     },
     phone:{
-        type: String,
-        required: true
+        type: String
     },
     city:{
-        type: String,
-        required: true
+        type: String
     },
     interests:{
         type: [String]

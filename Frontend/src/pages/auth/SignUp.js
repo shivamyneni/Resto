@@ -2,63 +2,73 @@ import React,{useState} from 'react'
 import Header from '../../components/Header';
 import { useNavigate,Link } from 'react-router-dom';
 import { getAuth, signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword,FacebookAuthProvider } from "firebase/auth";
+import axios from 'axios';
 export default function SignUp() {
     const auth = getAuth();
     const googleprovider = new GoogleAuthProvider();
     const facebookprovider = new FacebookAuthProvider();
     const navigate = useNavigate();
-    const googleSignIn=()=>{
-        signInWithPopup(auth, googleprovider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                navigate("/user-info")
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
-    }
-    const facebookSignIn=()=>{
-        signInWithPopup(auth, facebookprovider)
-        .then((result) => {
-            const user = result.user;
-            const credential = FacebookAuthProvider.credentialFromResult(result);
-            const accessToken = credential.accessToken;
-            navigate("/user-info")
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = FacebookAuthProvider.credentialFromError(error);
-        });
-    }
-    const onSubmit = async (e) => {
-    e.preventDefault()
-    await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user);
-            navigate("/user-info")
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-        });
-
-
-    }
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('');
     const [confirmPassword,setConfirmPassword]=useState('');
+    // const googleSignIn=()=>{
+    //     signInWithPopup(auth, googleprovider)
+    //         .then((result) => {
+    //             const credential = GoogleAuthProvider.credentialFromResult(result);
+    //             const token = credential.accessToken;
+    //             const user = result.user;
+    //             navigate("/user-info")
+    //         }).catch((error) => {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             const email = error.customData.email;
+    //             const credential = GoogleAuthProvider.credentialFromError(error);
+    //         });
+    // }
+    // const facebookSignIn=()=>{
+    //     signInWithPopup(auth, facebookprovider)
+    //     .then((result) => {
+    //         const user = result.user;
+    //         const credential = FacebookAuthProvider.credentialFromResult(result);
+    //         const accessToken = credential.accessToken;
+    //         navigate("/user-info")
+    //     })
+    //     .catch((error) => {
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         const email = error.customData.email;
+    //         const credential = FacebookAuthProvider.credentialFromError(error);
+    //     });
+    // }
+    const onSubmit = (e) => {
+        window.location.href='/user-info'
+        e.preventDefault()
+        axios.post("http://localhost:8082/signup",{
+            email:email,
+            name:name,
+            password:password
+        }).then(result =>{
+            console.log(result)
+        })
+    }
     return (
     <div className='h-screen'>
         <Header />
         <form className='flex flex-col items-center justify-center h-3/4'>                                                                                            
+        <div>
+            <label htmlFor="your-name">
+                Name
+            </label>
+            <input
+                type="text"
+                label="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}  
+                required                                    
+                placeholder="Enter name"                                
+            />
+        </div>
         <div>
             <label htmlFor="email-address">
                 Email address
@@ -85,7 +95,7 @@ export default function SignUp() {
                 placeholder="Enter password"              
             />
         </div>
-        <div>
+        {/* <div>
             <label htmlFor="password">
                 Confirm Password
             </label>
@@ -97,7 +107,7 @@ export default function SignUp() {
                 required                                 
                 placeholder="Re-enter password"              
             />
-        </div>                                              
+        </div>                                               */}
         <button
             className='border-2'
             type="submit" 
@@ -112,9 +122,9 @@ export default function SignUp() {
             </Link>
         </p>         
         </form> 
-        <div class="inline-flex items-center justify-center w-full">
-            <hr class="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
-            <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
+        {/* <div className="inline-flex items-center justify-center w-full">
+            <hr className="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
+            <div className="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
                 <text>OR</text>
             </div>
         </div>
@@ -127,7 +137,7 @@ export default function SignUp() {
                 <button onClick={googleSignIn}>Continue with Google</button>
             </div>
             <br />
-        </div>
+        </div> */}
     </div>
     )
 }

@@ -3,24 +3,22 @@ import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
+import axios from 'axios';
+
 const SignIn = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const onLogin = (e) => {
+        window.location.href='/user-info'
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            navigate("/home")
-            console.log(user);
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });  
+        // signInWithEmailAndPassword(auth, email, password)
+        axios.post("http://localhost:8082/signin",{
+            email:email,
+            password:password
+            }).then(result =>{
+                console.log(result.data)
+            })
     }
     return(
         <div className='h-screen'> 
