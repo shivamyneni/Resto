@@ -1,12 +1,19 @@
-import { legacy_createStore as createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
-const reducer=(state={activeTab:""},action)=>{
-    if(action.type==="changeTab"){
-        return {...state,activeTab:action.payload}
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import { tabReducer } from '../reducers/tabReducer';
+
+const initialState = {
+    userSignin:{
+        userInfo:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')):null,
     }
-    return state
-}
+};
+const reducer = combineReducers({
+    currentTab: tabReducer
+})
 
-const store=createStore(reducer,composeWithDevTools())
-export default store
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer,initialState,composeEnhancer(applyMiddleware(thunk)));
+
+export default store;
