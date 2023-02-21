@@ -89,7 +89,7 @@ export default function SignUp() {
         <div>
         <Header />
             <div className='flex flex-col items-center justify-center h-screen'>
-                <h4><b>Register here</b></h4>
+                <h4 className='m-1'><b>Register here</b></h4>
                 <form className='bg-white shadow-md rounded-lg p-8'>                                                                                            
                 <div>
                     <label className='block text-gray-700 font-bold mb-2' htmlFor="your-name">
