@@ -44,7 +44,7 @@ export default function SignUp() {
         });
     }
     const socialSignup = (email) => {
-        axios.post("http://localhost:8082/signup",{
+        axios.post("/signup",{
             email:email,
             logintype:"social"
         }).then(res => {
@@ -65,7 +65,7 @@ export default function SignUp() {
     const onSubmit = (e) => {
         // window.location.href='/user-info'
         e.preventDefault()
-        axios.post("http://localhost:8082/signup",{
+        axios.post("/signup",{
             email:email,
             name:name,
             password:password,
