@@ -91,7 +91,7 @@ export default function SignUp() {
             <div className='flex flex-col items-center justify-center m-10'>
                 <h4 className='m-1'><b>Register here</b></h4>
                 <form className='bg-white shadow-md rounded-lg p-8'>                                                                                            
-                <div>
+                <div className='mb-6'>
                     <label className='block text-gray-700 font-bold mb-2' htmlFor="your-name">
                         Name
                     </label>
@@ -105,7 +105,7 @@ export default function SignUp() {
                         placeholder="Enter name"                                
                     />
                 </div>
-                <div>
+                <div className='mb-6'>
                     <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">
                         Email address
                     </label>
@@ -119,7 +119,7 @@ export default function SignUp() {
                         placeholder="Enter email"                                
                     />
                 </div>
-                <div>
+                <div className='mb-6'>
                     <label className='block text-gray-700 font-bold mb-2' htmlFor="password">
                         Password
                     </label>
@@ -146,14 +146,14 @@ export default function SignUp() {
                         placeholder="Re-enter password"              
                     />
                 </div>                                               */}
-                <br></br>
-                <button
-                    className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    type="submit" 
-                    onClick={onSubmit}                        
-                > 
-                    Sign Up                                
-                </button>  
+                <div>
+                    <button
+                        className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
+                        type="submit" 
+                        onClick={onSubmit}                        
+                    >Sign Up</button>
+                </div>
+                <br/>
                 <p className="text-sm text-black text-center">
                     Already have an account? {' '}
                     <Link to="/signin">

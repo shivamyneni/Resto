@@ -85,9 +85,9 @@ const SignIn = () => {
         });
     }
     return(
-        <div className='h-screen'> 
+        <div> 
             <Header />    
-            <div className='flex flex-col items-center justify-center h-screen'>         
+            <div className='flex flex-col items-center justify-center m-10'>         
                 <h4><b>Login here</b></h4>                                                                                   
                 <form className='bg-white shadow-md rounded-lg p-8'>                                              
                     <div className='mb-6'>
@@ -124,12 +124,11 @@ const SignIn = () => {
                         onClick={onLogin}>      
                             Login                                                                  
                         </button>
-                    </div>         
+                    </div>
+                    <br/>
                     <p className="text-sm text-black text-center">
                     No account yet? {' '}
-                    <Link to="/signup">
-                        Sign up
-                    </Link>
+                    <Link to="/signup">Sign up</Link>
                     </p>                       
                 </form>  
                 <div class="inline-flex items-center justify-center w-full">
