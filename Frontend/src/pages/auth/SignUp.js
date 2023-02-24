@@ -146,14 +146,13 @@ export default function SignUp() {
                             placeholder="Re-enter password"              
                         />
                     </div> */}
-                    <div>
+                    <div className='mb-6'>
                         <button
                             className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
                             type="submit" 
                             onClick={onSubmit}                        
                         >Sign Up</button>
                     </div>
-                    <br/>
                     <p className="text-sm text-black text-center">
                         Already have an account? <Link to="/signin">Sign In</Link>
                     </p>
@@ -174,7 +173,6 @@ export default function SignUp() {
                             <img src="https://img.icons8.com/material/24/ffffff/facebook-f.png"/>
                         </div>
                     </button>
-                
                     <button
                         className='bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50 mt-4'
                         onClick={googleSignIn}
