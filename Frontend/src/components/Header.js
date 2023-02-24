@@ -25,7 +25,7 @@ export default function NavBar() {
                         </Link>
                     </div>
                 </div>
-                <input className="w-1/2 border-b-2 border-gray h-8" />
+                <input className="w-1/2 border-b-2 border-gray h-8 p-2" />
                 <div>
                     <div className='flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0'>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
