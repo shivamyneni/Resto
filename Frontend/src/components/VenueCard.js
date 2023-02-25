@@ -10,7 +10,7 @@ export default function VenueCard(props) {
     const timeslots = props.timeslots.join(', ');
 
     return (
-        <Card className='w-1/3 m-2' onClick={e => navigate('/managevenue')} >
+        <Card className='w-1/3 m-2 hover:cursor-pointer' onClick={e => navigate('/managevenue')} >
             <CardContent>
                 <Typography>Name: {name}</Typography>
                 <Typography>Description: {description}</Typography>
