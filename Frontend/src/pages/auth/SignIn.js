@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
+import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
@@ -18,7 +18,7 @@ const SignIn = () => {
     const onLogin = (e) => {
         // window.location.href='/user-info'
         e.preventDefault();
-        // signInWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
         axios.post("/signin",{
             email:email,
             password:password,

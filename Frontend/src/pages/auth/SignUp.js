@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate,Link } from 'react-router-dom';
 import { getAuth, signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword,FacebookAuthProvider } from "firebase/auth";
 import axios from 'axios';
+import firebase from "firebase/app";
 export default function SignUp() {
     const auth = getAuth();
     const googleprovider = new GoogleAuthProvider();
