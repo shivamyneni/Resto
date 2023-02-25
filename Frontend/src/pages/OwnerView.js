@@ -16,7 +16,7 @@ export default function OwnerView() {
                     onClick={e => navigate("/addvenue")}>Add Venue</button>
             </div>
             <div className='flex w-full'>
-                <VenueCard 
+                <VenueCard
                     name='Garrett Fieldhouse' description='Nice little field' address='1025 E 7th St, Bloomington, IN 47405' 
                     sports={["Soccer", "Tennis", "Football", "Baseball"]} timeslots={[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]}/>
                 <VenueCard 

@@ -1,6 +1,8 @@
 import { Card, CardContent, Typography } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 export default function VenueCard(props) {
+    const navigate = useNavigate();
     const name = props.name;
     const description = props.description;
     const address = props.address;
@@ -8,11 +10,12 @@ export default function VenueCard(props) {
     const timeslots = props.timeslots.join(', ');
 
     return (
-        <Card className='w-1/3 m-2'>
+        <Card className='w-1/3 m-2' onClick={e => navigate('/managevenue')} >
             <CardContent>
                 <Typography>Name: {name}</Typography>
                 <Typography>Description: {description}</Typography>
-                <Typography>Address: {address}</Typography>
+                <Typography className='mt-1'>Address:</Typography>
+                <Typography>{address}</Typography>
                 <Typography className='mt-1'>Sports:</Typography>
                 <Typography>{sports}</Typography>
                 <Typography className='mt-1'>Time Slots:</Typography>
