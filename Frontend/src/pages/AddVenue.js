@@ -93,7 +93,7 @@ export default function AddVenue() {
                                 {[1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
-                                            <Checkbox color='primary' checked={chargable} onChange={(e) => setChargable(e.target.checked)}/>
+                                            <Checkbox color='primary' />
                                             <ListItemText primary={value}/>
                                         </ListItem>
                                     );
@@ -101,7 +101,7 @@ export default function AddVenue() {
                             </List>
                         </AccordionDetails>
                     </Accordion>
-                    <FormControlLabel control={<Checkbox className='bg-purple-600 hover:bg-purple-700' defaultChecked color='primary' />} label="Chargable" />
+                    <FormControlLabel control={<Checkbox className='bg-purple-600 hover:bg-purple-700' color='primary' checked={chargable} onChange={(e) => setChargable(e.target.checked)}/>} label="Chargable" />
                     <div>
                         <button
                             className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
