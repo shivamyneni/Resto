@@ -10,6 +10,8 @@ app.use(cors())
 const mongoose = require('mongoose')
 connectDB();
 require("./models/user")
+require("./models/venue")
+require("./models/activity")
 mongoose.connection.on('connected', ()=>{
     console.log("connected to mongodb")
 })
@@ -21,6 +23,7 @@ mongoose.connection.on('error', (err)=>{
 app.use(express.json())
 //defining routes
 app.use(require("./routes/auth"))
+app.use(require("./routes/activity"))
 
 // app.get('/', (req, res) => res.send('Hello world!'));
 
