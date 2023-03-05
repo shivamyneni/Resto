@@ -6,22 +6,20 @@ import VenueCard from '../components/VenueCard';
 
 export default function OwnerView() {
     const navigate = useNavigate();
-    const venues = useRef([])
-    // const [updateVenues, setUpdateVenues] = useState(venues.current)
+    const [venues, setVenues] = useState([])
     useEffect(() => {
-    }, [venues.current])
-    axios.post("/viewvenues").then(res => {
-        console.log(res.data['allvenues'])
-        // setVenues(res.data['allvenues'])
-        venues.current = res.data['allvenues']
-        if (res.data.error) {
-            alert(res.data.error)
-        }
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-    })
+        axios.get("/viewvenues").then(res => {
+            console.log(res.data['allvenues'])
+            setVenues(res.data['allvenues'])
+            if (res.data.error) {
+                alert(res.data.error)
+            }
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+        })
+    }, [])
     return (
     <div>
         <Header />
@@ -32,9 +30,9 @@ export default function OwnerView() {
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' 
                     onClick={e => navigate("/addvenue")}>Add Venue</button>
             </div>
-            <div className='flex w-full'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
                 {
-                    venues.current.map(value => {
+                    venues.map(value => {
                         return (
                             <VenueCard key={value.name} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
                         )
