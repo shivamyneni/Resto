@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
@@ -18,7 +18,12 @@ const SignIn = () => {
     const onLogin = (e) => {
         // window.location.href='/user-info'
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password).then((user)=>{
+            if(auth.currentUser.emailVerified == false){
+                sendEmailVerification(auth.currentUser)
+                navigate("/email-verification")
+            }
+        })
         axios.post("/signin",{
             email:email,
             password:password,
@@ -30,7 +35,14 @@ const SignIn = () => {
                     dispatch({type:"user_signin_fail",error:res.data.error})
                 }
                 else{
-                    navigate("/user-info")
+                    console.log(auth.currentUser.emailVerified,"hii");
+                    if(auth?.currentUser?.emailVerified == false){
+                        sendEmailVerification(auth.currentUser)
+                        navigate("/email-verification")
+                    }
+                    else{
+                        navigate("/user-info")
+                    }
                 }
             }).then((res)=>{
                 dispatch({type:"user_signin_success",payload:res.data})
