@@ -25,7 +25,7 @@ export default function App() {
         <Route path="user-info" element={<UserInfo />} />
         <Route path="addvenue" element={<AddVenue />} />
         <Route path="ownerview" element={<OwnerView />} />
-        <Route path="managevenue" element={<VenueDetails />} />
+        <Route path="managevenue/:id" element={<VenueDetails />} />
         <Route path="AddActivity" element={<AddActivity />} />
       </Routes>
     </div>
