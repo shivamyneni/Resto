@@ -29,7 +29,7 @@ export default function OwnerView() {
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' 
                     onClick={e => navigate("/addvenue")}>Add Venue</button>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3' style={{width: '95vw'}}>
                 {
                     venues.map(value => {
                         return (
