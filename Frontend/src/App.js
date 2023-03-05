@@ -12,6 +12,8 @@ import UserInfo from './pages/auth/UserInfo';
 import AddVenue from './pages/AddVenue';
 import OwnerView from './pages/OwnerView';
 import EmailVerificationSent from './pages/auth/EmailVerificationSent';
+import VenueDetails from './pages/VenueDetails';
+import AddActivity from './pages/AddActivity';
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
         <Route path="addvenue" element={<AddVenue />} />
         <Route path="ownerview" element={<OwnerView />} />
         <Route path="email-verification" element={<EmailVerificationSent/>} />
+        <Route path="managevenue/:id" element={<VenueDetails />} />
+        <Route path="AddActivity" element={<AddActivity />} />
       </Routes>
     </div>
   );

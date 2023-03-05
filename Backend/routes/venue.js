@@ -22,14 +22,29 @@ router.post("/addvenue", (req, res) =>{
     })
 })
 
-router.post("/viewvenues", (req, res) => {
+router.get("/viewvenues", (req, res) => {
     Venue.find({})
     .then((allvenues) => {
-        console.log(allvenues)
+        // console.log(allvenues)
         if (!allvenues){
             return res.status(200).json({"error":"no venues"})
         }
         return res.status(200).json({"allvenues":allvenues})
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
+
+router.post("/managevenue/:venueid", (req,res) => {
+    console.log(req.params.venueid)
+    Venue.findById(req.params.venueid)
+    .then((venue) => {
+        console.log(venue)
+        if (!venue){
+            return res.status(200).json({"error":"non existing venue"})
+        }
+        return res.status(200).json({"venue":venue})
     })
     .catch((err)=>{
         console.log(err)
