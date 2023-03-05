@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -6,22 +6,21 @@ import VenueCard from '../components/VenueCard';
 
 export default function OwnerView() {
     const navigate = useNavigate();
-    const venues = useRef([])
-    // const [updateVenues, setUpdateVenues] = useState(venues.current)
+    const [venues, setVenues] = useState([])
     useEffect(() => {
-    }, [venues.current])
-    axios.post("/viewvenues").then(res => {
-        console.log(res.data['allvenues'])
-        // setVenues(res.data['allvenues'])
-        venues.current = res.data['allvenues']
-        if (res.data.error) {
-            alert(res.data.error)
-        }
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-    })
+        axios.post("/viewvenues").then(res => {
+            console.log(res.data['allvenues'])
+            setVenues(res.data['allvenues'])
+            if (res.data.error) {
+                alert(res.data.error)
+            }
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+        })
+    }, [])
+    
     return (
     <div>
         <Header />
@@ -34,7 +33,7 @@ export default function OwnerView() {
             </div>
             <div className='flex w-full'>
                 {
-                    venues.current.map(value => {
+                    venues.map(value => {
                         return (
                             <VenueCard key={value.name} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
                         )
