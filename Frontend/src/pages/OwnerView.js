@@ -32,7 +32,6 @@ export default function OwnerView() {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
                 {
                     venues.map(value => {
-                        console.log(value._id)
                         return (
                             <VenueCard key={value._id} id={value._id} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
                         )
