@@ -9,7 +9,6 @@ export default function OwnerView() {
     const [venues, setVenues] = useState([])
     useEffect(() => {
         axios.get("/viewvenues").then(res => {
-            console.log(res.data['allvenues'])
             setVenues(res.data['allvenues'])
             if (res.data.error) {
                 alert(res.data.error)
