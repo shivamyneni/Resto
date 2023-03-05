@@ -5,12 +5,12 @@ import Header from '../components/Header';
 
 export default function VenueDetails() {
   const { id }= useParams();
-  console.log(id)
+  // console.log(id)
   const navigate = useNavigate();
   const [venue, setVenue] = useState([])
   useEffect(() => {
     axios.post(`/managevenue/${id}`).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setVenue(res.data['venue'])
         if (res.data.error) {
             alert(res.data.error)
@@ -48,11 +48,11 @@ export default function VenueDetails() {
         </div>
         <div className='mb-4'>
           <strong>Sports offered: </strong>
-          {/* <span>{venue.sports.join(', ')}</span> */}
+          <span>{venue['sports'].join(', ')}</span>
         </div>
         <div className='mb-4'>
           <strong>Available timeslots: </strong>
-          {/* <span>{venue.timeslots.join(', ')}</span> */}
+          <span>{venue['timeslots'].join(', ')}</span>
         </div>
         <button
           className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
