@@ -13,14 +13,19 @@ export default function AddVenue() {
     const [chargable, setChargable] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:8082/signup",{
-
+        axios.post("/addvenue",{
+            name: venueName,
+            info: venueDesc,
+            address: venueAddress,
+            sports: ["Soccer", "Tennis", "Football", "Baseball"],
+            timeslots: [1,2,3,4,5,6],
+            chargable: chargable
         }).then(res => {
             console.log(res)
-            if(res.data.error){
+            if (res.data.error){
                 alert(res.data.error)
             } else {
-                navigate("/user-info")
+                navigate("/ownerview")
             }
         })
         .catch((error) => {
