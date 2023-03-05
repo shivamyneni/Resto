@@ -10,6 +10,7 @@ export default function AddVenue() {
     const [venueName, setVenueName] = useState('')
     const [venueDesc, setVenueDesc] = useState('')
     const [venueAddress, setVenueAddress] = useState('')
+    const [sports, setSports] = useState([])
     const [chargable, setChargable] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault()
@@ -83,7 +84,13 @@ export default function AddVenue() {
                                 {["Soccer", "Tennis", "Football", "Baseball"].map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
-                                            <Checkbox color='primary' />
+                                            <Checkbox color='primary' onClick={e => {
+                                                console.log(sports);
+                                                sports.forEach(element => {
+                                                    console.log(element)
+                                                });
+                                                setSports([...sports, {value}])
+                                            }}/>
                                             <ListItemText primary={value}/>
                                         </ListItem>
                                     );
