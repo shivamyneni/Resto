@@ -4,11 +4,7 @@ const activitySchema = new mongoose.Schema({
     name:{
         type: String,
         required: true
-    },
-    venueid:{
-        type: String,
-        required: true
-    },
+    }
     info:{
         type: String
     },
