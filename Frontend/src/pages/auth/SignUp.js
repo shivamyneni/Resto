@@ -65,7 +65,8 @@ export default function SignUp() {
     }
     const onSubmit = (e) => {
         // window.location.href='/user-info'
-        createUserWithEmailAndPassword(auth,email,password)
+        if(password.length>5){
+            createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 // send verification mail.
               sendEmailVerification(auth.currentUser)
@@ -94,7 +95,10 @@ export default function SignUp() {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
-        });
+        })}
+        else{
+            alert("Password should be atleast 6 characters")
+        }
     }
     return (
         <div>
