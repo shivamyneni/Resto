@@ -29,7 +29,7 @@ export default function AddActivity() {
     e.preventDefault()
     axios.post("/addactivity",{
         name: activityName,
-        venueId: venue,
+        venueid: id,
         timeslot: timing,
         availability: availability
     }).then(res => {
@@ -62,7 +62,7 @@ export default function AddActivity() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2">Venue:</label>
           <input
             id='venue' 
@@ -71,7 +71,7 @@ export default function AddActivity() {
             onChange={handleVenueChange} 
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
           />
-        </div>
+        </div> */}
         <div className="mb-6">
           <label className='block text-gray-700 font-bold mb-2'>Timing:</label>
           <input
