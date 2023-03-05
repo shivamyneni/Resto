@@ -3,6 +3,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import React from 'react';
 import SignIn from './pages/auth/SignIn'
 import Contact from './pages/Contact';
 import About from './pages/About';

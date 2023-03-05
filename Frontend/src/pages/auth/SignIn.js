@@ -11,8 +11,8 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const userSignin = useSelector((state)=>state.userSignin);
-    const {userInfo,error} = userSignin;
+    // const userSignin = useSelector((state)=>state.userSignin);
+    // const {userInfo,error} = userSignin;
     const googleprovider = new GoogleAuthProvider();
     const facebookprovider = new FacebookAuthProvider();
     const onLogin = (e) => {
