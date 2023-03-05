@@ -36,4 +36,19 @@ router.get("/viewvenues", (req, res) => {
     })
 })
 
+router.post("/managevenue/:venueid", (req,res) => {
+    console.log(req.params.venueid)
+    Venue.findById(req.params.venueid)
+    .then((venue) => {
+        console.log(venue)
+        if (!venue){
+            return res.status(200).json({"error":"non existing venue"})
+        }
+        return res.status(200).json({"venue":venue})
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
+
 module.exports = router
