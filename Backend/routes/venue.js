@@ -22,4 +22,18 @@ router.post("/addvenue", (req, res) =>{
     })
 })
 
+router.post("/viewvenues", (req, res) => {
+    Venue.find({})
+    .then((allvenues) => {
+        console.log(allvenues)
+        if (!allvenues){
+            return res.status(200).json({"error":"no venues"})
+        }
+        return res.status(200).json({"allvenues":allvenues})
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
+
 module.exports = router
