@@ -8,10 +8,14 @@ export default function VenueDetails() {
   // console.log(id)
   const navigate = useNavigate();
   const [venue, setVenue] = useState([])
+  const [sports, setSports] = useState("")
+  const [timeslots, setTimeslots] = useState("")
   useEffect(() => {
     axios.post(`/managevenue/${id}`).then(res => {
-        // console.log(res.data)
+        // console.log(res.data['venue'])
         setVenue(res.data['venue'])
+        setSports(res.data['venue']['sports'].join(', '))
+        setTimeslots(res.data['venue']['timeslots'].join(', '))
         if (res.data.error) {
             alert(res.data.error)
         }
@@ -20,7 +24,8 @@ export default function VenueDetails() {
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
     })
-}, [])
+  }, [])
+
   // Example venue data - replace with your own data fetching code
   /*const venue = {
     id: 1,
@@ -31,11 +36,6 @@ export default function VenueDetails() {
     timeslots: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
   };*/
   
-
-  const handleAddActivity = () => {
-    navigate('/AddActivity');
-  };
-
   return (
     <div>
       <Header />
@@ -45,18 +45,19 @@ export default function VenueDetails() {
         <div className='mb-4'>
           <strong>Address: </strong>
           <span>{venue.address}</span>
+          <span>{venue.info}</span>
         </div>
         <div className='mb-4'>
           <strong>Sports offered: </strong>
-          <span>{venue['sports'].join(', ')}</span>
+          <span>{sports}</span>
         </div>
         <div className='mb-4'>
           <strong>Available timeslots: </strong>
-          <span>{venue['timeslots'].join(', ')}</span>
+          <span>{timeslots}</span>
         </div>
         <button
           className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-          onClick={handleAddActivity}
+          onClick={e => navigate('/AddActivity')}
         >
           Add Activity
         </button>
