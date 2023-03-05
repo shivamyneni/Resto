@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import Header from '../../components/Header';
 import { useNavigate,Link } from 'react-router-dom';
-import { getAuth, signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword,FacebookAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup,sendEmailVerification, GoogleAuthProvider,createUserWithEmailAndPassword,FacebookAuthProvider } from "firebase/auth";
 import axios from 'axios';
 import firebase from "firebase/app";
 export default function SignUp() {
@@ -65,6 +65,16 @@ export default function SignUp() {
     }
     const onSubmit = (e) => {
         // window.location.href='/user-info'
+        createUserWithEmailAndPassword(auth,email,password)
+            .then((userCredential)=>{
+                // send verification mail.
+              sendEmailVerification(auth.currentUser)
+                .then((res)=>{
+                    console.log(res);
+                })
+            navigate("/email-verification")
+            })
+            .catch(alert);
         e.preventDefault()
         axios.post("/signup",{
             email:email,
