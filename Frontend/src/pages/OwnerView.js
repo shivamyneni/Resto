@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -34,7 +34,7 @@ export default function OwnerView() {
                 {
                     venues.map(value => {
                         return (
-                            <VenueCard key={value.name} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
+                            <VenueCard key={value._id} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
                         )
                     })
                 }
