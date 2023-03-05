@@ -10,17 +10,23 @@ export default function AddVenue() {
     const [venueName, setVenueName] = useState('')
     const [venueDesc, setVenueDesc] = useState('')
     const [venueAddress, setVenueAddress] = useState('')
+    const [sports, setSports] = useState([])
     const [chargable, setChargable] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:8082/signup",{
-
+        axios.post("/addvenue",{
+            name: venueName,
+            info: venueDesc,
+            address: venueAddress,
+            sports: ["Soccer", "Tennis", "Football", "Baseball"],
+            timeslots: [1,2,3,4,5,6],
+            chargable: chargable
         }).then(res => {
             console.log(res)
-            if(res.data.error){
+            if (res.data.error){
                 alert(res.data.error)
             } else {
-                navigate("/user-info")
+                navigate("/ownerview")
             }
         })
         .catch((error) => {
@@ -78,7 +84,13 @@ export default function AddVenue() {
                                 {["Soccer", "Tennis", "Football", "Baseball"].map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
-                                            <Checkbox color='primary' />
+                                            <Checkbox color='primary' onClick={e => {
+                                                console.log(sports);
+                                                sports.forEach(element => {
+                                                    console.log(element)
+                                                });
+                                                setSports([...sports, {value}])
+                                            }}/>
                                             <ListItemText primary={value}/>
                                         </ListItem>
                                     );

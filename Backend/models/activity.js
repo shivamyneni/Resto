@@ -5,10 +5,6 @@ const activitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    venueid:{
-        type: String,
-        required: true
-    },
     info:{
         type: String
     },
