@@ -28,7 +28,7 @@ export default function App() {
         <Route path="ownerview" element={<OwnerView />} />
         <Route path="email-verification" element={<EmailVerificationSent/>} />
         <Route path="managevenue/:id" element={<VenueDetails />} />
-        <Route path="AddActivity" element={<AddActivity />} />
+        <Route path="AddActivity/:id" element={<AddActivity />} />
       </Routes>
     </div>
   );

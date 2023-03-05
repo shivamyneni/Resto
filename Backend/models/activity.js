@@ -15,6 +15,10 @@ const activitySchema = new mongoose.Schema({
     availability:{
         type: Number,
         required: true
+    },
+    venueid:{
+        type: String,
+        required: true
     }
 })
 

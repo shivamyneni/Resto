@@ -57,4 +57,25 @@ router.post("/viewactivity", (req, res) => {
     })
 })
 
+router.post("/venueactivities", (req, res) => {
+    const {venueid} = req.body
+    Venue.findById(venueid)
+    .then((venue) => {
+        console.log(venue)
+        if (!venue){
+            return res.status(200).json({"error":"non existing venue"})
+        }
+        Activity.find({venueid:venueid})
+        .then((activities) => {
+            if (!activities){
+                return res.status(200).json({"error":"no activites"})
+            }
+            return res.status(200).json({"activities":activities})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    })
+})
+
 module.exports = router
