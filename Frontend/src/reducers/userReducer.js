@@ -10,7 +10,7 @@ export const userRegisterReducer = (state={},action)=>{
     }
 }
 
-export const userSigninReducer = (state={},action)=>{
+export const userSigninReducer = (state={userInfo:null,error:false},action)=>{
     switch(action.type){
         case "user_signin_success":
             return {userInfo:action.payload}
