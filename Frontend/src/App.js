@@ -11,6 +11,8 @@ import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
 import AddVenue from './pages/AddVenue';
 import OwnerView from './pages/OwnerView';
+import VenueDetails from './pages/VenueDetails';
+import AddActivity from './pages/AddActivity';
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="user-info" element={<UserInfo />} />
         <Route path="addvenue" element={<AddVenue />} />
         <Route path="ownerview" element={<OwnerView />} />
+        <Route path="managevenue" element={<VenueDetails />} />
+        <Route path="AddActivity" element={<AddActivity />} />
       </Routes>
     </div>
   );
