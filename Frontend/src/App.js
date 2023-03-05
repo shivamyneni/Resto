@@ -1,16 +1,16 @@
 import './App.css';
-import React from 'react'
 import {
   Route,
   Routes,
 } from "react-router-dom";
+import React from 'react';
 import SignIn from './pages/auth/SignIn'
 import Contact from './pages/Contact';
 import About from './pages/About';
 import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
-// import AddVenue from './pages/AddVenue';
-// import OwnerView from './pages/OwnerView';
+import AddVenue from './pages/AddVenue';
+import OwnerView from './pages/OwnerView';
 
 export default function App() {
   return (
@@ -21,8 +21,8 @@ export default function App() {
         <Route path="signup" element={ <SignUp/> } />
         <Route path="contact" element={ <Contact/> } />
         <Route path="user-info" element={<UserInfo />} />
-        {/* <Route path="addvenue" element={<AddVenue />} />
-        <Route path="ownerview" element={<OwnerView />} /> */}
+        <Route path="addvenue" element={<AddVenue />} />
+        <Route path="ownerview" element={<OwnerView />} />
       </Routes>
     </div>
   );

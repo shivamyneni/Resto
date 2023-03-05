@@ -22,8 +22,8 @@ mongoose.connection.on('error', (err)=>{
 //using json middleware to parse req
 app.use(express.json())
 //defining routes
-app.use(require("./routes/auth"))
-app.use(require("./routes/activity"))
+app.use("/auth",require("./routes/auth"))
+app.use("/dashboard", require("./routes/dashboard"))
 
 // app.get('/', (req, res) => res.send('Hello world!'));
 

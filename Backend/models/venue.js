@@ -9,9 +9,6 @@ const venueSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    info:{
-        type: String
-    },
     city:{
         type: String
     },
@@ -24,11 +21,11 @@ const venueSchema = new mongoose.Schema({
     sports:{
         type: [String]
     },
-    dropdown:{
-        type: [String]
-    },
     rent:{
         type: Boolean
+    },
+    images:{
+        type:[String]
     }
 })
 

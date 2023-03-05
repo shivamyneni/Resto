@@ -9,7 +9,7 @@ const activitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    info:{
+    city:{
         type: String
     },
     timeslot:{

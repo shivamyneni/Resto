@@ -9,10 +9,6 @@ const bcrypt = require("bcryptjs")
 // const jwt = require("jsonwebtoken")
 // const {JWT_SECRET} = require("../keys")
 
-router.get("/", (req, res) => {
-    res.send("<h2>Hiiiiiii</h2>")
-})
-
 router.post("/signup",(req, res) => {
     // console.log(req.body)
     const {name, email, password, logintype} = req.body
@@ -24,7 +20,7 @@ router.post("/signup",(req, res) => {
     User.findOne({email:email})
     .then((saveduser)=>{
         if (saveduser){
-            return res.status(200).json({"error":"existing user"})
+            res.redirect('/signin')
         }
         if (logintype == "email"){
             bcrypt.hash(password,12)
@@ -37,7 +33,7 @@ router.post("/signup",(req, res) => {
                 })
                 user.save()
                 .then((user)=>{
-                    return res.json({"message":"user saved successfully"})
+                    res.redirect('/dashboard')
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -54,7 +50,7 @@ router.post("/signup",(req, res) => {
             })
             user.save()
             .then((user)=>{
-                return res.json({"message":"user saved successfully"})
+                res.redirect('/dashboard')
             })
             .catch((err)=>{
                 console.log(err)
@@ -77,15 +73,13 @@ router.post("/signin", (req, res) => {
     User.findOne({email:email})
     .then((saveduser)=>{
         if(!saveduser){
+            console.log(saveduser.password, password);
             return res.status(200).json({"error":"invalid user"})
         }
         bcrypt.compare(password, saveduser.password)
         .then((matched)=>{
             if(matched){
-                // return res.json({"message":"user found"})
-                // const token = jwt.sign({_id:saveduser._id}, JWT_SECRET)
-                const {_id, name, email} = saveduser
-                res.status(200).json({"user":{_id,name,email}})
+                res.redirect('/dashboard')
             }
             else{
                 return res.status(200).json({"error":"wrong password"})

@@ -5,24 +5,26 @@ const mongoose = require('mongoose')
 const Activity = mongoose.model('Activity')
 const Venue = mongoose.model('Venue')
 
-router.post("/addactivity", (req, res)=>{
-    const {venueid, name, timeslot, availability} = req.body
-    console.log(venueid)
-    Venue.findOne({venueid:venueid})
+router.post("/addActivity", (req, res)=>{
+    const {name, venueid, city,timeslot,availability} = req.body
+    if(!name || !venueid || !city || !timeslot || !availability ){
+        return res.send({"error":"please enter all the details"})
+    }
+    Venue.find({venueid:venueid})
     .then((venue)=>{
-        console.log(venue)
-        if (!venue){
-            return res.status(200).json({"error":"non existing venue"})
+        if (venue.length===0){
+            return res.send({"error":"venue doesn't exists"})
         }
-        const activity = new Activity({
-            venueid: venueid,
+        const newActivity = new Activity({
             name: name,
+            venueid: venueid,
+            city: city,
             timeslot: timeslot,
-            availability: availability
+            availability: availability,
         })
-        activity.save()
-        .then((activity) => {
-            return res.json({"message":"activity saved successfully"})
+        newActivity.save()
+        .then((newActivity) => {
+            return res.json({"message":"venue details saved successfully",activity:{newActivity}})
         })
         .catch((err) => {
             console.log(err)
@@ -33,28 +35,31 @@ router.post("/addactivity", (req, res)=>{
     })
 })
 
-router.post("/viewactivity", (req, res) => {
-    const {venueid, activityname} = req.body
-    Venue.findOne({venueid:venueid})
-    .then((venue) => {
-        console.log(venue)
-        if (!venue){
-            return res.status(200).json({"error":"non existing venue"})
+router.post("/:venueid", (req, res) => {
+    Activity.find({venueid:req.params.venueid})
+    .then((activities) => {
+        if (!activities){
+            return res.status(200).json({"404":"activities not available"})
         }
-        Activity.findOne({name:activityname})
-        .then((activity) => {
-            if (!activity){
-                return res.status(200).json({"error":"non existing activity"})
-            }
-            return res.status(200).json({"name":activity.name, "info":activity.info, "timeslot": activity.timeslot, "availability": activity.availability})
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+        return res.send({activities:activities})
     })
     .catch((err)=>{
         console.log(err)
     })
 })
+
+router.use("/", (req, res) => {
+    Activity.find({})
+    .then((activities) => {
+        if (!activities){
+            return res.status(200).json({"404":"activities not found"})
+        }
+        
+        return res.send({activities:activities})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    })
 
 module.exports = router
