@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function AddActivity() {
-  const { venueId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [availability, setavailability] = useState('');
   const [activityName, setActivityName] = useState('');
@@ -37,7 +37,7 @@ export default function AddActivity() {
         if (res.data.error){
             alert(res.data.error)
         } else {
-            navigate("/managevenue")
+            navigate(`/managevenue/${id}`)
         }
     })
     .catch((error) => {
