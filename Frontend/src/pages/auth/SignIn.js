@@ -104,15 +104,13 @@ const SignIn = () => {
         });
     }
     return(
-        <div className='h-screen'> 
+        <div> 
             <Header />    
-            <div className='flex flex-col items-center justify-center h-screen'>         
+            <div className='flex flex-col items-center justify-center m-10'>         
                 <h4><b>Login here</b></h4>                                                                                   
                 <form className='bg-white shadow-md rounded-lg p-8'>                                              
                     <div className='mb-6'>
-                        <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">
-                            Email address
-                        </label>
+                        <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">Email address</label>
                         <input
                             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
                             id="email-address"
@@ -124,9 +122,7 @@ const SignIn = () => {
                         />
                     </div>
                     <div className='mb-6'>
-                        <label className='block text-gray-700 font-bold mb-2' htmlFor="password">
-                            Password
-                        </label>
+                        <label className='block text-gray-700 font-bold mb-2' htmlFor="password">Password</label>
                         <input
                             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
                             id="password"
@@ -140,15 +136,10 @@ const SignIn = () => {
                     <div className='mb-6'>
                         <button
                         className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                        onClick={onLogin}>      
-                            Login                                                                  
-                        </button>
-                    </div>         
+                        onClick={onLogin}>Login</button>
+                    </div>
                     <p className="text-sm text-black text-center">
-                    No account yet? {' '}
-                    <Link to="/signup">
-                        Sign up
-                    </Link>
+                        No account yet? <Link to="/signup">Sign up</Link>
                     </p>                       
                 </form>  
                 <div class="inline-flex items-center justify-center w-full">

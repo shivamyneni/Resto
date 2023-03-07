@@ -26,12 +26,12 @@ export default function NavBar() {
                         </Link>
                     </div>
                 </div>
-                <input style={{ height: "2rem" }} className="w-1/2 border-b-2 border-gray" />
+                <input className="w-1/2 border-b-2 border-gray h-8 p-2" />
                 <div>
                     <div className='flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0'>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
-                            <Link to="/signup" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color:activeTab==="signin" ? "red": activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signup")}}>Login/SignUp</Link>
-                            <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red":"black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
+                            <Link to="/signup" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="signin" || activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signup")}}>Login/SignUp</Link>
+                            <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red" : "black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
                         </ul>
                     </div>
                 </div>
