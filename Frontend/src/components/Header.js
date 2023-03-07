@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import React,{ useEffect } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 
 export default function NavBar() {
-    const activeTab = useSelector((state) => state.activeTab)
+    const tabstate = useSelector((state) => state.currentTab)
+    const {activeTab} = tabstate
     const history = useLocation();
     const dispatch = useDispatch();
     const changeTab = (value) => {

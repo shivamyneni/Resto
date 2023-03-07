@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import Header from '../../components/Header';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { sendEmailVerification ,getAuth} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 function UserInfo() {
   const [username,setUserName] = useState('')
+  const auth = getAuth()
   const [phone,setPhone] = useState('')
   const [city,setCity] = useState('')
+  const navigate = useNavigate();
   const [isOwner,setIsOwner] = useState(false)
   const myOptions = ['Cricket', 'Tennis', 'Badminton', 'BasketBall', 'TT'];
   const handleisOwnerChange=(event)=>{

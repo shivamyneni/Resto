@@ -10,17 +10,24 @@ export default function AddVenue() {
     const [venueName, setVenueName] = useState('')
     const [venueDesc, setVenueDesc] = useState('')
     const [venueAddress, setVenueAddress] = useState('')
+    const [sports, setSports] = useState([])
+    const [timeslots, setTimeslots] = useState([])
     const [chargable, setChargable] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:8082/signup",{
-
+        axios.post("/addvenue",{
+            name: venueName,
+            info: venueDesc,
+            address: venueAddress,
+            sports: sports,
+            timeslots: timeslots,
+            chargable: chargable
         }).then(res => {
-            console.log(res)
-            if(res.data.error){
+            // console.log(res)
+            if (res.data.error){
                 alert(res.data.error)
             } else {
-                navigate("/user-info")
+                navigate("/ownerview")
             }
         })
         .catch((error) => {
@@ -78,7 +85,15 @@ export default function AddVenue() {
                                 {["Soccer", "Tennis", "Football", "Baseball"].map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
-                                            <Checkbox color='primary' />
+                                            <Checkbox color='primary' onClick={e => {
+                                                if (e.target.checked) {
+                                                    setSports([...sports, value])
+                                                    console.log([...sports, value])
+                                                } else {
+                                                    setSports(sports.filter(i => i !== value))
+                                                    console.log(sports.filter(i => i !== value))
+                                                }
+                                            }} />
                                             <ListItemText primary={value}/>
                                         </ListItem>
                                     );
@@ -90,10 +105,18 @@ export default function AddVenue() {
                         <AccordionSummary className='m-0' expandIcon={<ExpandMoreIcon />}><b>Time Slots</b></AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(value => {
+                                {[1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
-                                            <Checkbox color='primary' />
+                                            <Checkbox color='primary' onClick={e => {
+                                                if (e.target.checked) {
+                                                    setTimeslots([...timeslots, value])
+                                                    console.log([...timeslots, value])
+                                                } else {
+                                                    setTimeslots(timeslots.filter(i => i !== value))
+                                                    console.log(timeslots.filter(i => i !== value))
+                                                }
+                                            }} />
                                             <ListItemText primary={value}/>
                                         </ListItem>
                                     );

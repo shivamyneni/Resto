@@ -3,6 +3,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import React from 'react';
 import SignIn from './pages/auth/SignIn'
 import Contact from './pages/Contact';
 import About from './pages/About';
@@ -10,6 +11,9 @@ import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
 import AddVenue from './pages/AddVenue';
 import OwnerView from './pages/OwnerView';
+import EmailVerificationSent from './pages/auth/EmailVerificationSent';
+import VenueDetails from './pages/VenueDetails';
+import AddActivity from './pages/AddActivity';
 
 export default function App() {
   return (
@@ -22,6 +26,9 @@ export default function App() {
         <Route path="user-info" element={<UserInfo />} />
         <Route path="addvenue" element={<AddVenue />} />
         <Route path="ownerview" element={<OwnerView />} />
+        <Route path="email-verification" element={<EmailVerificationSent/>} />
+        <Route path="managevenue/:id" element={<VenueDetails />} />
+        <Route path="AddActivity/:id" element={<AddActivity />} />
       </Routes>
     </div>
   );

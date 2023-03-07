@@ -1,21 +1,30 @@
 import React, {useState} from 'react';
-import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
+import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignIn = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // const userSignin = useSelector((state)=>state.userSignin);
+    // const {userInfo,error} = userSignin;
     const googleprovider = new GoogleAuthProvider();
     const facebookprovider = new FacebookAuthProvider();
     const onLogin = (e) => {
         // window.location.href='/user-info'
         e.preventDefault();
-        // signInWithEmailAndPassword(auth, email, password)
-        axios.post("http://localhost:8082/signin",{
+        signInWithEmailAndPassword(auth, email, password).then((user)=>{
+            if(auth.currentUser.emailVerified == false){
+                sendEmailVerification(auth.currentUser)
+                navigate("/email-verification")
+            }
+        })
+        axios.post("/signin",{
             email:email,
             password:password,
             logintype:"email"
@@ -23,10 +32,20 @@ const SignIn = () => {
                 console.log(res)
                 if(res.data.error){
                     alert(res.data.error)
+                    dispatch({type:"user_signin_fail",error:res.data.error})
                 }
                 else{
-                    navigate("/user-info")
+                    console.log(auth.currentUser.emailVerified,"hii");
+                    if(auth?.currentUser?.emailVerified == false){
+                        sendEmailVerification(auth.currentUser)
+                        navigate("/email-verification")
+                    }
+                    else{
+                        navigate("/user-info")
+                    }
                 }
+            }).then((res)=>{
+                dispatch({type:"user_signin_success",payload:res.data})
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -35,7 +54,7 @@ const SignIn = () => {
             });
     }
     const socialLogin = (email) =>{
-        axios.post("http://localhost:8082/signin",{
+        axios.post("/signin",{
             email:email,
             logintype:"social"
             }).then(res => {
@@ -113,9 +132,9 @@ const SignIn = () => {
                             placeholder="Password"
                             onChange={(e)=>setPassword(e.target.value)}
                         />
-                    </div>
+                    </div>                
                     <div className='mb-6'>
-                        <button 
+                        <button
                         className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
                         onClick={onLogin}>Login</button>
                     </div>
