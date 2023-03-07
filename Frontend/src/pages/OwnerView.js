@@ -23,10 +23,11 @@ export default function OwnerView() {
     <div>
         <Header />
         <div className='flex flex-col items-center justify-center m-4'>
-            <div className='flex'>
-                <h4 className='mx-96'><b>Venue Owner View</b></h4>
+            <div className='flex w-full justify-around sticky top-44 md:top-20'>
+                <div className='w-1/12'></div>
+                <h4 className='w-1/8'><b>Venue Owner View</b></h4>
                 <button
-                    className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' 
+                    className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-1/12' 
                     onClick={e => navigate("/addvenue")}>Add Venue</button>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3' style={{width: '95vw'}}>
