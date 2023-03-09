@@ -1,6 +1,8 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
+import {InputAdornment, Input} from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/SearchOutlined'
 
 export default function NavBar() {
     const tabstate = useSelector((state) => state.currentTab)
@@ -16,6 +18,10 @@ export default function NavBar() {
         dispatch({ type: "changeTab", payload: homeRoute })
     }, [dispatch, history.pathname])
 
+    const runSearch = (query) => {
+        console.log(query)
+    }
+
     return (
         <nav className="w-full shadow sticky top-0">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -26,7 +32,13 @@ export default function NavBar() {
                         </Link>
                     </div>
                 </div>
-                <input className="w-1/2 border-b-2 border-gray h-8 p-2" />
+                <div className='w-1/2'>
+                    <Input id='SearchBar' placeholder='Search' startAdornment={<InputAdornment className='hover:cursor-pointer' onClick={e => runSearch(document.getElementById('SearchBar').value)} position='start'><SearchIcon /></InputAdornment>} className="w-3/4 border-b-2 border-gray h-8 p-2" 
+                        onKeyDown={e => {
+                            if (e.key === 'Enter')
+                                runSearch(e.target.value);
+                        }}/>
+                </div>
                 <div>
                     <div className='flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0'>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
