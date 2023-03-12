@@ -15,6 +15,7 @@ import EmailVerificationSent from './pages/auth/EmailVerificationSent';
 import VenueDetails from './pages/VenueDetails';
 import AddActivity from './pages/AddActivity';
 import UserProfile from './pages/UserProfile';
+import ResetPassword from './pages/ResetPassword';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="email-verification" element={<EmailVerificationSent/>} />
         <Route path="managevenue/:id" element={<VenueDetails />} />
         <Route path="AddActivity/:id" element={<AddActivity />} />
+        <Route path="resetpw" element={<ResetPassword />} />
         <Route path="user-profile" element={<UserProfile />} />
       </Routes>
     </div>

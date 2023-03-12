@@ -107,7 +107,7 @@ const SignIn = () => {
         <div> 
             <Header />    
             <div className='flex flex-col items-center justify-center m-10'>         
-                <h4><b>Login here</b></h4>                                                                                   
+                <h4 className='m-2'><b>Login here</b></h4>                                                                                   
                 <form className='bg-white shadow-md rounded-lg p-8'>                                              
                     <div className='mb-6'>
                         <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">Email address</label>
@@ -132,15 +132,18 @@ const SignIn = () => {
                             placeholder="Password"
                             onChange={(e)=>setPassword(e.target.value)}
                         />
-                    </div>                
+                    </div>
                     <div className='mb-6'>
                         <button
                         className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
                         onClick={onLogin}>Login</button>
                     </div>
-                    <p className="text-sm text-black text-center">
+                    <p className="text-sm text-black text-center mb-2">
                         No account yet? <Link to="/signup">Sign up</Link>
-                    </p>                       
+                    </p>
+                    <p className="text-sm text-black text-center">
+                        Forgot Password? <Link to="/resetpw">Reset Password</Link>
+                    </p>
                 </form>  
                 <div class="inline-flex items-center justify-center w-full">
                     <hr class="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
