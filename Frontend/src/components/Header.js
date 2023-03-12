@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {InputAdornment, Input} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/SearchOutlined'
 
@@ -44,6 +45,7 @@ export default function NavBar() {
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
                             <Link to="/signup" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="signin" || activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signup")}}>Login/SignUp</Link>
                             <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red" : "black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
+                            <Link to="/user-profile"><AccountCircleIcon/></Link>
                         </ul>
                     </div>
                 </div>
