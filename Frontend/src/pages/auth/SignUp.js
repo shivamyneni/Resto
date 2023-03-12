@@ -102,9 +102,9 @@ export default function SignUp() {
     }
     return (
         <div>
-        <Header />
-            <div className='flex flex-col items-center justify-center h-screen'>
-                <h4><b>Register here</b></h4>
+            <Header />
+            <div className='flex flex-col items-center justify-center m-10'>
+                <h4 className='m-1'><b>Register here</b></h4>
                 <form className='bg-white shadow-md rounded-lg p-8'>                                                                                            
                 <div>
                     <label className='block text-gray-700 font-bold mb-2' htmlFor="your-name">
@@ -194,7 +194,6 @@ export default function SignUp() {
                             <img src="https://img.icons8.com/material/24/ffffff/facebook-f.png"/>
                         </div>
                     </button>
-                
                     <button
                         className='bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50 mt-4'
                         onClick={googleSignIn}
