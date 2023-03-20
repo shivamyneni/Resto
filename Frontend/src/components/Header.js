@@ -3,7 +3,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {InputAdornment, Input} from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/SearchOutlined'
+import SearchIcon from '@mui/icons-material/SearchOutlined'
 
 export default function NavBar() {
     const tabstate = useSelector((state) => state.currentTab)
@@ -24,7 +24,7 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="w-full shadow sticky top-0">
+        <nav className="w-full shadow sticky top-0 bg-white">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block transform transition duration-500 hover:scale-125">
