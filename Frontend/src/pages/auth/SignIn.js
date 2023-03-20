@@ -19,10 +19,11 @@ const SignIn = () => {
         // window.location.href='/user-info'
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password).then((user)=>{
-            if(auth.currentUser.emailVerified == false){
-                sendEmailVerification(auth.currentUser)
-                navigate("/email-verification")
-            }
+            // if(auth.currentUser.emailVerified === false){
+            //     sendEmailVerification(auth.currentUser)
+            //     navigate("/email-verification")
+            // }
+            navigate("/venues")
         })
         axios.post("/signin",{
             email:email,
@@ -36,13 +37,14 @@ const SignIn = () => {
                 }
                 else{
                     console.log(auth.currentUser.emailVerified,"hii");
-                    if(auth?.currentUser?.emailVerified == false){
-                        sendEmailVerification(auth.currentUser)
-                        navigate("/email-verification")
-                    }
-                    else{
-                        navigate("/user-info")
-                    }
+                    // if(auth.currentUser.emailVerified === false){
+                    //     sendEmailVerification(auth.currentUser)
+                    //     navigate("/email-verification")
+                    // }
+                    // else{
+                    //     navigate("/user-info")
+                    // }
+                    navigate('/venues')
                 }
             }).then((res)=>{
                 dispatch({type:"user_signin_success",payload:res.data})
@@ -63,7 +65,7 @@ const SignIn = () => {
                     alert(res.data.error)
                 }
                 else{
-                    navigate("/user-info")
+                    navigate("/venues")
                 }
             })
             .catch((error) => {
@@ -79,7 +81,7 @@ const SignIn = () => {
                 const token = credential.accessToken;
                 const user = result.user;
                 socialLogin(user.email)
-                navigate("/user-info")
+                navigate("/venues")
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -94,7 +96,7 @@ const SignIn = () => {
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
             socialLogin(user.email)
-            navigate("/user-info")
+            // navigate("/venues")
         })
         .catch((error) => {
             const errorCode = error.code;

@@ -1,11 +1,16 @@
+
 const express = require('express')
 const router = express.Router()
-
 const mongoose = require('mongoose')
 const Venue = mongoose.model('Venue')
+const activity = require('./activity')
 
-router.post("/addvenue", (req, res) =>{
-    const {name, address, info, sports,timeslots, chargable} = req.body
+router.use("/:venueid/activities",activity)
+router.post("/addVenue", (req, res) =>{
+    const {name, address, info, sports,timeslots} = req.body
+    if(!name || !address || !info || !sports || !timeslots ){
+        return res.send({"error":"please enter all the details"})
+    }
     const venue = new Venue({
         name: name,
         info: info,
@@ -14,7 +19,7 @@ router.post("/addvenue", (req, res) =>{
         timeslots: timeslots
     })
     venue.save()
-    .then((activity) => {
+    .then((venue) => {
         return res.json({"message":"venue saved successfully"})
     })
     .catch((err) => {
@@ -22,33 +27,29 @@ router.post("/addvenue", (req, res) =>{
     })
 })
 
-router.get("/viewvenues", (req, res) => {
-    Venue.find({})
-    .then((allvenues) => {
-        // console.log(allvenues)
-        if (!allvenues){
-            return res.status(200).json({"error":"no venues"})
-        }
-        return res.status(200).json({"allvenues":allvenues})
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
-})
-
-router.post("/managevenue/:venueid", (req,res) => {
-    console.log(req.params.venueid)
-    Venue.findById(req.params.venueid)
+router.get("/:venueid", (req,res) => {
+    console.log(req.params.venueid);
+    Venue.find({_id:req.params.venueid})
     .then((venue) => {
-        console.log(venue)
         if (!venue){
             return res.status(200).json({"error":"non existing venue"})
         }
         return res.status(200).json({"venue":venue})
     })
-    .catch((err)=>{
-        console.log(err)
-    })
+})
+
+router.get("/", (req, res) => {
+    Venue.find({})
+    .then((venues) => {
+        if (!venues){
+            return res.status(200).json({"404":"venues not found"})
+        }
+        
+        return res.send({venues:venues})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
 })
 
 module.exports = router

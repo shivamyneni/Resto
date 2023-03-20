@@ -19,6 +19,12 @@ const activitySchema = new mongoose.Schema({
     venueid:{
         type: String,
         required: true
+    },
+    chargeable:{
+        type:Boolean,
+    },
+    images:{
+        type: [String]
     }
 })
 

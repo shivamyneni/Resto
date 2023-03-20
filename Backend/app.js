@@ -23,8 +23,7 @@ mongoose.connection.on('error', (err)=>{
 app.use(express.json())
 //defining routes
 app.use(require("./routes/auth"))
-app.use(require("./routes/activity"))
-app.use(require("./routes/venue"))
+app.use("/", require("./routes/dashboard"))
 
 // app.get('/', (req, res) => res.send('Hello world!'));
 
