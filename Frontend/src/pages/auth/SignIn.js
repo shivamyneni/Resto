@@ -142,7 +142,7 @@ const SignIn = () => {
                         No account yet? <Link to="/signup">Sign up</Link>
                     </p>
                     <p className="text-sm text-black text-center">
-                        Forgot Password? <Link to="/resetpw">Reset Password</Link>
+                        Forgot Password? <Link to="/forgotpwd">Reset Password</Link>
                     </p>
                 </form>  
                 <div class="inline-flex items-center justify-center w-full">
