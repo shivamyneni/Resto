@@ -8,14 +8,15 @@ export default function ResetPassword() {
     const [email, setEmail] = useState('')
     
     const onSubmit = (e) => {
-        axios.post("/resetpw",{
+        axios.post("/forgot-password",{
             email:email
         }).then(res => {
             console.log(res)
             if (res.data.error) {
                 alert(res.data.error)
             } else{
-                navigate("/signin")
+                console.log((res.data.message));
+                // navigate("/signin")
             }
         })
         .catch((error) => {
@@ -28,7 +29,7 @@ export default function ResetPassword() {
         <div>
             <Header />
             <div className='flex flex-col items-center justify-center m-10'>
-                <h4 className='m-2'><b>Reset password</b></h4>
+                <h4 className='m-2'><b>Enter your email</b></h4>
                 <form className='bg-white shadow-md rounded-lg p-8'>
                     <div>
                         <label className='block text-gray-700 font-bold mb-2' htmlFor="email-address">
@@ -50,7 +51,7 @@ export default function ResetPassword() {
                             className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
                             type="submit"
                             onClick={onSubmit}> 
-                            Reset                             
+                            Submit                            
                         </button>  
                     </div>       
                 </form>
