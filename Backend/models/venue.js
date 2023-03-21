@@ -6,15 +6,9 @@ const venueSchema = new mongoose.Schema({
         required: true
     },
     info:{
-        type: String
-    },
-    city:{
-        type: String
+        type:String
     },
     address:{
-        type: String
-    },
-    state:{
         type: String
     },
     sports:{
@@ -22,6 +16,9 @@ const venueSchema = new mongoose.Schema({
     },
     timeslots:{
         type: [Number]
+    },
+    Images:{
+        type:[String]
     }
 })
 

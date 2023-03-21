@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Accordion, AccordionSummary, Checkbox, FormControlLabel, AccordionDetails, List, ListItem, ListItemText } from '@material-ui/core';
+import { Accordion, AccordionSummary, Checkbox, AccordionDetails, List, ListItem, ListItemText } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default function AddVenue() {
@@ -12,22 +12,20 @@ export default function AddVenue() {
     const [venueAddress, setVenueAddress] = useState('')
     const [sports, setSports] = useState([])
     const [timeslots, setTimeslots] = useState([])
-    const [chargable, setChargable] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post("/addvenue",{
+        axios.post("/venues/addVenue",{
             name: venueName,
             info: venueDesc,
             address: venueAddress,
             sports: sports,
             timeslots: timeslots,
-            chargable: chargable
         }).then(res => {
             // console.log(res)
             if (res.data.error){
                 alert(res.data.error)
             } else {
-                navigate("/ownerview")
+                navigate("/venues")
             }
         })
         .catch((error) => {
@@ -124,7 +122,6 @@ export default function AddVenue() {
                             </List>
                         </AccordionDetails>
                     </Accordion>
-                    <FormControlLabel control={<Checkbox className='bg-purple-600 hover:bg-purple-700' color='primary' checked={chargable} onChange={(e) => setChargable(e.target.checked)}/>} label="Chargable" />
                     <div>
                         <button
                             className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'

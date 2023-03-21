@@ -12,7 +12,7 @@ function UserInfo() {
   const [city,setCity] = useState('')
   const navigate = useNavigate();
   const [isOwner,setIsOwner] = useState(false)
-  const myOptions = ['Cricket', 'Tennis', 'Badminton', 'BasketBall', 'TT'];
+  const myOptions = ['Cricket', 'Tennis', 'Badminton', 'BasketBall', 'football'];
   const handleisOwnerChange=(event)=>{
     setIsOwner(event.target.value)
   }

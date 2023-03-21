@@ -11,7 +11,7 @@ export default function VenueCard(props) {
     const timeslots = props.timeslots.join(', ');
 
     return (
-        <Card className='m-1.5 hover:cursor-pointer' onClick={e => navigate(`/managevenue/${props.id}`)} >
+        <Card className='m-1.5 hover:cursor-pointer' onClick={e => navigate(`./${props.id}/activities`)} >
             <CardContent>
                 <Typography>Name: {name}</Typography>
                 <Typography>Description: {description}</Typography>
