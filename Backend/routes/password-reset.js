@@ -143,7 +143,11 @@ router.get("/reset-password/:email/:token", async (req, res) => {
 
 router.post("/reset-password/:email/:token", async (req, res) => {
   const { email, token } = req.params;
-  const { password } = req.body;
+  const { password, password2 } = req.body;
+
+  if(password !== password2){
+    return res.send({message:"passwords does not match"})
+  }
 
   const oldUser = await User.findOne({ email : email });
   if (!oldUser) {
@@ -164,7 +168,7 @@ router.post("/reset-password/:email/:token", async (req, res) => {
       }
     );
 
-    res.send({ email: verify.email, message: "verified" });
+    res.send({ email: verify.email, message: "password changed successfully" });
   } catch (error) {
     console.log(error);
     res.json({ message: "Something Went Wrong" });
