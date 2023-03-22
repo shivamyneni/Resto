@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ActivityCard from '../components/ActivityCard';
+import BookSlot from './BookSlot';
 
 export default function VenueCustomerDetails() {
     const { id }= useParams();
