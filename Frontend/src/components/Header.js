@@ -1,11 +1,13 @@
 import React,{ useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {InputAdornment, Input} from '@material-ui/core'
 import SearchIcon from '@mui/icons-material/SearchOutlined'
 
-export default function NavBar() {
+export default function NavBar(props) {
+    const navigate = useNavigate();
     const tabstate = useSelector((state) => state.currentTab)
     const {activeTab} = tabstate
     const history = useLocation();
@@ -20,7 +22,7 @@ export default function NavBar() {
     }, [dispatch, history.pathname])
 
     const runSearch = (query) => {
-        console.log(query)
+        navigate(`/customerView/${query}`)
     }
 
     return (

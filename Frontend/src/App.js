@@ -32,6 +32,7 @@ export default function App() {
         <Route path="addvenue" element={<AddVenue />} />
         <Route path="OwnerView" element={<OwnerView />} />
         <Route path="CustomerView" element={<CustomerView />} />
+        <Route path="CustomerView/:query" element={<CustomerView />} />
         <Route path="email-verification" element={<EmailVerificationSent/>} />
         <Route path="managevenue/:id" element={<VenueDetails />} />
         <Route path="venuedetails/:id" element={<VenueDetailsCustomer />} />
