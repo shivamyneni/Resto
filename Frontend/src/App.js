@@ -18,7 +18,7 @@ import UserProfile from './pages/UserProfile';
 import ResetPassword from './pages/ResetPassword';
 import CustomerView from './pages/CustomerView';
 import VenueDetailsCustomer from './pages/VenueDetailsCustomer';
-// import BookSlot from './pages/BookSlot';
+import BookSlot from './pages/BookSlot';
 
 export default function App() {
   return (
@@ -39,6 +39,7 @@ export default function App() {
         <Route path="AddActivity/:id" element={<AddActivity />} />
         <Route path="resetpw" element={<ResetPassword />} />
         <Route path="user-profile" element={<UserProfile />} />
+        <Route path="BookSlot/:id" element={<BookSlot />} />
       </Routes>
     </div>
   );
