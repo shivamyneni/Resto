@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ActivityCard from '../components/ActivityCard';
-import BookSlot from './BookSlot';
 
 export default function VenueCustomerDetails() {
     const { id }= useParams();
@@ -13,6 +12,8 @@ export default function VenueCustomerDetails() {
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
+    const [rating, setRating] = useState(0);
+
     useEffect(() => {
         axios.post(`/managevenue/${id}`).then(res => {
             // console.log(res.data['venue'])
@@ -74,6 +75,23 @@ export default function VenueCustomerDetails() {
                     })
                 }
             </div>
+            <strong>Rating: </strong>
+            <span>{rating}</span>
+            <div>
+                {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                    key={star}
+                    onClick={() => setRating(star)}
+                    className={`text-xl ${
+                    star <= rating ? 'text-yellow-400' : 'text-gray-400'
+                    }`}
+                >
+                    ★
+                </button>
+                ))}
+            </div>
         </div>
+        
+        
     );
 }
