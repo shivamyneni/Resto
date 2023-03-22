@@ -18,7 +18,7 @@ import UserProfile from './pages/UserProfile';
 import ResetPassword from './pages/ResetPassword';
 import CustomerView from './pages/CustomerView';
 import VenueDetailsCustomer from './pages/VenueDetailsCustomer';
-import BookSlot from './pages/BookSlot';
+// import BookSlot from './pages/BookSlot';
 
 export default function App() {
   return (
