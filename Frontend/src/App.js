@@ -34,11 +34,10 @@ export default function App() {
         <Route path="CustomerView" element={<CustomerView />} />
         <Route path="email-verification" element={<EmailVerificationSent/>} />
         <Route path="managevenue/:id" element={<VenueDetails />} />
-        <Route path="managevenue/:id" element={<VenueDetailsCustomer />} />
+        <Route path="venuedetails/:id" element={<VenueDetailsCustomer />} />
         <Route path="AddActivity/:id" element={<AddActivity />} />
         <Route path="resetpw" element={<ResetPassword />} />
         <Route path="user-profile" element={<UserProfile />} />
-
       </Routes>
     </div>
   );
