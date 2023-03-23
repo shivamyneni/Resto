@@ -91,7 +91,5 @@ export default function VenueCustomerDetails() {
                 ))}
             </div>
         </div>
-        
-        
     );
 }
