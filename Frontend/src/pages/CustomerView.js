@@ -31,7 +31,7 @@ export default function CustomerView() {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3' style={{width: '95vw'}}>
                 {
                     venues.filter(value => {
-                        return query == undefined || 
+                        return query === undefined || 
                         (value.name.toLowerCase().includes(query.toLowerCase()) ||
                         (value.info.toLowerCase().includes(query.toLowerCase())) ||
                         (value.address.toLowerCase().includes(query.toLowerCase())) ||
