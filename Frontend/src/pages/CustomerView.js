@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
-import VenueCardCustomer from '../components/VenueCardCustomer';
+import VenueCard from '../components/VenueCard';
 
 export default function CustomerView() {
+    const navigate = useNavigate();
     const { query }= useParams();
     const [venues, setVenues] = useState([]);
 
@@ -39,7 +40,7 @@ export default function CustomerView() {
                         (value.timeslots.map(i => i.toString().toLowerCase()).includes(query.toLowerCase())))
                     }).map(value => {
                         return (
-                            <VenueCardCustomer
+                            <VenueCard
                             key={value._id}
                             id={value._id}
                             name={value.name}
@@ -47,6 +48,7 @@ export default function CustomerView() {
                             address={value.address}
                             sports={value.sports}
                             timeslots={value.timeslots}
+                            onClick={e => navigate(`/venuedetails/${value._id}`)}
                             />
                         );
                     })
