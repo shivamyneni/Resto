@@ -78,16 +78,8 @@ export default function VenueCustomerDetails() {
             <strong>Rating: </strong>
             <span>{rating}</span>
             <div>
-                {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                    key={star}
-                    onClick={() => setRating(star)}
-                    className={`text-xl ${
-                    star <= rating ? 'text-yellow-400' : 'text-gray-400'
-                    }`}
-                >
-                    ★
-                </button>
+                {[1, 2, 3, 4, 5].map(star => (
+                <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
                 ))}
             </div>
         </div>

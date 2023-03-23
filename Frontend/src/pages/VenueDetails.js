@@ -12,6 +12,7 @@ export default function VenueDetails() {
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
+    
     useEffect(() => {
         axios.post(`/managevenue/${id}`).then(res => {
             // console.log(res.data['venue'])
