@@ -1,9 +1,7 @@
 import React from 'react'
 import { Card, CardContent, Typography } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
 
 export default function VenueCard(props) {
-    const navigate = useNavigate();
     const name = props.name;
     const description = props.description;
     const address = props.address;
@@ -11,7 +9,7 @@ export default function VenueCard(props) {
     const timeslots = props.timeslots.join(', ');
 
     return (
-        <Card className='m-1.5 hover:cursor-pointer' onClick={e => navigate(`/managevenue/${props.id}`)} >
+        <Card className='m-1.5 hover:cursor-pointer' onClick={props.onClick} >
             <CardContent>
                 <Typography>Name: {name}</Typography>
                 <Typography>Description: {description}</Typography>

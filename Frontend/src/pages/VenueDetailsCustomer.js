@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ActivityCard from '../components/ActivityCard';
 
-export default function VenueDetails() {
+export default function VenueCustomerDetails() {
     const { id }= useParams();
     // console.log(id)
     const navigate = useNavigate();
@@ -12,7 +12,8 @@ export default function VenueDetails() {
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
-    
+    const [rating, setRating] = useState(0);
+
     useEffect(() => {
         axios.post(`/managevenue/${id}`).then(res => {
             // console.log(res.data['venue'])
@@ -62,7 +63,7 @@ export default function VenueDetails() {
             </div>
                 <button 
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e => navigate(`/AddActivity/${id}`)}>Add Activity
+                    onClick={e => navigate(`/BookSlot/${id}`)}>Book Slot
                 </button>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
@@ -73,6 +74,13 @@ export default function VenueDetails() {
                         )
                     })
                 }
+            </div>
+            <strong>Rating: </strong>
+            <span>{rating}</span>
+            <div>
+                {[1, 2, 3, 4, 5].map(star => (
+                <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
+                ))}
             </div>
         </div>
     );

@@ -16,6 +16,9 @@ import VenueDetails from './pages/VenueDetails';
 import AddActivity from './pages/AddActivity';
 import UserProfile from './pages/UserProfile';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import CustomerView from './pages/CustomerView';
+import VenueDetailsCustomer from './pages/VenueDetailsCustomer';
+import BookSlot from './pages/BookSlot';
 
 export default function App() {
   return (
@@ -27,12 +30,16 @@ export default function App() {
         <Route path="contact" element={ <Contact/> } />
         <Route path="user-info" element={<UserInfo />} />
         <Route path="addvenue" element={<AddVenue />} />
-        <Route path="ownerview" element={<OwnerView />} />
+        <Route path="OwnerView" element={<OwnerView />} />
+        <Route path="CustomerView" element={<CustomerView />} />
+        <Route path="CustomerView/:query" element={<CustomerView />} />
         <Route path="email-verification" element={<EmailVerificationSent/>} />
         <Route path="managevenue/:id" element={<VenueDetails />} />
+        <Route path="venuedetails/:id" element={<VenueDetailsCustomer />} />
         <Route path="AddActivity/:id" element={<AddActivity />} />
         <Route path="forgotpwd" element={<ForgotPassword />} />
         <Route path="user-profile" element={<UserProfile />} />
+        <Route path="BookSlot/:id" element={<BookSlot />} />
       </Routes>
     </div>
   );

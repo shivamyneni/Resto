@@ -23,7 +23,7 @@ export default function OwnerView() {
     <div>
         <Header />
         <div className='flex flex-col items-center justify-center m-4'>
-            <div className='flex w-full justify-around sticky top-44 md:top-20'>
+            <div className='flex w-full justify-around sticky top-40 md:top-20 bg-white'>
                 <div className='w-1/12'></div>
                 <h4 className='w-1/8'><b>Venue Owner View</b></h4>
                 <button
@@ -34,7 +34,15 @@ export default function OwnerView() {
                 {
                     venues.map(value => {
                         return (
-                            <VenueCard key={value._id} id={value._id} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
+                            <VenueCard 
+                            key={value._id} 
+                            id={value._id} 
+                            name={value.name} 
+                            description={value.info} 
+                            address={value.address} 
+                            sports={value.sports} 
+                            timeslots={value.timeslots}
+                            onClick={e => navigate(`/managevenue/${value._id}`)}/>
                         )
                     })
                 }
