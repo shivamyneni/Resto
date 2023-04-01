@@ -63,6 +63,7 @@ const SignIn = () => {
                 console.log(res)
                 if(res.data.error){
                     alert(res.data.error)
+                    navigate("/signin")
                 }
                 else{
                     navigate("/venues")

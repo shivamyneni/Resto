@@ -15,7 +15,7 @@ export default function ResetPassword() {
             if (res.data.error) {
                 alert(res.data.error)
             } else{
-                navigate("/signin")
+                navigate("/email-verification")
             }
         })
         .catch((error) => {

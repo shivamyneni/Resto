@@ -43,7 +43,7 @@ export default function OwnerView() {
                             address={value.address} 
                             sports={value.sports} 
                             timeslots={value.timeslots}
-                            onClick={e => navigate(`/managevenue/${value._id}`)}/>
+                            onClick={e => navigate(`/venues/${value._id}/activities`)}/>
                         )
                     })
                 }

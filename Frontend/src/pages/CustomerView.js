@@ -10,8 +10,8 @@ export default function CustomerView() {
     const [venues, setVenues] = useState([]);
 
     useEffect(() => {
-        axios.get('/viewvenues').then(res => {
-            setVenues(res.data['allvenues']);
+        axios.get('/uservenues').then(res => {
+            setVenues(res.data['venues']);
             if (res.data.error) {
                 alert(res.data.error);
             }
@@ -48,7 +48,7 @@ export default function CustomerView() {
                             address={value.address}
                             sports={value.sports}
                             timeslots={value.timeslots}
-                            onClick={e => navigate(`/venuedetails/${value._id}`)}
+                            onClick={e => navigate(`/uservenues/${value._id}/useractivities`)}
                             />
                         );
                     })

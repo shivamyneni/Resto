@@ -6,7 +6,7 @@ import {
 import React from 'react';
 import SignIn from './pages/auth/SignIn'
 import Contact from './pages/Contact';
-import About from './pages/About';
+import About from './pages/Dashboard';
 import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
 import AddVenue from './pages/AddVenue';
@@ -18,14 +18,15 @@ import UserProfile from './pages/UserProfile';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import CustomerView from './pages/CustomerView';
-import VenueDetailsCustomer from './pages/VenueDetailsCustomer';
+import VenueDetailsUser from './pages/VenueDetailsUser';
 import BookSlot from './pages/BookSlot';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/about" element={ <About/> } />
+        <Route exact path="/" element={ <Dashboard/> } />
         <Route path="signin" element={ <SignIn/> } />
         <Route path="signup" element={ <SignUp/> } />
         <Route path="contact" element={ <Contact/> } />
@@ -37,10 +38,10 @@ export default function App() {
         <Route path="venues/:id/activities/addActivity" element={<AddActivity />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:email/:token" element={<ResetPassword />} />
-        <Route path="CustomerView" element={<CustomerView />} />
-        <Route path="CustomerView/:query" element={<CustomerView />} />
+        <Route path="uservenues" element={<CustomerView />} />
+        <Route path="uservenues/:id/useractivities" element={<VenueDetailsUser />} />
         <Route path="user-profile" element={<UserProfile />} />
-        <Route path="BookSlot/:id" element={<BookSlot />} />
+        <Route path="uservenues/:venueid/useractivities/bookslot/:activityid" element={<BookSlot />} />
       </Routes>
     </div>
   );

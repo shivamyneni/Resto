@@ -88,7 +88,7 @@ export default function SignUp() {
                 alert(res.data.error)
             }
             else{
-                navigate("/user-info")
+                navigate("/signin")
             }
         })
         .catch((error) => {

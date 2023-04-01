@@ -71,7 +71,7 @@ export default function VenueDetails() {
                 {
                     activities.map(value => {
                         return (
-                            <ActivityCard key={value._id} id={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
+                            <ActivityCard access="owner" key={value._id} id={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
                         )
                     })
                 }
