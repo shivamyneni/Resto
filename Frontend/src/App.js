@@ -16,6 +16,7 @@ import VenueDetails from './pages/VenueDetails';
 import AddActivity from './pages/AddActivity';
 import UserProfile from './pages/UserProfile';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="venues/:id/activities" element={<VenueDetails />} />
         <Route path="venues/:id/activities/addActivity" element={<AddActivity />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password/:email/:token" element={<ResetPassword />} />
         <Route path="user-profile" element={<UserProfile />} />
       </Routes>
     </div>

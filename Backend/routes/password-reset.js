@@ -96,7 +96,7 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "15m",
     });
-    const link = `http://localhost:8082/reset-password/${oldUser.email}/${token}`;
+    const link = `http://localhost:3000/reset-password/${oldUser.email}/${token}`;
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -143,10 +143,10 @@ router.get("/reset-password/:email/:token", async (req, res) => {
 
 router.post("/reset-password/:email/:token", async (req, res) => {
   const { email, token } = req.params;
-  const { password, password2 } = req.body;
+  const { password, cnfrmpassword } = req.body;
 
-  if(password !== password2){
-    return res.send({message:"passwords does not match"})
+  if(password !== cnfrmpassword){
+    return res.send({message:"mismatch"})
   }
 
   const oldUser = await User.findOne({ email : email });
@@ -168,81 +168,11 @@ router.post("/reset-password/:email/:token", async (req, res) => {
       }
     );
 
-    res.send({ email: verify.email, message: "password changed successfully" });
+    res.send({ email: verify.email, message: "success" });
   } catch (error) {
     console.log(error);
-    res.json({ message: "Something Went Wrong" });
+    res.send({ message: "failure" });
   }
 });
 
 module.exports = router
-// app.get("/getAllUser", async (req, res) => {
-//   try {
-//     const allUser = await User.find({});
-//     res.send({ status: "ok", data: allUser });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
-// app.post("/deleteUser", async (req, res) => {
-//   const { userid } = req.body;
-//   try {
-//     User.deleteOne({ _id: userid }, function (err, res) {
-//       console.log(err);
-//     });
-//     res.send({ status: "Ok", data: "Deleted" });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
-
-// app.post("/upload-image", async (req, res) => {
-//   const { base64 } = req.body;
-//   try {
-//     await Images.create({ image: base64 });
-//     res.send({ Status: "ok" })
-
-//   } catch (error) {
-//     res.send({ Status: "error", data: error });
-
-//   }
-// })
-
-// app.get("/get-image", async (req, res) => {
-//   try {
-//     await Images.find({}).then(data => {
-//       res.send({ status: "ok", data: data })
-//     })
-
-//   } catch (error) {
-
-//   }
-// })
-
-// app.get("/paginatedUsers", async (req, res) => {
-//   const allUser = await User.find({});
-//   const page = parseInt(req.query.page)
-//   const limit = parseInt(req.query.limit)
-
-//   const startIndex = (page - 1) * limit
-//   const lastIndex = (page) * limit
-
-//   const results = {}
-//   results.totalUser=allUser.length;
-//   results.pageCount=Math.ceil(allUser.length/limit);
-
-//   if (lastIndex < allUser.length) {
-//     results.next = {
-//       page: page + 1,
-//     }
-//   }
-//   if (startIndex > 0) {
-//     results.prev = {
-//       page: page - 1,
-//     }
-//   }
-//   results.result = allUser.slice(startIndex, lastIndex);
-//   res.json(results)
-// })

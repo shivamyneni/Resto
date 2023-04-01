@@ -15,8 +15,7 @@ export default function ResetPassword() {
             if (res.data.error) {
                 alert(res.data.error)
             } else{
-                console.log((res.data.message));
-                // navigate("/signin")
+                navigate("/signin")
             }
         })
         .catch((error) => {
