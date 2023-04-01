@@ -35,7 +35,15 @@ export default function OwnerView() {
                 {
                     venues.map(value => {
                         return (
-                            <VenueCard key={value._id} id={value._id} name={value.name} description={value.info} address={value.address} sports={value.sports} timeslots={value.timeslots}/>
+                            <VenueCard 
+                            key={value._id} 
+                            id={value._id} 
+                            name={value.name} 
+                            description={value.info} 
+                            address={value.address} 
+                            sports={value.sports} 
+                            timeslots={value.timeslots}
+                            onClick={e => navigate(`/managevenue/${value._id}`)}/>
                         )
                     })
                 }

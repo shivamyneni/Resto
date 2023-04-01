@@ -4,22 +4,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ActivityCard from '../components/ActivityCard';
 
-export default function VenueDetails() {
+export default function VenueCustomerDetails() {
     const { id }= useParams();
     // console.log(id)
     const navigate = useNavigate();
     const [venue, setVenue] = useState([])
-    const [address, setAddress]=useState([])
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
-    
+    const [rating, setRating] = useState(0);
+
     useEffect(() => {
-        axios.get(`/venues/${id}/`).then(res => {
-            setVenue(res.data['venue'][0]['name'])
-            setAddress(res.data['venue'][0]['address'])
-            setSports(res.data['venue'][0]['sports'].join(', '))
-            setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
+        axios.post(`/managevenue/${id}`).then(res => {
+            // console.log(res.data['venue'])
+            setVenue(res.data['venue'])
+            setSports(res.data['venue']['sports'].join(', '))
+            setTimeslots(res.data['venue']['timeslots'].join(', '))
             if (res.data.error) {
                 alert(res.data.error)
             }
@@ -28,10 +28,9 @@ export default function VenueDetails() {
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
         });
-        axios.get(`/venues/${id}/activities`, {
+        axios.post('/venueactivities', {
             venueid: id
         }).then(res => {
-            console.log(res.data);
             console.log(res.data['activities'])
             setActivities(res.data['activities'])
             if (res.data.error) {
@@ -49,10 +48,10 @@ export default function VenueDetails() {
         <Header />
         <div className='m-4'>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
-            <p className='mb-4'>{venue}</p>
+            <p className='mb-4'>{venue.info}</p>
             <div className='mb-4'>
                 <strong>Address: </strong>
-                <span>{address}</span>
+                <span>{venue.address}</span>
             </div>
             <div className='mb-4'>
                 <strong>Sports offered: </strong>
@@ -64,7 +63,7 @@ export default function VenueDetails() {
             </div>
                 <button 
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e => navigate(`/venues/${id}/activities/addActivity`)}>Add Activity
+                    onClick={e => navigate(`/BookSlot/${id}`)}>Book Slot
                 </button>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
@@ -75,6 +74,13 @@ export default function VenueDetails() {
                         )
                     })
                 }
+            </div>
+            <strong>Rating: </strong>
+            <span>{rating}</span>
+            <div>
+                {[1, 2, 3, 4, 5].map(star => (
+                <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
+                ))}
             </div>
         </div>
     );

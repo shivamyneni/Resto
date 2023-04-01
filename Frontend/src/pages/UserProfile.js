@@ -8,26 +8,6 @@ function UserProfile() {
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
-
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
-  };
-
-  const editHandler=(e)=>{
-    
-  }
-
   return (
     <div>
       <Header />
@@ -46,7 +26,7 @@ function UserProfile() {
                     id="name"
                     type="text"
                     value={name}
-                    onChange={handleNameChange}
+                    onChange={event => setName(event.target.value) }
                   />
                 </div>
                 <div>
@@ -58,7 +38,7 @@ function UserProfile() {
                     id="email"
                     type="email"
                     value={email}
-                    onChange={handleEmailChange}
+                    onChange={event => setEmail(event.target.value) }
                   />
                 </div>
                 <div>
@@ -70,7 +50,7 @@ function UserProfile() {
                     id="phone"
                     type="tel"
                     value={phone}
-                    onChange={handlePhoneChange}
+                    onChange={event => setPhone(event.target.value) }
                   />
                 </div>
                 <div>
@@ -82,12 +62,12 @@ function UserProfile() {
                     id="city"
                     type="text"
                     value={city}
-                    onChange={handleCityChange}
+                    onChange={event => setCity(event.target.value) }
                   />
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button variant="contained" onClick={editHandler} className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
+                <Button variant="contained" className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md" onClick={(e)=>{ }}>
                   Edit Changes
                 </Button>
               </div>

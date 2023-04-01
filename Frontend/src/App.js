@@ -17,6 +17,9 @@ import AddActivity from './pages/AddActivity';
 import UserProfile from './pages/UserProfile';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
+import CustomerView from './pages/CustomerView';
+import VenueDetailsCustomer from './pages/VenueDetailsCustomer';
+import BookSlot from './pages/BookSlot';
 
 export default function App() {
   return (
@@ -34,7 +37,10 @@ export default function App() {
         <Route path="venues/:id/activities/addActivity" element={<AddActivity />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:email/:token" element={<ResetPassword />} />
+        <Route path="CustomerView" element={<CustomerView />} />
+        <Route path="CustomerView/:query" element={<CustomerView />} />
         <Route path="user-profile" element={<UserProfile />} />
+        <Route path="BookSlot/:id" element={<BookSlot />} />
       </Routes>
     </div>
   );
