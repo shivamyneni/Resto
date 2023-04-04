@@ -1,13 +1,21 @@
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
-import Header from "../components/Header"
+import Header from "../components/Header";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 function UserProfile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
+  const bookedDates = [new Date('04-01-2023'), new Date('04-02-2023'), new Date('04-05-2023')];
 
+  const tileDisabled = ({ date, view }) =>
+    view === 'month' && bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime());
+
+  const tileClassName = ({ date }) =>
+    bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime()) ? 'bg-red-500' : null;
   return (
     <div>
       <Header />
@@ -78,6 +86,16 @@ function UserProfile() {
       <div className='m-2 flex'>
         <text className='flex-start '>Bookings History</text>
       </div>
+      <div className="max-w-md mx-auto flex-start">
+      <h2 className="text-xl font-bold mb-4">Booking Calendar</h2>
+      <Calendar className="ml-5" tileDisabled={tileDisabled} tileClassName={tileClassName} />
+      <style jsx>{`
+        .booked {
+          background-color: #f56565;
+          color: #fff;
+        }
+      `}</style>
+    </div>
     </div>
   );
 }
