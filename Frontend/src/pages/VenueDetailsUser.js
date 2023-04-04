@@ -14,77 +14,107 @@ export default function VenueCustomerDetails() {
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
     const [rating, setRating] = useState(0);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
+        axios.get("/user").then((res) => {
+          setUserId(res.data.id);
+        }).catch((error) => {
+          console.log(error);
+        });
+      
         axios.get(`/uservenues/${id}`).then(res => {
-            setVenue(res.data['venue'][0]['name'])
-            setVenueId(id)
-            setAddress(res.data['venue'][0]['address'])
-            setSports(res.data['venue'][0]['sports'].join(', '))
-            setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
-            if (res.data.error) {
-                alert(res.data.error)
-            }
+          setVenue(res.data['venue'][0]['name'])
+          setVenueId(id)
+          setAddress(res.data['venue'][0]['address'])
+          setSports(res.data['venue'][0]['sports'].join(', '))
+          setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
+          setRating(res.data['venue'][0]['rating'])
+          if (res.data.error) {
+            alert(res.data.error)
+          }
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
         });
+      
         axios.get(`/uservenues/${id}/useractivities`, {
-            venueid: id
+          venueid: id
         }).then(res => {
-            console.log(res.data['activities'])
-            setActivities(res.data['activities'])
-            if (res.data.error) {
-                alert(res.data.error)
-            }
+          console.log(res.data['activities'])
+          setActivities(res.data['activities'])
+          if (res.data.error) {
+            alert(res.data.error)
+          }
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
         });
-    }, [])
+      }, []);
+
+      const handleRating = (value) => {
+        axios.post(`/uservenues/${id}/rating`, {
+          userId: userId,
+          rating: value
+        }).then(res => {
+          setRating(res.data.rating)
+          if (res.data.error) {
+            alert(res.data.error)
+          }
+        }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+      };
+      
+      
     
-    return (
+      return (
         <div>
-        <Header />
-        <div className='m-4'>
+          <Header />
+          <div className='m-4'>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
             <p className='mb-4'>{venue.info}</p>
             <div className='mb-4'>
-                <strong>Address: </strong>
-                <span>{address}</span>
+              <strong>Address: </strong>
+              <span>{address}</span>
             </div>
             <div className='mb-4'>
-                <strong>Sports offered: </strong>
-                <span>{sports}</span>
+              <strong>Sports offered: </strong>
+              <span>{sports}</span>
             </div>
             <div className='mb-4'>
-                <strong>Available timeslots: </strong>
-                <span>{timeslots}</span>
+              <strong>Available timeslots: </strong>
+              <span>{timeslots}</span>
             </div>
-                {/* <button 
-                    className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e => navigate(`uservenues/${venueId}/useractivities/bookslot/${activityId}`)}>Book Slot
-                </button> */}
-            </div>
-            
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
-                {   
-                    activities.map(value => {
-                        return (
-                            <ActivityCard access="user" venueId={venueid} key={value._id} activityId={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
-                        )
-                    })
-                }
-            </div>
+            {/* <button 
+                className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
+                onClick={e => navigate(`uservenues/${venueId}/useractivities/bookslot/${activityId}`)}>Book Slot
+            </button> */}
+          </div>
+      
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
+            {   
+              activities.map(value => {
+                return (
+                  <ActivityCard access="user" venueId={venueid} key={value._id} activityId={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
+                )
+              })
+            }
+          </div>
+      
+          <div className='m-4'>
             <strong>Rating: </strong>
             <span>{rating}</span>
             <div>
-                {[1, 2, 3, 4, 5].map(star => (
+              {[1, 2, 3, 4, 5].map(star => (
                 <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
-                ))}
+              ))}
             </div>
+          </div>
         </div>
-    );
+      );      
 }
