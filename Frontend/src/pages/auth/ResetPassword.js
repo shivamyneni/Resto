@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import axios, { Axios } from "axios";
 
 const ResetPasswordPage = () => {
+  const {token} = useParams()
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [cnfrmpassword,setCnfrmPassword] = useState("");
@@ -19,8 +21,29 @@ const ResetPasswordPage = () => {
     setCnfrmPassword(event.target.value)
   }
 
-  const handleResetPassword = (event) => {
-    //reset password code here
+  const handleResetPassword = (e) => {
+      e.preventDefault()
+      axios.post(`/reset-password/${email}/${token}`,{
+          password: password,
+          cnfrmpassword:cnfrmpassword
+      }).then(res => {
+          console.log(res)
+          if (res.data.error){
+              alert(res.data.error)
+          } else {
+              if(res.data.message==="mismatch"){
+                alert("passwords doesnt match")
+              }
+              else if(res.data.message==="success"){
+                navigate(`/signin`)
+              }
+          }
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+      });
   };
 
   return (

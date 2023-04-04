@@ -22,7 +22,7 @@ export default function NavBar(props) {
     }, [dispatch, history.pathname])
 
     const runSearch = (query) => {
-        navigate(`/customerView/${query}`)
+        navigate(`/uservenues/${query}`)
     }
 
     return (
@@ -45,6 +45,8 @@ export default function NavBar(props) {
                 <div>
                     <div className='flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0'>
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-3">
+                            <Link to="/venues" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="owner" ? "red" :"black"}} onClick={()=>{changeTab("owner")}}>Owner</Link>
+                            <Link to="/uservenues" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="user" ? "red" :"black"}} onClick={()=>{changeTab("user")}}>User</Link>
                             <Link to="/signup" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="signin" || activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signup")}}>Login/SignUp</Link>
                             <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red" : "black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
                             <Link to="/user-profile"><AccountCircleIcon/></Link>

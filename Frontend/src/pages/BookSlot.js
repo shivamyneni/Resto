@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function BookSlot() {
-  const { id } = useParams();
+  const { venueid,activityid } = useParams();
   const navigate = useNavigate();
   const [selectedTime, setSelectedTime] = useState(0);
   const [court, setCourt] = useState('');
@@ -18,17 +18,17 @@ export default function BookSlot() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/bookslot', {
+    axios.get(`/uservenues/${venueid}/useractivities/bookslot/${activityid}`, {
       time: selectedTime,
       court,
-      venueId: id,
+      venueId: venueid,
     })
       .then((res) => {
         console.log(res);
         if (res.data.error) {
           alert(res.data.error);
         } else {
-          navigate("/VenueDetailsCustomer")
+          navigate(`/venues/${venueid}/useractivities`)
         }
       })
       .catch((error) => {

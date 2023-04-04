@@ -6,20 +6,22 @@ import ActivityCard from '../components/ActivityCard';
 
 export default function VenueCustomerDetails() {
     const { id }= useParams();
-    // console.log(id)
     const navigate = useNavigate();
     const [venue, setVenue] = useState([])
+    const [venueid,setVenueId] = useState([])
+    const [address, setAddress]=useState([])
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
     const [rating, setRating] = useState(0);
 
     useEffect(() => {
-        axios.post(`/managevenue/${id}`).then(res => {
-            // console.log(res.data['venue'])
-            setVenue(res.data['venue'])
-            setSports(res.data['venue']['sports'].join(', '))
-            setTimeslots(res.data['venue']['timeslots'].join(', '))
+        axios.get(`/uservenues/${id}`).then(res => {
+            setVenue(res.data['venue'][0]['name'])
+            setVenueId(id)
+            setAddress(res.data['venue'][0]['address'])
+            setSports(res.data['venue'][0]['sports'].join(', '))
+            setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
             if (res.data.error) {
                 alert(res.data.error)
             }
@@ -28,7 +30,7 @@ export default function VenueCustomerDetails() {
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
         });
-        axios.post('/venueactivities', {
+        axios.get(`/uservenues/${id}/useractivities`, {
             venueid: id
         }).then(res => {
             console.log(res.data['activities'])
@@ -51,7 +53,7 @@ export default function VenueCustomerDetails() {
             <p className='mb-4'>{venue.info}</p>
             <div className='mb-4'>
                 <strong>Address: </strong>
-                <span>{venue.address}</span>
+                <span>{address}</span>
             </div>
             <div className='mb-4'>
                 <strong>Sports offered: </strong>
@@ -61,16 +63,17 @@ export default function VenueCustomerDetails() {
                 <strong>Available timeslots: </strong>
                 <span>{timeslots}</span>
             </div>
-                <button 
+                {/* <button 
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e => navigate(`/BookSlot/${id}`)}>Book Slot
-                </button>
+                    onClick={e => navigate(`uservenues/${venueId}/useractivities/bookslot/${activityId}`)}>Book Slot
+                </button> */}
             </div>
+            
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
-                {
+                {   
                     activities.map(value => {
                         return (
-                            <ActivityCard key={value._id} id={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
+                            <ActivityCard access="user" venueId={venueid} key={value._id} activityId={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
                         )
                     })
                 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Checkbox, FormControlLabel} from '@material-ui/core';
 import axios from 'axios';
 
 export default function AddActivity() {
@@ -7,19 +8,20 @@ export default function AddActivity() {
   const navigate = useNavigate();
   const [availability, setavailability] = useState('');
   const [activityName, setActivityName] = useState('');
-  const [venue, setVenue] = useState('');
+  const [activityInfo, setActivityInfo] = useState('');
   const [timing, setTiming] = useState('');
+  const [chargeable, setChargeable] = useState(false)
 
   const handleActivityNameChange = (event) => {
     setActivityName(event.target.value);
   };
 
-  const handleavailabilityNameChange = (event) => {
-    setavailability(event.target.value);
+  const handleActivityInfoChange = (event) => {
+    setActivityInfo(event.target.value);
   };
 
-  const handleVenueChange = (event) => {
-    setVenue(event.target.value);
+  const handleavailabilityNameChange = (event) => {
+    setavailability(event.target.value);
   };
 
   const handleTimingChange = (event) => {
@@ -27,17 +29,19 @@ export default function AddActivity() {
   };
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post("/addactivity",{
+    axios.post(`/venues/${id}/activities/addActivity`,{
         name: activityName,
         venueid: id,
+        info:activityInfo,
         timeslot: timing,
-        availability: availability
+        availability: availability,
+        chargeable:chargeable
     }).then(res => {
         console.log(res)
         if (res.data.error){
             alert(res.data.error)
         } else {
-            navigate(`/managevenue/${id}`)
+            navigate(`/venues/${id}/activities`)
         }
     })
     .catch((error) => {
@@ -59,6 +63,16 @@ export default function AddActivity() {
             type='text'
             value={activityName}
             onChange={handleActivityNameChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor='activity-info' className="block text-gray-700 font-bold mb-2">Activity Info:</label>
+          <input
+            id='activity-info'
+            type='text'
+            value={activityInfo}
+            onChange={handleActivityInfoChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
@@ -92,6 +106,7 @@ export default function AddActivity() {
             onChange={handleavailabilityNameChange}
           />
         </div>
+        <FormControlLabel control={<Checkbox className='bg-purple-600 hover:bg-purple-700' color='primary' checked={chargeable} onChange={(e) => setChargeable(e.target.checked)}/>} label="Chargable" />
         <button className='bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' type='submit'>Submit</button>
       </form>
     </div>
