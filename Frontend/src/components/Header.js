@@ -5,6 +5,8 @@ import { Link, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {InputAdornment, Input} from '@material-ui/core'
 import SearchIcon from '@mui/icons-material/SearchOutlined'
+import ChatIcon from '@mui/icons-material/Chat';
+import UnreadChatIcon from '@mui/icons-material/MarkUnreadChatAlt';
 
 export default function NavBar(props) {
     const navigate = useNavigate();
@@ -21,9 +23,7 @@ export default function NavBar(props) {
         dispatch({ type: "changeTab", payload: homeRoute })
     }, [dispatch, history.pathname])
 
-    const runSearch = (query) => {
-        navigate(`/uservenues/${query}`)
-    }
+    const runSearch = (query) => navigate(`/uservenues/${query}`);
 
     return (
         <nav className="w-full shadow sticky top-0 bg-white">
@@ -50,6 +50,7 @@ export default function NavBar(props) {
                             <Link to="/signup" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="signin" || activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signup")}}>Login/SignUp</Link>
                             <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red" : "black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
                             <Link to="/user-profile"><AccountCircleIcon/></Link>
+                            <Link to="/chat"><ChatIcon/></Link>
                         </ul>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ export default function OwnerView() {
     <div>
         <Header />
         <div className='flex flex-col items-center justify-center m-4'>
-            <div className='flex w-full justify-around sticky top-40 md:top-20 bg-white'>
+            <div className='flex w-full justify-around'>
                 <div className='w-1/12'></div>
                 <h4 className='w-1/8'><b>Venue Owner View</b></h4>
                 <button
