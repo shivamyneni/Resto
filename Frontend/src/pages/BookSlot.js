@@ -45,7 +45,7 @@ export default function BookSlot() {
   const handleSubmit=(e)=>{
     e.preventDefault();
     if(user){
-    axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:selectedTime,court}).then((res)=>{
+    axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:selectedTime,court,userId: user.uid}).then((res)=>{
       if(res.data.url){
         window.location.href = res.data.url;
       }
