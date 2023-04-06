@@ -1,20 +1,29 @@
-import React, {useState} from 'react';
-import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import React, {useState,useEffect} from 'react';
+import {  signInWithPopup, GoogleAuthProvider,FacebookAuthProvider, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 const SignIn = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [user,setUser] = useState('');
     // const userSignin = useSelector((state)=>state.userSignin);
     // const {userInfo,error} = userSignin;
     const googleprovider = new GoogleAuthProvider();
     const facebookprovider = new FacebookAuthProvider();
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+          });
+        if(user){
+            navigate("/uservenues")
+        }
+        return () => unsubscribe();
+    },[user])
     const onLogin = (e) => {
         // window.location.href='/user-info'
         e.preventDefault();
