@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Accordion, AccordionSummary, Checkbox, AccordionDetails, List, ListItem, ListItemText } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import moment from 'moment';
+import 'moment-timezone';
 
 export default function AddVenue() {
     const navigate = useNavigate();
@@ -12,6 +14,9 @@ export default function AddVenue() {
     const [venueAddress, setVenueAddress] = useState('')
     const [sports, setSports] = useState([])
     const [timeslots, setTimeslots] = useState([])
+    const selectTimeslots = ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'];
+    const formattedTimeslots = selectTimeslots.map(timeslot => moment(timeslot, 'hh:mm A').format('hh:mm A'));
+
     const onSubmit = (e) => {
         e.preventDefault()
         axios.post("/venues/addVenue",{
@@ -103,7 +108,7 @@ export default function AddVenue() {
                         <AccordionSummary className='m-0' expandIcon={<ExpandMoreIcon />}><b>Time Slots</b></AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                {[1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(value => {
+                                {formattedTimeslots.map(value => {
                                     return (
                                         <ListItem key={value} className='p-0'>
                                             <Checkbox color='primary' onClick={e => {

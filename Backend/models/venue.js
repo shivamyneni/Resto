@@ -15,7 +15,7 @@ const venueSchema = new mongoose.Schema({
         type: [String]
     },
     timeslots:{
-        type: [Number]
+        type: [String]
     },
     Images:{
         type:[String]
