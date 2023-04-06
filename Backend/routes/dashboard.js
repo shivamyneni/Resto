@@ -8,6 +8,7 @@ var citiesList = []
 router.use("/venues",require("./venue"))
 router.use("/uservenues",require("./uservenue"))
 router.use("/stripe",require("./stripe"))
+router.use("/bookings",require("./booking"))
 
 router.use('/',async(req,res)=>{
     citiesList =  await Venue.find({},{city:1,_id:0})
