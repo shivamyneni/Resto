@@ -97,4 +97,30 @@ router.post("/signin", (req, res) => {
     })
 })
 
+router.get("/userdetails/:uid", (req,res) => {
+    User.find({uid:req.params.uid})
+    .then((user) => {
+        if (!user){
+            return res.status(200).json({"error":"non existing user"})
+        }
+        return res.status(200).json({"user":user})
+    })
+})
+
+router.put("/userupdate/:uid",async (req,res)=>{
+    const {email, name, phone, city} = req.body
+    try{
+        const updated = await User.findOneAndUpdate({uid:req.params.uid},
+            {
+            email,name,city,phone
+            },
+            {
+                new: true
+            });
+        res.json(updated)
+    }catch(err){
+        res.status(400).json({ message: err.message });
+    }
+})
+
 module.exports = router
