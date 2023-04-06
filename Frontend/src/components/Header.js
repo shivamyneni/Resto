@@ -7,6 +7,8 @@ import {InputAdornment, Input} from '@material-ui/core'
 import SearchIcon from '@mui/icons-material/SearchOutlined'
 import { getAuth } from 'firebase/auth';
 import { Button } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
+import UnreadChatIcon from '@mui/icons-material/MarkUnreadChatAlt';
 
 export default function NavBar(props) {
     const auth = getAuth();
@@ -25,9 +27,7 @@ export default function NavBar(props) {
         dispatch({ type: "changeTab", payload: homeRoute })
     }, [dispatch, history.pathname,user])
 
-    const runSearch = (query) => {
-        navigate(`/uservenues/${query}`)
-    }
+    const runSearch = (query) => navigate(`/uservenues/${query}`);
 
     const handleLogout=()=>{
         auth.signOut().then(()=>{
@@ -61,6 +61,7 @@ export default function NavBar(props) {
                                     <Link to="/signin" className='font-semibold text-md transform transition duration-500 hover:scale-110' style={{color: activeTab==="signin" || activeTab==="signup" ? "red" :"black"}} onClick={()=>{changeTab("signin")}}>Login/SignUp</Link>}
                             <Link to="/contact" className='font-semibold text-lg transform transition duration-500 hover:scale-110' style={{color:activeTab==="contact" ? "red" : "black"}} onClick={()=>{changeTab("contact")}}>Contact</Link>
                             <Link to="/user-profile"><AccountCircleIcon/></Link>
+                            <Link to="/chat"><ChatIcon/></Link>
                         </ul>
                     </div>
                 </div>

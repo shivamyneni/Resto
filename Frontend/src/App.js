@@ -6,7 +6,6 @@ import {
 import React from 'react';
 import SignIn from './pages/auth/SignIn'
 import Contact from './pages/Contact';
-import About from './pages/Dashboard';
 import SignUp from './pages/auth/SignUp';
 import UserInfo from './pages/auth/UserInfo';
 import AddVenue from './pages/AddVenue';
@@ -20,6 +19,7 @@ import ResetPassword from './pages/auth/ResetPassword';
 import CustomerView from './pages/CustomerView';
 import VenueDetailsUser from './pages/VenueDetailsUser';
 import BookSlot from './pages/BookSlot';
+import Chat from './pages/Chat';
 import Dashboard from './pages/Dashboard';
 
 export default function App() {
@@ -42,6 +42,7 @@ export default function App() {
         <Route path="uservenues/:id/useractivities" element={<VenueDetailsUser />} />
         <Route path="user-profile" element={<UserProfile />} />
         <Route path="uservenues/:venueid/useractivities/bookslot/:activityid" element={<BookSlot />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
   );
