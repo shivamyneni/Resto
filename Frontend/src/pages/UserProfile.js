@@ -1,13 +1,48 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
-import Header from "../components/Header"
+import React, { useEffect, useState } from 'react';
+import Header from "../components/Header";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import Card from "../components/HistoryCard";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import axios from 'axios';
 
 function UserProfile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
+  const [bookings,setBookings] = useState([]);
+  const auth = getAuth();
+  const [user, setUser] = useState(null);
+  const bookedDates = [new Date('04-01-2023'), new Date('04-02-2023'), new Date('04-05-2023')];
 
+  const tileDisabled = ({ date, view }) =>
+    view === 'month' && bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime());
+
+  const tileClassName = ({ date }) =>
+    bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime()) ? 'bg-red-500' : null;
+
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser.uid);
+        
+      });
+      axios.get(`/bookings/${user}/`).then(res => {
+          console.log("hi",res.data.bookings);
+          if (res.data.error) {
+              alert(res.data.error)
+          }
+          else{
+            setBookings(res.data.bookings)
+          }
+      }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+      });
+      return () => unsubscribe();
+    },[user]);
   return (
     <div>
       <Header />
@@ -76,7 +111,24 @@ function UserProfile() {
         </div>
       </div>
       <div className='m-2 flex'>
-        <text className='flex-start '>Bookings History</text>
+      <Calendar className="ml-5 flex-start" tileDisabled={tileDisabled} tileClassName={tileClassName} />
+      <style jsx>{`
+        .booked {
+          background-color: #f56565;
+          color: #fff;
+        }
+      `}</style>
+      <div className='flex'>
+        {
+          bookings.map((item)=>
+            <Card
+            title={item.venueName}
+            description={item.court}
+            time={item.time}
+          />
+          )
+        }
+      </div>
       </div>
     </div>
   );

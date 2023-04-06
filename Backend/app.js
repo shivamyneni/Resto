@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const connectDB = require('./config/db.js');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -12,6 +13,7 @@ connectDB();
 require("./models/user")
 require("./models/venue")
 require("./models/activity")
+const stripe= 
 mongoose.connection.on('connected', ()=>{
     console.log("connected to mongodb")
 })
@@ -19,6 +21,8 @@ mongoose.connection.on('error', (err)=>{
     console.log("connection error to mongodb", err)
 })
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 //using json middleware to parse req
 app.use(express.json())
 //defining routes
