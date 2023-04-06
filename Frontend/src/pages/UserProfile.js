@@ -29,7 +29,6 @@ function UserProfile() {
         
       });
       axios.get(`/bookings/${user}/`).then(res => {
-          console.log("hi",res.data.bookings);
           if (res.data.error) {
               alert(res.data.error)
           }
@@ -41,8 +40,38 @@ function UserProfile() {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
       });
+      axios.get(`/userdetails/${user}/`).then(res => {
+        if (res.data.error) {
+            alert(res.data.error)
+        }
+        else{
+          setEmail(res.data.user[0]?.email);
+          setName(res.data.user[0]?.name);
+          setCity(res.data.user[0]?.city);
+          setPhone(res.data.user[0]?.phone);
+        }
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+    });
       return () => unsubscribe();
     },[user]);
+
+  const handleUpdate= async (e)=>{
+    e.preventDefault()
+    try{
+    const res = await axios.put(`/userupdate/${user}/`,{
+      name,
+      phone,
+      email,
+      city,
+    })
+    alert('User updated successfully!');
+    }catch(err){
+      console.error(err);
+    }
+  }
   return (
     <div>
       <Header />
@@ -102,7 +131,7 @@ function UserProfile() {
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button variant="contained" className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md" onClick={(e)=>{ }}>
+                <Button variant="contained" className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md" onClick={handleUpdate}>
                   Edit Changes
                 </Button>
               </div>
