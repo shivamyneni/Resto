@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const bookingSchema = new mongoose.Schema({
-    userId:{
+    uid:{
         type:String,
         required:true
     },
