@@ -6,7 +6,7 @@ export default function VenueCard(props) {
     const description = props.description;
     const address = props.address;
     const sports = props.sports.join(', ');
-    const timeslots = props.timeslots.join(', ');
+    const timeslots = props.timeslots == undefined ? [] : props.timeslots.join(', ');
 
     return (
         <Card className='m-1.5 hover:cursor-pointer' onClick={props.onClick} >
