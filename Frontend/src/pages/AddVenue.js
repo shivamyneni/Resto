@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,9 +6,11 @@ import { Accordion, AccordionSummary, Checkbox, AccordionDetails, List, ListItem
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
 import 'moment-timezone';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function AddVenue() {
     const navigate = useNavigate();
+    const [user,setUser] = useState('');
     const [venueName, setVenueName] = useState('')
     const [venueDesc, setVenueDesc] = useState('')
     const [venueAddress, setVenueAddress] = useState('')
@@ -17,9 +19,22 @@ export default function AddVenue() {
     const selectTimeslots = ['09:00 AM', '10:00 AM', '11:00 AM','12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'];
     const formattedTimeslots = selectTimeslots.map(timeslot => moment(timeslot, 'hh:mm A').format('hh:mm A'));
 
+    const auth = getAuth();
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser.uid);
+          });
+        if(!auth?.currentUser?.uid){
+            alert("SignIn to Continue")
+            navigate("/signin")
+        }
+        return () => unsubscribe();
+    },[user])
+    
     const onSubmit = (e) => {
         e.preventDefault()
         axios.post("/venues/addVenue",{
+            ownerId: user,
             name: venueName,
             info: venueDesc,
             address: venueAddress,

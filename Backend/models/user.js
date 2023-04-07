@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     city:{
         type: String
     },
-    interests:{
+    intrests:{
         type: [String]
     },
     logintype:{

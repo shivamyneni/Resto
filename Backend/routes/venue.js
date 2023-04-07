@@ -7,11 +7,12 @@ const activity = require('./activity')
 
 router.use("/:venueid/activities",activity)
 router.post("/addVenue", (req, res) =>{
-    const {name, address, info, sports,timeslots} = req.body
+    const {ownerId,name, address, info, sports,timeslots} = req.body
     if(!name || !address || !info || !sports || !timeslots ){
         return res.send({"error":"please enter all the details"})
     }
     const venue = new Venue({
+        ownerId,
         name: name,
         info: info,
         address: address,
@@ -37,8 +38,8 @@ router.get("/:venueid", (req,res) => {
     })
 })
 
-router.get("/", (req, res) => {
-    Venue.find({})
+router.get("/owner/:ownerId", (req, res) => {
+    Venue.find({ownerId:req.params.ownerId})
     .then((venues) => {
         if (!venues){
             return res.status(200).json({"404":"venues not found"})

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { sendEmailVerification ,getAuth} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function UserInfo() {
   const [username,setUserName] = useState('')
@@ -13,10 +14,29 @@ function UserInfo() {
   const navigate = useNavigate();
   const [isOwner,setIsOwner] = useState(false)
   const myOptions = ['Cricket', 'Tennis', 'Badminton', 'BasketBall', 'football'];
+  const [selectedValues, setSelectedValues] = useState([]);
+
+  const handleSelectedValuesChange = (event, values) => {
+    setSelectedValues(values);
+  };
   const handleisOwnerChange=(event)=>{
     setIsOwner(event.target.value)
   }
-  console.log(isOwner);
+  const handleSubmit= async (e)=>{
+    e.preventDefault()
+    try{
+    const res = await axios.put(`/userupdate/${auth.currentUser.uid}/`,{
+      name:username,
+      phone,
+      city,
+      isOwner,
+      intrests: selectedValues
+    })
+    alert('User updated successfully!');
+    }catch(err){
+      console.error(err);
+    }
+  }
   return (
     <div className='h-screen'>
         <Header />
@@ -86,9 +106,10 @@ function UserInfo() {
     <Autocomplete
       options={myOptions}
       multiple
-      className='block w-full px-3 py-2 border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
       defaultValue={[myOptions[3]]}
       getOptionLabel={(option) => option}
+      onChange={handleSelectedValuesChange}
+      value={selectedValues}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -99,8 +120,11 @@ function UserInfo() {
       )}
     />
   </div>
-  <div className='flex justify-end'>
-    <button className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'>
+  <div className='flex justify-between'>
+    <button onClick={()=> navigate("/venues")}>
+      Skip for now
+    </button>
+    <button onClick={handleSubmit} className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'>
       Submit
     </button>
   </div>
