@@ -43,6 +43,7 @@ export default function App() {
         <Route path="user-profile" element={<UserProfile />} />
         <Route path="uservenues/:venueid/useractivities/bookslot/:activityid" element={<BookSlot />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/chat/:id" element={<Chat />} />
       </Routes>
     </div>
   );
