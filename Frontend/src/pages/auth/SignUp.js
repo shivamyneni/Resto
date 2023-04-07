@@ -19,7 +19,7 @@ export default function SignUp() {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
-                socialSignup(user.email)
+                socialSignup(user.email,user.uid)
                 navigate("/user-info")
             }).catch((error) => {
                 const errorCode = error.code;
@@ -34,7 +34,7 @@ export default function SignUp() {
             const user = result.user;
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
-            socialSignup(user.email)
+            socialSignup(user.email,user.uid)
             navigate("/user-info")
         })
         .catch((error) => {
@@ -44,10 +44,11 @@ export default function SignUp() {
             const credential = FacebookAuthProvider.credentialFromError(error);
         });
     }
-    const socialSignup = (email) => {
+    const socialSignup = (email,uid) => {
         axios.post("/signup",{
             email:email,
-            logintype:"social"
+            logintype:"social",
+            uid
         }).then(res => {
             console.log(res)
             if(res.data.error){
@@ -81,6 +82,7 @@ export default function SignUp() {
             email:email,
             name:name,
             password:password,
+            uid: auth.currentUser.uid,
             logintype:"email"
         }).then(res => {
             console.log(res)

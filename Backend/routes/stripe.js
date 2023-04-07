@@ -11,7 +11,7 @@ const router = express.Router()
 router.post('/payment-checkout', async (req, res) => {
     const customer = await stripe.customers.create({
       metadata:{
-        userId : req.body.userId,
+        uid : req.body.uid,
         venueName: req.body.venueName,
         court: req.body.court,
         time: req.body.time
@@ -43,7 +43,7 @@ router.post('/payment-checkout', async (req, res) => {
 
 const createBooking = async(customer,data)=>{
   const newBooking = new book({
-    userId: customer.metadata.userId,
+    uid: customer.metadata.uid,
     customerId: data.customer,
     paymentIntentId: data.payment_intent,
     venueName:customer.metadata.venueName,

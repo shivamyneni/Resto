@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Card from "../components/HistoryCard";
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import axios from 'axios';
 
 function UserProfile() {
@@ -14,7 +14,7 @@ function UserProfile() {
   const [city, setCity] = useState('');
   const [bookings,setBookings] = useState([]);
   const auth = getAuth();
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null);
   const bookedDates = [new Date('04-01-2023'), new Date('04-02-2023'), new Date('04-05-2023')];
 
   const tileDisabled = ({ date, view }) =>
@@ -24,8 +24,11 @@ function UserProfile() {
     bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime()) ? 'bg-red-500' : null;
 
     useEffect(() => {
-      axios.get(`/bookings/${user?.uid}/`).then(res => {
-          console.log(res.data.bookings);
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser.uid);
+        
+      });
+      axios.get(`/bookings/${user}/`).then(res => {
           if (res.data.error) {
               alert(res.data.error)
           }
@@ -37,7 +40,38 @@ function UserProfile() {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
       });
+      axios.get(`/userdetails/${user}/`).then(res => {
+        if (res.data.error) {
+            alert(res.data.error)
+        }
+        else{
+          setEmail(res.data.user[0]?.email);
+          setName(res.data.user[0]?.name);
+          setCity(res.data.user[0]?.city);
+          setPhone(res.data.user[0]?.phone);
+        }
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+    });
+      return () => unsubscribe();
     },[user]);
+
+  const handleUpdate= async (e)=>{
+    e.preventDefault()
+    try{
+    const res = await axios.put(`/userupdate/${user}/`,{
+      name,
+      phone,
+      email,
+      city,
+    })
+    alert('User updated successfully!');
+    }catch(err){
+      console.error(err);
+    }
+  }
   return (
     <div>
       <Header />
@@ -97,7 +131,7 @@ function UserProfile() {
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button variant="contained" className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md" onClick={(e)=>{ }}>
+                <Button variant="contained" className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md" onClick={handleUpdate}>
                   Edit Changes
                 </Button>
               </div>

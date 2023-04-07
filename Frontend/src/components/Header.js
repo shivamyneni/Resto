@@ -1,18 +1,16 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {InputAdornment, Input} from '@material-ui/core'
 import SearchIcon from '@mui/icons-material/SearchOutlined'
-import { getAuth } from 'firebase/auth';
-import { Button } from '@mui/material';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import ChatIcon from '@mui/icons-material/Chat';
-import UnreadChatIcon from '@mui/icons-material/MarkUnreadChatAlt';
 
 export default function NavBar(props) {
     const auth = getAuth();
-    const user = auth.currentUser;
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const tabstate = useSelector((state) => state.currentTab)
     const {activeTab} = tabstate
@@ -24,8 +22,12 @@ export default function NavBar(props) {
     useEffect(() => {
         const path = history.pathname.slice(1);
         const homeRoute = path.split('/')[0];
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+          });
         dispatch({ type: "changeTab", payload: homeRoute })
-    }, [dispatch, history.pathname,user])
+        return () => unsubscribe();
+    }, [dispatch, history.pathname,user,auth])
 
     const runSearch = (query) => navigate(`/uservenues/${query}`);
 
