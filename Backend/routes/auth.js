@@ -111,9 +111,7 @@ router.put("/userupdate/:uid",async (req,res)=>{
     const {email, name, phone, city} = req.body
     try{
         const updated = await User.findOneAndUpdate({uid:req.params.uid},
-            {
-            email,name,city,phone
-            },
+            req.body,
             {
                 new: true
             });
