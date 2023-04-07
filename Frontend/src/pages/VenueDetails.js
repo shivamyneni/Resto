@@ -10,6 +10,7 @@ export default function VenueDetails() {
     const navigate = useNavigate();
     const [venue, setVenue] = useState([])
     const [address, setAddress]=useState([])
+    const [info, setInfo] = useState("")
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
@@ -18,6 +19,7 @@ export default function VenueDetails() {
         axios.get(`/venues/${id}/`).then(res => {
             setVenue(res.data['venue'][0]['name'])
             setAddress(res.data['venue'][0]['address'])
+            setInfo(res.data['venue'][0]['info'])
             setSports(res.data['venue'][0]['sports'].join(', '))
             setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
             if (res.data.error) {
@@ -49,7 +51,14 @@ export default function VenueDetails() {
         <Header />
         <div className='m-4'>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
-            <p className='mb-4'>{venue}</p>
+            <div className='mb-4'>
+                <strong>Venue: </strong>
+                <span>{venue}</span>
+            </div>
+            <div className='mb-4'>
+                <strong>Description: </strong>
+                <span>{info}</span>
+            </div>
             <div className='mb-4'>
                 <strong>Address: </strong>
                 <span>{address}</span>

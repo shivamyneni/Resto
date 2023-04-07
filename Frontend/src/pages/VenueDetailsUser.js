@@ -10,6 +10,7 @@ export default function VenueCustomerDetails() {
     const [venue, setVenue] = useState([])
     const [venueid,setVenueId] = useState([])
     const [address, setAddress]=useState([])
+    const [info, setInfo] = useState("")
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
@@ -27,6 +28,7 @@ export default function VenueCustomerDetails() {
           setVenue(res.data['venue'][0]['name'])
           setVenueId(id)
           setAddress(res.data['venue'][0]['address'])
+          setInfo(res.data['venue'][0]['info'])
           setSports(res.data['venue'][0]['sports'].join(', '))
           setTimeslots(res.data['venue'][0]['timeslots'].join(', '))
           setRating(res.data['venue'][0]['rating'])
@@ -77,7 +79,14 @@ export default function VenueCustomerDetails() {
           <Header />
           <div className='m-4'>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
-            <p className='mb-4'>{venue.info}</p>
+            <div className='mb-4'>
+                <strong>Venue: </strong>
+                <span>{venue}</span>
+            </div>
+            <div className='mb-4'>
+                <strong>Description: </strong>
+                <span>{info}</span>
+            </div>
             <div className='mb-4'>
               <strong>Address: </strong>
               <span>{address}</span>
