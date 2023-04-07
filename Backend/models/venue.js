@@ -8,6 +8,9 @@ const venueSchema = new mongoose.Schema({
     info:{
         type:String
     },
+    ownerId:{
+        type: String,
+    },
     address:{
         type: String
     },

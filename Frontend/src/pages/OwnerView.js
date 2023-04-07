@@ -4,12 +4,20 @@ import axios from 'axios';
 import Header from '../components/Header';
 import VenueCard from '../components/VenueCard';
 import { Backdrop } from '@mui/material';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function OwnerView() {
     const navigate = useNavigate();
     const [venues, setVenues] = useState([])
+    const auth = getAuth();
     useEffect(() => {
-        axios.get("/venues").then(res => {
+        if(auth?.currentUser?.uid){
+            
+        }else{
+            alert("Sign In to Continue")
+            navigate("/signin")
+        }
+        axios.get(`/venues/owner/${auth?.currentUser?.uid}`).then(res => {
             setVenues(res.data['venues'])
             if (res.data.error) {
                 alert(res.data.error)
@@ -19,7 +27,7 @@ export default function OwnerView() {
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
         })
-    }, [])
+    }, [auth])
     return (
     <div>
         <Header />
@@ -33,7 +41,7 @@ export default function OwnerView() {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3' style={{width: '95vw'}}>
                 {
-                    venues.map(value => {
+                    venues?.map(value => {
                         return (
                             <VenueCard 
                             key={value._id} 

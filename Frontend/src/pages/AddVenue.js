@@ -1,20 +1,35 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Accordion, AccordionSummary, Checkbox, AccordionDetails, List, ListItem, ListItemText } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function AddVenue() {
     const navigate = useNavigate();
+    const [user,setUser] = useState('');
     const [venueName, setVenueName] = useState('')
     const [venueDesc, setVenueDesc] = useState('')
     const [venueAddress, setVenueAddress] = useState('')
     const [sports, setSports] = useState([])
     const [timeslots, setTimeslots] = useState([])
+    const auth = getAuth();
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser.uid);
+          });
+        if(!auth?.currentUser?.uid){
+            alert("SignIn to Continue")
+            navigate("/signin")
+        }
+        return () => unsubscribe();
+    },[user])
+    
     const onSubmit = (e) => {
         e.preventDefault()
         axios.post("/venues/addVenue",{
+            ownerId: user,
             name: venueName,
             info: venueDesc,
             address: venueAddress,
