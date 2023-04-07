@@ -92,11 +92,11 @@ export default function VenueCustomerDetails() {
               <span>{address}</span>
             </div>
             <div className='mb-4'>
-              <strong>Sports offered: </strong>
+              <strong>Sports Offered: </strong>
               <span>{sports}</span>
             </div>
             <div className='mb-4'>
-              <strong>Available timeslots: </strong>
+              <strong>Availability: </strong>
               <span>{timeslots}</span>
             </div>
             {/* <button 
@@ -109,7 +109,7 @@ export default function VenueCustomerDetails() {
             {   
               activities.map(value => {
                 return (
-                  <ActivityCard access="user" venueId={venueid} key={value._id} activityId={value._id} name={value.name} timeslot={value.timeslot} availability={value.availability}/>
+                  <ActivityCard access="user" venueId={venueid} key={value._id} activityId={value._id} name={value.name} timeslot={value.timeslot} info={value.info} availability={value.availability}/>
                 )
               })
             }

@@ -11,13 +11,13 @@ export default function VenueCard(props) {
     return (
         <Card className='m-1.5 hover:cursor-pointer' onClick={props.onClick} >
             <CardContent>
-                <Typography>Name: {name}</Typography>
-                <Typography>Description: {description}</Typography>
-                <Typography className='mt-1'>Address:</Typography>
+                <Typography><b>{name}</b></Typography>
+                <Typography>{description}</Typography>
+                {/* <Typography className='mt-1'>Address:</Typography> */}
                 <Typography>{address}</Typography>
-                <Typography className='mt-1'>Sports:</Typography>
+                <Typography className='mt-1'>Sports Offered:</Typography>
                 <Typography>{sports}</Typography>
-                <Typography className='mt-1'>Time Slots:</Typography>
+                <Typography className='mt-1'>Available:</Typography>
                 <Typography>{timeslots}</Typography>
             </CardContent>
         </Card>

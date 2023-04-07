@@ -13,7 +13,6 @@ router.post('/payment-checkout', async (req, res) => {
       metadata:{
         uid : req.body.uid,
         venueName: req.body.venueName,
-        court: req.body.court,
         time: req.body.time
       }
     })

@@ -4,6 +4,7 @@ const router = express.Router({mergeParams:true})
 const mongoose = require('mongoose')
 const Activity = mongoose.model('Activity')
 const Venue = mongoose.model('Venue')
+const { book } = require("../models/bookings");
 
 router.post("/addActivity", (req, res)=>{
     const {name, info,timeslot,availability,chargeable} = req.body
@@ -50,5 +51,16 @@ router.get("/", (req, res) => {
         console.log(err)
     })
 })
+
+router.get("/:activityid", (req,res) => {
+    Activity.find({_id:req.params.activityid})
+    .then((activity) => {
+        if (!activity){
+            return res.status(200).json({"error":"non existing activity"})
+        }
+        return res.status(200).json({"activity":activity})
+    })
+})
+
 
 module.exports = router

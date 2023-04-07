@@ -2,12 +2,20 @@ import React, { useState,useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getAuth } from "firebase/auth";
+import Header from '../components/Header';
+
 
 export default function BookSlot() {
   const { venueid,activityid } = useParams();
+  console.log(activityid)
   const navigate = useNavigate();
   const [selectedTime, setSelectedTime] = useState(0);
   const [venueName,setVenueName] = useState("");
+  const [activityName, setActivityName] = useState("");
+  const [activityInfo, setActivityInfo] = useState("");
+  const [timeslot, setTimeslot] = useState("")
+  const [availability, setAvailability] = useState(0)
+
   const [court, setCourt] = useState('');
   const auth = getAuth();
   const user = auth.currentUser;
@@ -45,7 +53,7 @@ export default function BookSlot() {
   const handleSubmit=(e)=>{
     e.preventDefault();
     if(user){
-    axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:selectedTime,court,uid: user.uid}).then((res)=>{
+    axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:timeslot,uid: user.uid}).then((res)=>{
       if(res.data.url){
         window.location.href = res.data.url;
       }
@@ -67,37 +75,46 @@ export default function BookSlot() {
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
     });
+
+    axios.get(`/venues/${venueid}/activities/${activityid}`).then(res =>{
+      console.log(res.data['activity']);
+      setActivityName(res.data['activity'][0]['name']);
+      setActivityInfo(res.data['activity'][0]['info']);
+      setAvailability(res.data['activity'][0]['availability']);
+      setTimeslot(res.data['activity'][0]['timeslot']);
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+
+
 }, [venueid])
 
   return (
+    <div>
+    <Header />
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold mb-8">Book Slot</h1>
+    <h1 className="text-4xl font-bold mb-8">Book Slot</h1>
+      <div className='m-4'>
+              <div className='mb-4'>
+                  <strong>Activity: </strong>
+                  <span>{activityName}</span>
+              </div>
+              <div className='mb-4'>
+                  <strong>Description: </strong>
+                  <span>{activityInfo}</span>
+              </div>
+              <div className='mb-4'>
+                <strong>Availability: </strong>
+                <span>{availability}</span>
+              </div>
+              <div className='mb-4'>
+                <strong>Timeslot: </strong>
+                <span>{timeslot}</span>
+              </div>
+      </div>
       <form onSubmit={handleSubmit} className="w-2/3 flex flex-col items-center">
-        <div className="mb-6">
-          <label htmlFor="time" className="block text-gray-700 font-bold mb-2">Time:</label>
-          <select
-            id="time"
-            value={selectedTime}
-            onChange={handleTimeChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            {[...Array(24)].map((_, index) => (
-              <option value={index} key={index}>
-                {index}:00 - {index + 1}:00
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-6">
-          <label htmlFor="court" className="block text-gray-700 font-bold mb-2">Court:</label>
-          <input
-            type="text"
-            id="court"
-            value={court}
-            onChange={handleCourtChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
         <div className="mb-6">
           <button
             type="submit"
@@ -105,6 +122,7 @@ export default function BookSlot() {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }
