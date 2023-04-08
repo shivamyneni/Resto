@@ -38,6 +38,21 @@ router.get("/:venueid", (req,res) => {
     })
 })
 
+router.delete("/delete/:venueid", (req, res) => {
+    Venue.findByIdAndDelete({_id:req.params.venueid})
+      .then((venue) => {
+        if (!venue) {
+          return res.status(404).json({ error: "Venue not found" });
+        }
+        return res.status(200).json({ message: "Venue deleted successfully" });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      });
+  });
+
+  
 router.get("/owner/:ownerId", (req, res) => {
     Venue.find({ownerId:req.params.ownerId})
     .then((venues) => {

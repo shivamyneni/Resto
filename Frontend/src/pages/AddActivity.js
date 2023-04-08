@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Checkbox, FormControlLabel} from '@material-ui/core';
 import axios from 'axios';
+import { Accordion, AccordionSummary, Checkbox, Radio, RadioGroup, AccordionDetails, List, ListItem, ListItemText, FormControlLabel } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import moment from 'moment';
+import 'moment-timezone';
 
 export default function AddActivity() {
   const { id } = useParams();
@@ -11,6 +14,8 @@ export default function AddActivity() {
   const [activityInfo, setActivityInfo] = useState('');
   const [timing, setTiming] = useState('');
   const [chargeable, setChargeable] = useState(false)
+  const selectTimeslots = ['09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM','01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'];
+  const formattedTimeslots = selectTimeslots.map(timeslot => moment(timeslot, 'hh:mm A').format('hh:mm A'));
 
   const handleActivityNameChange = (event) => {
     setActivityName(event.target.value);
@@ -86,7 +91,7 @@ export default function AddActivity() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
           />
         </div> */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <label className='block text-gray-700 font-bold mb-2'>Timing:</label>
           <input
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -95,9 +100,31 @@ export default function AddActivity() {
             value={timing}
             onChange={handleTimingChange}
           />
-        </div>
+        </div> */}
+		<Accordion>
+			<AccordionSummary className='m-6' expandIcon={<ExpandMoreIcon />}><b>Time Slot</b></AccordionSummary>
+			<AccordionDetails>
+			<RadioGroup
+				aria-labelledby="demo-controlled-radio-buttons-group"
+				name="controlled-radio-buttons-group"
+				value={timing}
+				onChange={handleTimingChange}
+			>
+				<List>
+					{formattedTimeslots.map(value => {
+						return (
+							<ListItem key={value} className='p-0'>
+								<FormControlLabel value={value} control={<Radio />} label={value} />
+								{/* <ListItemText primary={value}/> */}
+							</ListItem>
+						);
+					})}
+				</List>
+			</RadioGroup>
+			</AccordionDetails>
+		</Accordion>
         <div className="mb-6">
-          <label className='block text-gray-700 font-bold mb-2'>availability:</label>
+          <label className='block text-gray-700 font-bold mb-2'>Capacity:</label>
           <input
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             id='availability'
