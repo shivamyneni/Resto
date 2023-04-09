@@ -44,7 +44,7 @@ export default function VenueCustomerDetails() {
         axios.get(`/uservenues/${id}/useractivities`, {
           venueid: id
         }).then(res => {
-          console.log(res.data['activities'])
+          // console.log(res.data['activities'])
           setActivities(res.data['activities'])
           if (res.data.error) {
             alert(res.data.error)

@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Typography, Button} from '@material-ui/core';
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 export default function ActivityCard(props) {
     const venueId = props.venueId
     const id = props.id
@@ -10,6 +11,8 @@ export default function ActivityCard(props) {
     const availability = props.availability;
     const timeslot = props.timeslot;
     const info = props.info;
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
     const navigate = useNavigate();
 
     const handleRemove=(e)=>{
@@ -18,6 +21,22 @@ export default function ActivityCard(props) {
         .then(response => {
             // handle success
             props.reload()
+        })
+        .catch(error => {
+            // handle error
+            console.log(error.response.data.error);
+        });
+    }
+
+    const handleBooking = (e) =>{
+        e.preventDefault();
+        console.log(userId)
+        axios.post(`/bookings/booknow`,{
+            activityid:id,
+            userId:userId
+        })
+        .then(response => {
+            console.log(response)
         })
         .catch(error => {
             // handle error
@@ -41,14 +60,20 @@ export default function ActivityCard(props) {
                 <Typography className='mt-1'>Availability: {availability}</Typography>
                 <Typography>
                 {access === "user" && (
+                    // <button
+                    // className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
+                    // onClick={e =>
+                    //     navigate(
+                    //     `/uservenues/${venueId}/useractivities/bookslot/${id}`
+                    //     )
+                    // }>
+                    // Book Slot
+                    // </button>
                     <button
                     className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e =>
-                        navigate(
-                        `/uservenues/${venueId}/useractivities/bookslot/${id}`
-                        )
-                    }>
-                    Book Slot
+                    onClick={handleBooking}
+                    >
+                        Book Now
                     </button>
                 )}
                 </Typography>

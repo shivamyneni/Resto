@@ -8,24 +8,28 @@ const bookingSchema = new mongoose.Schema({
     customerId:{
         type:String
     },
+    activityId:{
+        type:String,
+        required:true
+    },
+    bookingDate:{
+        type:Date,
+        required:true
+    },
     paymentIntentId:{
         type:String
     },
     venueName:{
-        type:String,
-        required:true
+        type:String
     },
     court: {
-        type:String,
-        required:true
+        type:String
     },
     time: {
-        type:String,
-        required: true
+        type:String
     },
     payment_status:{
-        type:String,
-        required:true
+        type:String
     }
 })
 
