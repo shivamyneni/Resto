@@ -76,6 +76,7 @@ export default function VenueCustomerDetails() {
     
       return (
         <div>
+          
           <Header />
           <div className='m-4'>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
@@ -99,12 +100,16 @@ export default function VenueCustomerDetails() {
               <strong>Available timeslots: </strong>
               <span>{timeslots}</span>
             </div>
-            {/* <button 
-                className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                onClick={e => navigate(`uservenues/${venueId}/useractivities/bookslot/${activityId}`)}>Book Slot
-            </button> */}
           </div>
-      
+          <div className='m-4'>
+            <strong>Venue Rating: </strong>
+            <span>{rating}</span>
+            <div>
+              {[1, 2, 3, 4, 5].map(star => (
+                <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
+              ))}
+            </div>
+          </div>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
             {   
               activities.map(value => {
@@ -115,15 +120,7 @@ export default function VenueCustomerDetails() {
             }
           </div>
       
-          <div className='m-4'>
-            <strong>Rating: </strong>
-            <span>{rating}</span>
-            <div>
-              {[1, 2, 3, 4, 5].map(star => (
-                <button key={star} className={`text-xl ${star <= rating ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(star)}>★</button>
-              ))}
-            </div>
-          </div>
+          
         </div>
       );      
 }

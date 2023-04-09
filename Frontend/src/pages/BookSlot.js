@@ -1,17 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getAuth } from "firebase/auth";
 
 export default function BookSlot() {
-  const { venueid,activityid } = useParams();
+  const { venueid, activityid } = useParams();
   const navigate = useNavigate();
   const [selectedTime, setSelectedTime] = useState(0);
-  const [venueName,setVenueName] = useState("");
+  const [venueName, setVenueName] = useState("");
   const [court, setCourt] = useState('');
+  const [availableSports, setAvailableSports] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
+
   const handleTimeChange = (event) => {
     setSelectedTime(parseInt(event.target.value));
   };
@@ -20,54 +21,33 @@ export default function BookSlot() {
     setCourt(event.target.value);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios.get(`/uservenues/${venueid}/useractivities/bookslot/${activityid}`, {
-  //     time: selectedTime,
-  //     court,
-  //     venueId: venueid,
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //       if (res.data.error) {
-  //         alert(res.data.error);
-  //       } else {
-  //         navigate(`/venues/${venueid}/useractivities`)
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       console.log(errorCode, errorMessage);
-  //     });
-  // };
-
-  const handleSubmit=(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(user){
-    axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:selectedTime,court,uid: user.uid}).then((res)=>{
-      if(res.data.url){
-        window.location.href = res.data.url;
-      }
-    })
-    .catch((err)=>console.log(err.message));}
-    else{
+    if (user) {
+      axios.post("/stripe/payment-checkout", { venueName, venueid, activityid, time: selectedTime, court, uid: user.uid }).then((res) => {
+        if (res.data.url) {
+          window.location.href = res.data.url;
+        }
+      })
+        .catch((err) => console.log(err.message));
+    } else {
       navigate("/signin")
     }
   };
 
   useEffect(() => {
     axios.get(`/venues/${venueid}/`).then(res => {
-        setVenueName(res.data['venue'][0]['name'])
-        if (res.data.error) {
-            alert(res.data.error)
-        }
+      setVenueName(res.data['venue'][0]['name'])
+      setAvailableSports(res.data['venue'][0]['sports'])
+      if (res.data.error) {
+        alert(res.data.error)
+      }
     }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
     });
-}, [venueid])
+  }, [venueid])
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -90,21 +70,27 @@ export default function BookSlot() {
         </div>
         <div className="mb-6">
           <label htmlFor="court" className="block text-gray-700 font-bold mb-2">Court:</label>
-          <input
-            type="text"
+          <select
             id="court"
             value={court}
             onChange={handleCourtChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
+          >
+            <option value="">Select Court</option>
+            {availableSports.map((sport, index) => (
+              <option value={sport} key={index}>
+                {sport}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-6">
           <button
             type="submit"
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">Confirm Booking
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+           </button>
+         </div>
+       </form>
+      </div>
+   );
 }
