@@ -15,7 +15,8 @@ function UserProfile() {
   const [bookings,setBookings] = useState([]);
   const auth = getAuth();
   const [user, setUser] = useState(null);
-  const bookedDates = [new Date('04-01-2023'), new Date('04-02-2023'), new Date('04-05-2023')];
+  // const bookedDates = [new Date('04-01-2023'), new Date('04-02-2023'), new Date('04-05-2023')];
+  const [bookedDates, setBookedDates] = useState([])
 
   const tileDisabled = ({ date, view }) =>
     view === 'month' && bookedDates.some(bookedDate => bookedDate.getTime() === date.getTime());
@@ -34,6 +35,19 @@ function UserProfile() {
           }
           else{
             setBookings(res.data.bookings)
+            const stringDates = res.data.bookingDates
+            const dateObjects = stringDates.map((dateString) => new Date(dateString));
+            setBookedDates(dateObjects)
+            // const bookArr = res.data.bookings
+            // console.log(bookArr)
+            // const modifiedArr = bookArr.map(obj => {
+            //   return {
+            //     ...obj,
+            //     bookingDate: bookingDate.toLocaleDateString('en-US')
+            //   };
+            // });
+            // setBookings(modifiedArr)
+            // console.log(modifiedArr)
           }
       }).catch((error) => {
           const errorCode = error.code;
@@ -151,9 +165,9 @@ function UserProfile() {
         {
           bookings.map((item)=>
             <Card
-            title={item.venueName}
-            description={item.court}
-            time={item.time}
+            venueName={item.venueName}
+            activityName={item.activityName}
+            bookedDate={item.bookingDate}
           />
           )
         }

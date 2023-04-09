@@ -9,13 +9,14 @@ router.get("/:uid", (req,res) => {
         if (!bookings){
             return res.status(200).json({"error":"non existing venue"})
         }
-        return res.status(200).json({"bookings":bookings})
+        // console.log(bookings)
+        const bookingDates = bookings.map(booking => new Date(booking.bookingDate));
+        return res.status(200).json({"bookings":bookings,"bookingDates":bookingDates})
     })
 })
 
 router.post("/booknow", (req, res) =>{
-    const { activityid, userId } = req.body;
-    console.log("-----------------",activityid)
+    const { venueId, venueName, activityName, activityid, userId } = req.body;
     const date = moment(new Date())
     const myDateString = date.format('YYYY-MM-DD');
     const myDateMoment = moment(myDateString);
@@ -28,6 +29,9 @@ router.post("/booknow", (req, res) =>{
         }
         const newBooking = new Book({
             uid: userId,
+            activityName:activityName,
+            venueName:venueName,
+            venueId:venueId,
             activityId: activityid,
             bookingDate: myDateMoment
         });

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 export default function ActivityCard(props) {
     const venueId = props.venueId
+    const venueName = props.venueName;
     const id = props.id
     const name = props.name;
     const access = props.access;
@@ -32,6 +33,9 @@ export default function ActivityCard(props) {
         e.preventDefault();
         console.log(userId)
         axios.post(`/bookings/booknow`,{
+            venueId:venueId,
+            venueName:venueName,
+            activityName:name,
             activityid:id,
             userId:userId
         })
