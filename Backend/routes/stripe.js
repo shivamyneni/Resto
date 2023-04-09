@@ -13,10 +13,11 @@ router.post('/payment-checkout', async (req, res) => {
       metadata:{
         uid : req.body.uid,
         venueName: req.body.venueName,
-        time: req.body.time
+        activityName:req.body.activityName
+        // time: req.body.time
       }
     })
-    const {venueName,court} = req.body;
+    const {venueName, activityName} = req.body;
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -24,7 +25,7 @@ router.post('/payment-checkout', async (req, res) => {
             currency: 'usd',
             product_data: {
               name: venueName,
-              description: court
+              description: activityName
             },
             unit_amount: 1000,
           },
@@ -40,24 +41,24 @@ router.post('/payment-checkout', async (req, res) => {
     res.send({url: session.url});
   });
 
-const createBooking = async(customer,data)=>{
-  const newBooking = new book({
-    uid: customer.metadata.uid,
-    customerId: data.customer,
-    paymentIntentId: data.payment_intent,
-    venueName:customer.metadata.venueName,
-    court:customer.metadata.court,
-    time:customer.metadata.time,
-    payment_status: data.payment_status
-  });
-  try{
-    const saved = await newBooking.save()
+// const createBooking = async(customer,data)=>{
+//   const newBooking = new book({
+//     uid: customer.metadata.uid,
+//     customerId: data.customer,
+//     paymentIntentId: data.payment_intent,
+//     venueName:customer.metadata.venueName,
+//     court:customer.metadata.court,
+//     time:customer.metadata.time,
+//     payment_status: data.payment_status
+//   });
+//   try{
+//     const saved = await newBooking.save()
 
-    console.log("Processed Order",saved);
-  }catch(err){
-    console.log(err);
-  }
-}
+//     console.log("Processed Order",saved);
+//   }catch(err){
+//     console.log(err);
+//   }
+// }
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 let endpointSecret;
@@ -93,7 +94,7 @@ router.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
     stripe.customers.retrieve(data.customer).then((customer)=>{
       console.log(customer);
       console.log("data:",data);
-      createBooking(customer,data);
+      // createBooking(customer,data);
     }).catch((err)=> console.log(err.message))
   }
 
