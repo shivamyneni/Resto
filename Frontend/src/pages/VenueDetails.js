@@ -6,7 +6,6 @@ import ActivityCard from '../components/ActivityCard';
 
 export default function VenueDetails() {
     const { id }= useParams();
-    // console.log(id)
     const navigate = useNavigate();
     const [venue, setVenue] = useState([])
     const [address, setAddress]=useState([])
@@ -14,7 +13,21 @@ export default function VenueDetails() {
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
-    
+    const handleRemove=()=>{
+        axios.delete(`/venues/delete/${id}`)
+        .then(response => {
+            // handle success
+            navigate("/venues")
+            console.log(response.data.message);
+        })
+        .catch(error => {
+            // handle error
+            console.log(error.response.data.error);
+        });
+    }
+    const reload=()=>{
+        window.location.reload();
+    }
     useEffect(() => {
         axios.get(`/venues/${id}/`).then(res => {
             setVenue(res.data['venue'][0]['name'])
@@ -71,16 +84,21 @@ export default function VenueDetails() {
                 <strong>Availability: </strong>
                 <span>{timeslots}</span>
             </div>
-                <button 
-                    className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={e => navigate(`/venues/${id}/activities/addActivity`)}>Add Activity
-                </button>
+            <div className='flex flex-col items-center'>
+            <div className='flex m-2  justify-between'>
+                <button onClick={handleRemove} className='bg-red-500 hover:bg-red-700 text-white font-bold  rounded p-2 ml-auto'>Remove</button>
+            </div>
+            <button 
+                className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded'
+                onClick={e => navigate(`/venues/${id}/activities/addActivity`)}>Add Activity
+            </button>
+            </div>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
                 {
                     activities.map(value => {
                         return (
-                            <ActivityCard access="owner" key={value._id} id={value._id} name={value.name} timeslot={value.timeslot} info={value.info} availability={value.availability}/>
+                            <ActivityCard access="owner" reload={()=>reload()} venueId={id} key={value._id} id={value._id} name={value.name} info={value.info} timeslot={value.timeslot} availability={value.availability}/>
                         )
                     })
                 }

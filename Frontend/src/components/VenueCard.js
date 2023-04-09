@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, CardContent, Typography } from '@material-ui/core';
+import axios from 'axios';
 
 export default function VenueCard(props) {
     const name = props.name;
@@ -8,8 +9,9 @@ export default function VenueCard(props) {
     const sports = props?.sports?.join(', ');
     const timeslots = props.timeslots == undefined ? [] : props.timeslots.join(', ');
 
+
     return (
-        <Card className='m-1.5 hover:cursor-pointer' onClick={props.onClick} >
+        <Card className='m-1.5 hover:cursor-pointer flex flex-col w-full' onClick={props.onClick}>
             <CardContent>
                 <Typography><b>{name}</b></Typography>
                 <Typography>{description}</Typography>
@@ -20,6 +22,6 @@ export default function VenueCard(props) {
                 <Typography className='mt-1'>Available:</Typography>
                 <Typography>{timeslots}</Typography>
             </CardContent>
-        </Card>
+</Card>
     );
 }

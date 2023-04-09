@@ -10,6 +10,7 @@ export default function OwnerView() {
     const navigate = useNavigate();
     const [venues, setVenues] = useState([])
     const auth = getAuth();
+
     useEffect(() => {
         if(auth?.currentUser?.uid){
             
@@ -44,6 +45,7 @@ export default function OwnerView() {
                     venues?.map(value => {
                         return (
                             <VenueCard 
+                            owner={true}
                             key={value._id} 
                             id={value._id} 
                             name={value.name} 
