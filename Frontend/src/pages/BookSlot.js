@@ -10,6 +10,7 @@ export default function BookSlot() {
   const [venueName, setVenueName] = useState("");
   const [court, setCourt] = useState('');
   const [availableSports, setAvailableSports] = useState([]);
+  const [timeslots, setTimeslots] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -39,6 +40,7 @@ export default function BookSlot() {
     axios.get(`/venues/${venueid}/`).then(res => {
       setVenueName(res.data['venue'][0]['name'])
       setAvailableSports(res.data['venue'][0]['sports'])
+      setTimeslots(res.data['venue'][0]['timeslots'])
       if (res.data.error) {
         alert(res.data.error)
       }
@@ -60,10 +62,11 @@ export default function BookSlot() {
             value={selectedTime}
             onChange={handleTimeChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            {[...Array(24)].map((_, index) => (
-              <option value={index} key={index}>
-                {index}:00 - {index + 1}:00
+          > {console.log(timeslots.slice(0,timeslots.length-1))}
+            
+            {timeslots.slice(0,timeslots.length-1).map((i, index) => (
+              <option value={i} key={i}>
+                {i}:00 - {parseInt(i)+1}:00
               </option>
             ))}
           </select>

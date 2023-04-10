@@ -100,6 +100,16 @@ export default function VenueCustomerDetails() {
               <strong>Available timeslots: </strong>
               <span>{timeslots}</span>
             </div>
+            <button
+                className='text-white font-bold py-2 px-4 rounded bg-purple-600 hover:bg-purple-700 '
+                onClick={(e) =>
+                  navigate(
+                    `/uservenues/${venueid}/useractivities/bookslot/${id}`
+                  )
+                }
+              >
+                Book Slot
+              </button>
           </div>
           <div className='m-4'>
             <strong>Venue Rating: </strong>

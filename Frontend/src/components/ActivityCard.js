@@ -60,8 +60,8 @@ export default function ActivityCard(props) {
                   </button>
                 ))}
               </div>
-              <Button
-                className='bg-purple-600 hover:bg-purple-700 text-black font-bold py-2 px-4 rounded'
+              <button
+                className='text-white font-bold py-2 px-4 rounded bg-purple-600 hover:bg-purple-700 '
                 onClick={(e) =>
                   navigate(
                     `/uservenues/${venueId}/useractivities/bookslot/${id}`
@@ -69,7 +69,7 @@ export default function ActivityCard(props) {
                 }
               >
                 Book Slot
-              </Button>
+              </button>
             </>
           )}
         </div>
