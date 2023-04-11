@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getAuth } from "firebase/auth";
@@ -17,9 +17,11 @@ export default function BookSlot() {
   const [availability, setAvailability] = useState(0)
 
   const [court, setCourt] = useState('');
+  const [availableSports, setAvailableSports] = useState([]);
+  const [timeslots, setTimeslots] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
+
   const handleTimeChange = (event) => {
     setSelectedTime(parseInt(event.target.value));
   };
@@ -28,29 +30,7 @@ export default function BookSlot() {
     setCourt(event.target.value);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios.get(`/uservenues/${venueid}/useractivities/bookslot/${activityid}`, {
-  //     time: selectedTime,
-  //     court,
-  //     venueId: venueid,
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //       if (res.data.error) {
-  //         alert(res.data.error);
-  //       } else {
-  //         navigate(`/venues/${venueid}/useractivities`)
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       console.log(errorCode, errorMessage);
-  //     });
-  // };
-
-  const handleSubmit=(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     if(user){
     axios.post("/stripe/payment-checkout",{venueName,venueid,activityid,time:timeslot,uid: user.uid}).then((res)=>{
@@ -66,14 +46,16 @@ export default function BookSlot() {
 
   useEffect(() => {
     axios.get(`/venues/${venueid}/`).then(res => {
-        setVenueName(res.data['venue'][0]['name'])
-        if (res.data.error) {
-            alert(res.data.error)
-        }
+      setVenueName(res.data['venue'][0]['name'])
+      setAvailableSports(res.data['venue'][0]['sports'])
+      setTimeslots(res.data['venue'][0]['timeslots'])
+      if (res.data.error) {
+        alert(res.data.error)
+      }
     }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
     });
 
     axios.get(`/venues/${venueid}/activities/${activityid}`).then(res =>{
