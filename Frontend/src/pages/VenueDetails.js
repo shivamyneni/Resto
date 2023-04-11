@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ActivityCard from '../components/ActivityCard';
+import VenueActivities from '../components/VenueActivities';
+import VenueBookings from '../components/VenueBookings';
 
 export default function VenueDetails() {
     const { id }= useParams();
@@ -13,6 +15,8 @@ export default function VenueDetails() {
     const [sports, setSports] = useState("")
     const [timeslots, setTimeslots] = useState("")
     const [activities, setActivities] = useState([])
+    const [bookings,setBookings] = useState([]);
+    const [activeTab,setActiveTab] = useState("activities");
     const handleRemove=()=>{
         axios.delete(`/venues/delete/${id}`)
         .then(response => {
@@ -29,6 +33,19 @@ export default function VenueDetails() {
         window.location.reload();
     }
     useEffect(() => {
+        axios.get(`/bookings/venues/${id}`).then(res=>{
+            if (res.data.error) {
+                alert(res.data.error)
+            }
+            else{
+              setBookings(res.data.bookings)
+              console.log("wde",res.data.bookings);
+            }
+        }).catch((error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+        })
         axios.get(`/venues/${id}/`).then(res => {
             setVenue(res.data['venue'][0]['name'])
             setAddress(res.data['venue'][0]['address'])
@@ -62,7 +79,7 @@ export default function VenueDetails() {
     return (
         <div>
         <Header />
-        <div className='m-4'>
+        <div className=''>
             <h1 className='text-xl font-bold mb-2'>{venue.name}</h1>
             <div className='mb-4'>
                 <strong>Venue: </strong>
@@ -93,16 +110,22 @@ export default function VenueDetails() {
                 onClick={e => navigate(`/venues/${id}/activities/addActivity`)}>Add Activity
             </button>
             </div>
+            <div className="h-10 mt-2 w-screen border border-black border-l-0 rounded-t-lg">
+                <div className="flex justify-around items-center h-full px-4">
+                    <button onClick={()=>{setActiveTab("bookings")}} className="text-gray-700 font-medium hover:text-gray-900">
+                    Bookings
+                    </button>
+                    <button onClick={()=>{setActiveTab("activities")}}  className="text-gray-700 font-medium hover:text-gray-900">
+                    Activities
+                    </button>
+                </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-screen'>
-                {
-                    activities.map(value => {
-                        return (
-                            <ActivityCard access="owner" reload={()=>reload()} venueId={id} venueName={venue} key={value._id} id={value._id} name={value.name} info={value.info} timeslot={value.timeslot} availability={value.availability}/>
-                        )
-                    })
-                }
             </div>
+            {
+                activeTab=="activities" ? 
+                <VenueActivities activities={activities} reload={()=>reload()} id={id} venue={venue}  /> :
+                <VenueBookings bookings={bookings} />
+            }
         </div>
     );
 }

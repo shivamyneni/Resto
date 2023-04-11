@@ -15,6 +15,18 @@ router.get("/:uid", (req,res) => {
     })
 })
 
+router.get("/venues/:venueid", (req,res) => {
+    Book.find({venueId:req.params.venueid})
+    .then((bookings) => {
+        if (!bookings){
+            return res.status(200).json({"error":"non existing venue"})
+        }
+        // console.log(bookings)
+        const bookingDates = bookings.map(booking => new Date(booking.bookingDate));
+        return res.status(200).json({"bookings":bookings,"bookingDates":bookingDates})
+    })
+})
+
 router.post("/booknow", (req, res) =>{
     const { venueId, venueName, activityName, activityid, userId } = req.body;
     const date = moment(new Date())

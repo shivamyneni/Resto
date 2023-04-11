@@ -13,7 +13,7 @@ export default function ActivityCard(props) {
     const timeslot = props.timeslot;
     const info = props.info;
     const auth = getAuth();
-    const userId = auth.currentUser.uid;
+    const userId = auth?.currentUser?.uid;
     const navigate = useNavigate();
 
     const handleRemove=(e)=>{
