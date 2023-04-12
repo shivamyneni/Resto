@@ -40,7 +40,20 @@ export default function ActivityCard(props) {
             userId:userId
         })
         .then(response => {
-            console.log(response)
+            console.log(response.data)
+            const bookingstatus = response.data
+            if ('error' in bookingstatus){
+                console.log('booking already exists')
+            }
+            else{
+                axios.post("/stripe/payment-checkout",{venueName:venueName,venueId:venueId,activityName:name,activityId:id,uid:userId})
+                .then((res)=>{
+                    if(res.data.url){
+                      window.location.href = res.data.url;
+                    }
+                })
+                .catch((err)=>console.log(err.message))
+            }
         })
         .catch(error => {
             // handle error

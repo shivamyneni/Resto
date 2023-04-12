@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Book = mongoose.model("bookings")
+const Activity = mongoose.model('Activity')
 const moment = require('moment');
 router.get("/:uid", (req,res) => {
     Book.find({uid:req.params.uid})
@@ -39,6 +40,16 @@ router.post("/booknow", (req, res) =>{
         if(booking.length > 0){
             return res.status(200).json({"error":"booking exists"})
         }
+        Activity.findOneAndUpdate(
+            {_id:activityid},
+            { $inc: { availability: -1 } },
+            function(err, result) {
+                if (err) {
+                  console.log(err);
+                }
+                console.log(result);
+            }
+        )
         const newBooking = new Book({
             uid: userId,
             activityName:activityName,
