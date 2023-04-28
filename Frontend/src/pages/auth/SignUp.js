@@ -70,34 +70,31 @@ export default function SignUp() {
             createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 // send verification mail.
-              sendEmailVerification(auth.currentUser)
-                .then((res)=>{
-                    console.log(res);
-                })
-            navigate("/email-verification")
+            //   sendEmailVerification(userCredential.user.uid)
+              axios.post("/signup",{
+                email:email,
+                name:name,
+                password:password,
+                uid: userCredential.user.uid,
+                logintype:"email"
+            }).then(res => {
+                console.log(res)
+                if(res.data.error){
+                    alert(res.data.error)
+                }
+                else{
+                    navigate("/signin")
+                }
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            })
             })
             .catch(alert);
         e.preventDefault()
-        axios.post("/signup",{
-            email:email,
-            name:name,
-            password:password,
-            uid: auth.currentUser.uid,
-            logintype:"email"
-        }).then(res => {
-            console.log(res)
-            if(res.data.error){
-                alert(res.data.error)
-            }
-            else{
-                navigate("/signin")
-            }
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-        })}
+       }
         else{
             alert("Password should be atleast 6 characters")
         }
@@ -180,22 +177,14 @@ export default function SignUp() {
                         </Link>
                     </p>
                 </form> 
-                <div class="inline-flex items-center justify-center w-full">
+                {/* <div class="inline-flex items-center justify-center w-full">
                     <hr class="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
                     <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
                         <text>OR</text>
                     </div>
                 </div>
                 <div className='flex flex-col items-center justify-around'>
-                    <button
-                        className='bg-blue-800 text-white py-2 px-4 rounded-md hover:bg-blue-900 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-50'
-                        onClick={facebookSignIn}
-                    >
-                        <div className='flex justify-around'>
-                            <text>Continue with Facebook</text>
-                            <img src="https://img.icons8.com/material/24/ffffff/facebook-f.png"/>
-                        </div>
-                    </button>
+
                     <button
                         className='bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50 mt-4'
                         onClick={googleSignIn}
@@ -205,7 +194,7 @@ export default function SignUp() {
                             <img src="https://img.icons8.com/material/24/ffffff/google-logo--v1.png"/>
                         </div>
                     </button>
-                </div>
+                </div> */}
             </div>
     </div>
     )

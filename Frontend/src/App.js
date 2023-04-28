@@ -26,7 +26,8 @@ export default function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={ <Dashboard/> } />
+        <Route exact path="/" element={ <SignIn/> } />
+        <Route path="/getMovies" element={ <Dashboard/> } />
         <Route path="signin" element={ <SignIn/> } />
         <Route path="signup" element={ <SignUp/> } />
         <Route path="contact" element={ <Contact/> } />

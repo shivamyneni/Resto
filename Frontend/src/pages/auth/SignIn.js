@@ -164,7 +164,7 @@ const SignIn = () => {
                     </div>
                 </div>
                 <div className='flex flex-col items-center justify-around'>
-                    <button
+                    {/* <button
                         className='bg-blue-800 text-white py-2 px-4 rounded-md hover:bg-blue-900 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-50'
                         onClick={facebookSignIn}
                     >
@@ -172,9 +172,9 @@ const SignIn = () => {
                             <text>Continue with Facebook</text>
                             <img src="https://img.icons8.com/material/24/ffffff/facebook-f.png"/>
                         </div>
-                    </button>
+                    </button> */}
                 
-                    <button
+                    {/* <button
                         className='bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50 mt-4'
                         onClick={googleSignIn}
                     >
@@ -182,7 +182,7 @@ const SignIn = () => {
                             <text>Continue with Google</text>
                             <img src="https://img.icons8.com/material/24/ffffff/google-logo--v1.png"/>
                         </div>
-                    </button>
+                    </button> */}
                 </div>
             </div>                    
         </div>

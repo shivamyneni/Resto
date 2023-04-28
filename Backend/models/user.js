@@ -14,18 +14,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String
     },
-    isOwner:{
-        type: Boolean
-    },
-    phone:{
-        type: String
-    },
-    city:{
-        type: String
-    },
-    intrests:{
-        type: [String]
-    },
+   
     logintype:{
         type: String
     }
