@@ -1,26 +1,22 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required: true
-    },
-   directorid:{
-        type: String,
-        required: true
-   },
-   posterUrl:{
+  name: {
     type: String,
-    required: true
-   },
-   ratings:{
+  },
+  directorname: {
+    type: String,
+  },
+  posterUrl: {
+    type: String,
+  },
+  ratings: {
     type: [String],
-   },
-   description:{
+  },
+  description: {
     type: String,
-   },
-   favouriteCount:{type:Number},
-   genre:{type:[String]},
-
-})
-mongoose.model("Movies",movieSchema)
+  },
+  favouriteCount: { type: Number },
+  genre: { type: [String] },
+});
+mongoose.model("Movies", movieSchema);

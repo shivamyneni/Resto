@@ -13,57 +13,57 @@ export default function SignUp() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('');
     const [confirmPassword,setConfirmPassword]=useState('');
-    const googleSignIn=()=>{
-        signInWithPopup(auth, googleprovider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                socialSignup(user.email,user.uid)
-                navigate("/user-info")
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
-    }
-    const facebookSignIn=()=>{
-        signInWithPopup(auth, facebookprovider)
-        .then((result) => {
-            const user = result.user;
-            const credential = FacebookAuthProvider.credentialFromResult(result);
-            const accessToken = credential.accessToken;
-            socialSignup(user.email,user.uid)
-            navigate("/user-info")
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = FacebookAuthProvider.credentialFromError(error);
-        });
-    }
-    const socialSignup = (email,uid) => {
-        axios.post("/signup",{
-            email:email,
-            logintype:"social",
-            uid
-        }).then(res => {
-            console.log(res)
-            if(res.data.error){
-                alert(res.data.error)
-            }
-            else{
-                navigate("/user-info")
-            }
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-        });
-    }
+    // const googleSignIn=()=>{
+    //     signInWithPopup(auth, googleprovider)
+    //         .then((result) => {
+    //             const credential = GoogleAuthProvider.credentialFromResult(result);
+    //             const token = credential.accessToken;
+    //             const user = result.user;
+    //             socialSignup(user.email,user.uid)
+    //             navigate("/user-info")
+    //         }).catch((error) => {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             const email = error.customData.email;
+    //             const credential = GoogleAuthProvider.credentialFromError(error);
+    //         });
+    // }
+    // const facebookSignIn=()=>{
+    //     signInWithPopup(auth, facebookprovider)
+    //     .then((result) => {
+    //         const user = result.user;
+    //         const credential = FacebookAuthProvider.credentialFromResult(result);
+    //         const accessToken = credential.accessToken;
+    //         socialSignup(user.email,user.uid)
+    //         navigate("/user-info")
+    //     })
+    //     .catch((error) => {
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         const email = error.customData.email;
+    //         const credential = FacebookAuthProvider.credentialFromError(error);
+    //     });
+    // }
+    // const socialSignup = (email,uid) => {
+    //     axios.post("/signup",{
+    //         email:email,
+    //         logintype:"social",
+    //         uid
+    //     }).then(res => {
+    //         console.log(res)
+    //         if(res.data.error){
+    //             alert(res.data.error)
+    //         }
+    //         else{
+    //             navigate("/user-info")
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         console.log(errorCode, errorMessage);
+    //     });
+    // }
     const onSubmit = (e) => {
         // window.location.href='/user-info'
         if(password.length>5){
@@ -83,7 +83,7 @@ export default function SignUp() {
                     alert(res.data.error)
                 }
                 else{
-                    navigate("/signin")
+                    navigate("/venues")
                 }
             })
             .catch((error) => {

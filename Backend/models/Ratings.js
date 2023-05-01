@@ -1,19 +1,16 @@
-const  mangoose = require('mongoose')
+const mangoose = require("mongoose");
 
 const ratingSchema = new mangoose.Schema({
-    movieid:{
-        type: String,
-        required: true
-    },
-    userid:{
-        type: String,
-        required: true
+  moviename: {
+    type: String,
+  },
+  ratingid: { type: String },
+  userid: {
+    type: String,
+  },
+  rating: {
+    type: Number,
+  },
+});
 
-    },
-    rating:{
-        type: Number,
-        required: true
-    }
-})
-
-mangoose.model("Ratings",ratingSchema)
+mangoose.model("Ratings", ratingSchema);

@@ -1,14 +1,14 @@
-const mangoose = require('mongoose')    
+const mangoose = require("mongoose");
 
 const watchlistSchema = new mangoose.Schema({
-    userid:{
-        type: String,
-        required: true
-    },
-    movieid:{
-        type: String,
-        required: true
-    },
-})
+  userid: {
+    type: String,
+    required: true,
+  },
+  moviename: {
+    type: String,
+    required: true,
+  },
+});
 
-mangoose.model("Watchlist",watchlistSchema)
+mangoose.model("Watchlist", watchlistSchema);
