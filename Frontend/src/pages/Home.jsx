@@ -70,7 +70,31 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row bg-white w-1/3 justify-end ">
+          <div className="flex flex-row bg-white w-[50%] justify-end ">
+            <button
+              onClick={() => {
+                navigate(`/restaurants/query1`);
+              }}
+              className="w-fit h-fit bg-[#2E8B57] ml-[3px] text-white rounded-md  px-[20px] py-[10px] font-bold font-Pathway"
+            >
+              Query1
+            </button>
+            <button
+              onClick={() => {
+                navigate(`/restaurants/query2`);
+              }}
+              className="w-fit h-fit bg-[#2E8B57] ml-[3px] text-white rounded-md  px-[20px] py-[10px] font-bold font-Pathway"
+            >
+              Query2
+            </button>
+            <button
+              onClick={() => {
+                navigate(`/restaurants/query3`);
+              }}
+              className="w-fit h-fit bg-[#2E8B57] ml-[3px] text-white rounded-md  px-[20px] py-[10px] font-bold font-Pathway"
+            >
+              Query3
+            </button>
             <img
               src={watchlisted}
               className="w-[30px] h-[30px] ml-[8px]"

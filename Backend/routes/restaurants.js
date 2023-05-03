@@ -63,16 +63,15 @@ router.post("/update", (req, res) => {
     return res.status(200).json({ error: "please send all data" });
   }
   Restaurants.findOneAndUpdate(
-    { name: name, locationname: locationname },
+    { name: req.body.name, locationname: req.body.locationname },
     {
-      $set: {
-        name: name,
-        locationname: locationname,
-        posterUrl: posterUrl,
-        cuisine: cuisine,
-        description: description,
-      },
+      name: req.body.name,
+      locationname: req.body.locationname,
+      posterUrl: req.body.posterUrl,
+      cuisine: req.body.cuisine,
+      description: req.body.description,
     },
+
     { new: true }
   )
     .then((restaurant) => {
