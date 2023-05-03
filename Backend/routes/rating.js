@@ -21,4 +21,17 @@ router.get("/:ratingid", (req, res) => {
     });
 });
 
+router.delete("/:ratingid", (req, res) => {
+  Rating.findOneAndDelete({ ratingid: req.params.ratingid })
+    .then((rating) => {
+      if (!rating) {
+        return res.status(200).json({ 404: "rating not available" });
+      }
+
+      return res.send(rating);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 module.exports = router;

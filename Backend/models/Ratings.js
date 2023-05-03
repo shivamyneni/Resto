@@ -11,7 +11,7 @@ const ratingSchema = new mangoose.Schema({
   rating: {
     type: Number,
   },
-  review: {
+  reviews: {
     type: String,
   },
 });

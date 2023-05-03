@@ -15,7 +15,7 @@ require("./models/user");
 // require("./models/activity")
 require("./models/Restaurants");
 require("./models/Locations");
-require("./models/Watchlist");
+require("./models/Favourite");
 require("./models/Ratings");
 const stripe = mongoose.connection.on("connected", () => {
   console.log("connected to mongodb");
@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 //defining routes
 app.use("/restaurants", require("./routes/restaurants"));
-app.use("/watchlist", require("./routes/watchlist"));
+app.use("/favourite", require("./routes/favourite"));
 app.use("/locations", require("./routes/locations"));
 app.use("/rating", require("./routes/rating"));
 app.use(require("./routes/auth"));

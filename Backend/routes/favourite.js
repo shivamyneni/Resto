@@ -2,17 +2,17 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const mongoose = require("mongoose");
-const Watchlist = mongoose.model("Watchlist");
+const Favourite = mongoose.model("Favourite");
 
 router.get("/", (req, res) => {
   res.send(req.body.userid);
-  Watchlist.find({ userid: req.body.userid })
-    .then((watchlist) => {
-      if (!watchlist) {
-        return res.status(200).json({ 404: "watchlist not available" });
+  Favourite.find({ userid: req.body.userid })
+    .then((favourite) => {
+      if (!favourite) {
+        return res.status(200).json({ 404: "favourite not available" });
       }
-      console.log(watchlist);
-      return res.send({ watchlist: watchlist });
+      console.log(favourite);
+      return res.send({ favourite: favourite });
     })
     .catch((err) => {
       console.log(err);
@@ -21,13 +21,13 @@ router.get("/", (req, res) => {
 
 router.get("/:userid", (req, res) => {
   //res.send(req.body.userid);
-  Watchlist.find({ userid: req.params.userid })
-    .then((watchlist) => {
-      if (!watchlist) {
-        return res.status(200).json({ 404: "watchlist not available" });
+  Favourite.find({ userid: req.params.userid })
+    .then((favourite) => {
+      if (!favourite) {
+        return res.status(200).json({ 404: "favourite not available" });
       }
-      console.log(watchlist);
-      return res.send({ watchlist: watchlist });
+      console.log(favourite);
+      return res.send({ favourite: favourite });
     })
     .catch((err) => {
       console.log(err);
@@ -43,22 +43,22 @@ router.post("/add", (req, res) => {
       restaurantname: restaurantname,
     });
   }
-  Watchlist.findOne({ userid: userid, restaurantname: restaurantname })
-    .then((savedwatchlist) => {
-      if (savedwatchlist) {
-        console.log(savedwatchlist);
+  Favourite.findOne({ userid: userid, restaurantname: restaurantname })
+    .then((savedfavourite) => {
+      if (savedfavourite) {
+        console.log(savedfavourite);
         return res.status(200).json({ error: "restaurant already added" });
       }
-      const watchlist = new Watchlist({
+      const favourite = new Favourite({
         userid: userid,
         restaurantname: restaurantname,
       });
-      watchlist
+      favourite
         .save()
-        .then((watchlist) => {
+        .then((favourite) => {
           return res
             .status(200)
-            .json({ message: "restaurant added to watchlist" });
+            .json({ message: "restaurant added to favourite" });
         })
         .catch((err) => {
           console.log(err);
@@ -70,22 +70,22 @@ router.post("/add", (req, res) => {
 });
 
 router.delete("/delete/", (req, res) => {
-  Watchlist.find({
+  Favourite.find({
     userid: req.body.userid,
     restaurantname: req.body.restaurantname,
   })
-    .then((watchlist) => {
-      if (!watchlist) {
-        return res.status(200).json({ error: "restaurant not in watchlist" });
+    .then((favourite) => {
+      if (!favourite) {
+        return res.status(200).json({ error: "restaurant not in favourite" });
       }
-      Watchlist.deleteOne({
+      Favourite.deleteOne({
         userid: req.body.userid,
         restaurantname: req.body.restaurantname,
       })
-        .then((watchlist) => {
+        .then((favourite) => {
           return res
             .status(200)
-            .json({ message: "restaurant removed from watchlist" });
+            .json({ message: "restaurant removed from favourite" });
         })
         .catch((err) => {
           console.log(err);

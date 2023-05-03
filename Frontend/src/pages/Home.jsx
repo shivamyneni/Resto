@@ -75,7 +75,7 @@ const Home = () => {
               src={watchlisted}
               className="w-[30px] h-[30px] ml-[8px]"
               onClick={() =>
-                navigate(`/watchlist/${getAuth().currentUser?.uid}`)
+                navigate(`/favourite/${getAuth().currentUser?.uid}`)
               }
             />
 

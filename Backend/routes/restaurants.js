@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
 
 const Restaurants = mongoose.model("Restaurants");
 //const Locations = mongoose.model("Locations");
-const Watchlist = mongoose.model("Watchlist");
+const Favourite = mongoose.model("Favourite");
 const Ratings = mongoose.model("Ratings");
+const User = mongoose.model("User");
 const Locations = mongoose.model("Locations");
 
 router.get("/", (req, res) => {
@@ -186,13 +187,13 @@ router.delete("/delete", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-  Watchlist.findOne({ userid: userid, restaurantname: name })
-    .then((watchlist) => {
-      if (!watchlist) {
+  Favourite.findOne({ userid: userid, restaurantname: name })
+    .then((favourite) => {
+      if (!favourite) {
         //return res.status(200).json({ error: "restaurant not available" });
       }
-      Watchlist.deleteOne({ userid: userid, restaurantname: name })
-        .then((watchlist) => {
+      Favourite.deleteOne({ userid: userid, restaurantname: name })
+        .then((favourite) => {
           //return res.status(200).json({ message: "restaurant deleted" });
         })
         .catch((err) => {
@@ -221,8 +222,8 @@ router.delete("/delete", (req, res) => {
 });
 
 router.post("/add/rating", (req, res) => {
-  const { name, userid, rating } = req.body;
-  if (!name || !userid || !rating) {
+  const { name, userid, rating, reviews } = req.body;
+  if (!name || !userid || !rating || !reviews) {
     return res.status(200).json({ error: "please send all data" });
   }
   Restaurants.findOne({ name: name })
@@ -232,16 +233,17 @@ router.post("/add/rating", (req, res) => {
       }
       Ratings.findOneAndUpdate(
         { userid: userid, restaurantname: name },
-        { rating: req.body.rating },
+        { rating: req.body.rating, reviews: req.body.reviews },
         { new: true }
       ).then((rating) => {
         if (rating) {
-          //return res.status(200).json({ message: "rating updated" });
+          return res.status(200).json({ message: "rating updated" });
         } else {
           const rating = new Ratings({
             userid: userid,
             restaurantname: name,
             rating: req.body.rating,
+            reviews: req.body.reviews,
             ratingid: `${userid}${name}`,
           });
           rating.save();
@@ -251,12 +253,12 @@ router.post("/add/rating", (req, res) => {
         restaurant.ratings.push(`${userid}${name}`);
         restaurant.save();
       } else {
-        restaurant.ratings.forEach((element) => {
-          if (element != `${userid}${name}`) {
-            restaurant.ratings.push(`${userid}${name}`);
-            restaurant.save();
-          }
-        });
+        // restaurant.ratings.forEach((element) => {
+        //   if (element != `${userid}${name}`) {
+        //     restaurant.ratings.push(`${userid}${name}`);
+        //     restaurant.save();
+        //   }
+        // });
       }
     })
     .then((restaurant) => {
@@ -279,7 +281,7 @@ router.post("/add/rating", (req, res) => {
       });
     })
     .then((updatedRestaurant) => {
-      return res.status(200).json({ message: "rating added" });
+      //return res.status(200).json({ message: "rating added" });
     })
     .catch((error) => {
       console.error(`Error updating restaurant overall rating: ${error}`);
@@ -293,6 +295,33 @@ router.get("/ratings/:name", (req, res) => {
         return res.status(200).json({ error: "restaurant not available" });
       }
       return res.status(200).json({ ratings: restaurant.ratings });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/rating/:ratingid", (req, res) => {
+  Ratings.find({ ratingid: req.params.ratingid })
+    .then((rating) => {
+      if (!rating) {
+        return res.status(200).json({ 404: "rating not available" });
+      }
+
+      return res.send(rating[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+router.delete("/rating/:ratingid", (req, res) => {
+  Ratings.findOneAndDelete({ ratingid: req.params.ratingid })
+    .then((rating) => {
+      if (!rating) {
+        return res.status(200).json({ 404: "rating not available" });
+      }
+
+      return res.send(rating);
     })
     .catch((err) => {
       console.log(err);
@@ -316,11 +345,7 @@ router.post("/:name/updateOverallRating", (req, res) => {
         { new: true } // Return the updated document
       );
     })
-    // .then((updatedRestaurant) => {
-    //   console.log(
-    //     `Updated restaurant ${updatedRestaurant.name} with overall rating ${updatedRestaurant.overallrating}`
-    //   );
-    // })
+
     .catch((error) => {
       console.error(`Error updating restaurant overall rating: ${error}`);
     });
@@ -367,48 +392,97 @@ router.post("/:name/updateOverallRating", (req, res) => {
 //     });
 // });
 
-router.get("/complex1", (req, res) => {
-  // Find all the restaurants that have been rated by at least two users and received a rating of 3 or higher from every user
-  Restaurants.aggregate([
-    {
-      $lookup: {
-        from: "ratings",
-        localField: "name",
-        foreignField: "restaurantname",
-        as: "ratings",
-      },
-    },
-    {
-      $match: {
-        ratings: {
-          $exists: true,
-          $not: {
-            $size: 0,
-          },
-          $all: {
-            $elemMatch: {
-              rating: { $gte: 1 },
-            },
-          },
-        },
-      },
-    },
-    {
-      $project: {
-        name: 1,
-        description: 1,
-        cuisine: 1,
-        locationname: 1,
-        overallRating: 1,
-      },
-    },
-  ])
-    .then((restaurants) => {
-      console.log(restaurants);
+router.get("/reviews/:name", (req, res) => {
+  Ratings.find({ restaurantname: req.params.name })
+    .then((ratings) => {
+      console.log(ratings);
+      res.status(200).json(ratings);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.log(error);
     });
+});
+
+// router.post('/reviews/:name', (req, res) => {
+//   const { userid, rating, review } = req.body;
+
+// router.get("/complex1", (req, res) => {
+//   // Find all the restaurants that have been rated by at least two users and received a rating of 3 or higher from every user
+//   Restaurants.aggregate([
+//     {
+//       $lookup: {
+//         from: "ratings",
+//         localField: "name",
+//         foreignField: "restaurantname",
+//         as: "ratings",
+//       },
+//     },
+//     {
+//       $match: {
+//         ratings: {
+//           $exists: true,
+//           $not: {
+//             $size: 0,
+//           },
+//           $all: {
+//             $elemMatch: {
+//               rating: { $gte: 1 },
+//             },
+//           },
+//         },
+//       },
+//     },
+//     {
+//       $project: {
+//         name: 1,
+//         description: 1,
+//         cuisine: 1,
+//         locationname: 1,
+//         overallRating: 1,
+//       },
+//     },
+//   ])
+//     .then((restaurants) => {
+//       console.log(restaurants);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
+
+router.get("/complex", (req, res) => {
+  User.findOne({ name: "dummy1" })
+    .then((user) => {
+      return res.status(200).json({ user });
+
+      //return res.status(200).json({ watchlist: user });
+
+      // // find all watchlist entries for the user
+      // Favourite.find({ userid: req.body.userid })
+      //   .then((watchlistEntries) => {
+      //     if (watchlistEntries.length === 0) {
+      //       // handle case where user has no watchlist entries
+      //       console.log("User has no watchlist entries");
+      //       return;
+      //     }
+
+      //     // get an array of restaurant ids from the watchlist entries
+      //     const restaurantIds = watchlistEntries.map(
+      //       (entry) => entry.restaurantname
+      //     );
+      //     console.log(restaurantIds);
+
+      //     // find all restaurants with matching ids
+      //     Restaurants.find({ name: { $in: restaurantIds } })
+      //       .then((restaurants) => {
+      //         console.log("Restaurants watchlisted by user:");
+      //         console.log(restaurants);
+      //       })
+      //       .catch((error) => console.log(error));
+      //   })
+      //   .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
 });
 
 module.exports = router;

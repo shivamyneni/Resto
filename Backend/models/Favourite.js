@@ -1,6 +1,6 @@
 const mangoose = require("mongoose");
 
-const watchlistSchema = new mangoose.Schema({
+const favouriteSchema = new mangoose.Schema({
   userid: {
     type: String,
     required: true,
@@ -11,4 +11,4 @@ const watchlistSchema = new mangoose.Schema({
   },
 });
 
-mangoose.model("Watchlist", watchlistSchema);
+mangoose.model("Favourite", favouriteSchema);
