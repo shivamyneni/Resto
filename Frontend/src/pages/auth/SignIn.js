@@ -35,7 +35,7 @@ const SignIn = () => {
     // window.location.href='/user-info'
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password).then((user) => {
-      navigate("/movies");
+      navigate("/restaurants");
     });
     axios
       .post("/signin", {
@@ -57,7 +57,7 @@ const SignIn = () => {
           // else{
           //     navigate("/user-info")
           // }
-          navigate("/getmovies");
+          navigate("/restaurants");
         }
       })
       .then((res) => {

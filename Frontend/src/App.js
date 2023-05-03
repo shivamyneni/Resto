@@ -19,9 +19,9 @@ import BookSlot from "./pages/BookSlot";
 import Chat from "./pages/Chat";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import AddMovie from "./pages/AddMovie";
+import AddRestaurant from "./pages/AddRestaurant";
 import Watchlist from "./pages/Watchlist";
-import DeleteMovie from "./pages/DeleteMovie";
+import DeleteRestaurant from "./pages/DeleteRestaurant";
 import {
   RecoilRoot,
   atom,
@@ -30,7 +30,8 @@ import {
   useRecoilValue,
 } from "recoil";
 import { getAuth } from "firebase/auth";
-import MovieDescription from "./pages/MovieDescription";
+import RestaurantDescription from "./pages/RestaurantDescription";
+import EditRestaurant from "./pages/EditRestaurant";
 export default function App() {
   atom({
     key: "authid",
@@ -41,11 +42,12 @@ export default function App() {
     <div className="App">
       <Routes>
         <Route exact path="/" element={<SignIn />} />
-        <Route path="movies" element={<Home />} />
-        <Route path="movies/search/:name" element={<Home />} />
-        <Route path="movies/:name" element={<MovieDescription />} />
-        <Route path="movies/add" element={<AddMovie />} />
-        <Route path="movies/delete" element={<DeleteMovie />} />
+        <Route path="restaurants" element={<Home />} />
+        <Route path="restaurants/search/:name" element={<Home />} />
+        <Route path="restaurants/:name" element={<RestaurantDescription />} />
+        <Route path="restaurants/add" element={<AddRestaurant />} />
+        <Route path="restaurants/update" element={<EditRestaurant />} />
+        <Route path="restaurants/delete" element={<DeleteRestaurant />} />
         <Route path="watchlist/:userid" element={<Watchlist />} />
         <Route path="signin" element={<SignIn />} />
 

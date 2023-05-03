@@ -5,7 +5,7 @@ const watchlistSchema = new mangoose.Schema({
     type: String,
     required: true,
   },
-  moviename: {
+  restaurantname: {
     type: String,
     required: true,
   },

@@ -1,7 +1,7 @@
 const mangoose = require("mongoose");
 
 const ratingSchema = new mangoose.Schema({
-  moviename: {
+  restaurantname: {
     type: String,
   },
   ratingid: { type: String },
@@ -10,6 +10,9 @@ const ratingSchema = new mangoose.Schema({
   },
   rating: {
     type: Number,
+  },
+  review: {
+    type: String,
   },
 });
 

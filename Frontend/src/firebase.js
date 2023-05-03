@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
@@ -9,22 +9,22 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAkMjGX_ewDdyvyfpPex1xKAoqfKtUxuCw",
-  authDomain: "movierating-33b01.firebaseapp.com",
-  projectId: "movierating-33b01",
-  storageBucket: "movierating-33b01.appspot.com",
-  messagingSenderId: "344536282950",
-  appId: "1:344536282950:web:dd4983c7d8500544189747",
-  measurementId: "G-ES28NZQLDL"
+  apiKey: "AIzaSyC63fxfhkEcfU8Dfkpr9BuafcLB_mJuMKo",
+  authDomain: "restogossip.firebaseapp.com",
+  projectId: "restogossip",
+  storageBucket: "restogossip.appspot.com",
+  messagingSenderId: "807819550146",
+  appId: "1:807819550146:web:0e5d444e19bbe60fcc0a5b",
+  measurementId: "G-DYJTQDE11Y",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+provider.setCustomParameters({ prompt: "select_account" });
 provider.setCustomParameters({
-  'login_hint': 'user@example.com'
+  login_hint: "user@example.com",
 });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export const analytics = getAnalytics(app);

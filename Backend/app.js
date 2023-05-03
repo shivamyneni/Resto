@@ -13,10 +13,10 @@ connectDB();
 require("./models/user");
 // require("./models/venue")
 // require("./models/activity")
-require("./models/Movies");
+require("./models/Restaurants");
+require("./models/Locations");
 require("./models/Watchlist");
 require("./models/Ratings");
-require("./models/Directors");
 const stripe = mongoose.connection.on("connected", () => {
   console.log("connected to mongodb");
 });
@@ -29,9 +29,9 @@ app.use(bodyParser.json());
 //using json middleware to parse req
 app.use(express.json());
 //defining routes
-app.use("/movies", require("./routes/movies"));
+app.use("/restaurants", require("./routes/restaurants"));
 app.use("/watchlist", require("./routes/watchlist"));
-app.use("/directors", require("./routes/directors"));
+app.use("/locations", require("./routes/locations"));
 app.use("/rating", require("./routes/rating"));
 app.use(require("./routes/auth"));
 // app.use(require("./routes/password-reset"))

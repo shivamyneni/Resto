@@ -35,28 +35,30 @@ router.get("/:userid", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-  const { userid, moviename } = req.body;
-  if (!userid || !moviename) {
+  const { userid, restaurantname } = req.body;
+  if (!userid || !restaurantname) {
     return res.status(200).json({
       error: "please send all data",
       userid: userid,
-      moviename: moviename,
+      restaurantname: restaurantname,
     });
   }
-  Watchlist.findOne({ userid: userid, moviename: moviename })
+  Watchlist.findOne({ userid: userid, restaurantname: restaurantname })
     .then((savedwatchlist) => {
       if (savedwatchlist) {
         console.log(savedwatchlist);
-        return res.status(200).json({ error: "movie already added" });
+        return res.status(200).json({ error: "restaurant already added" });
       }
       const watchlist = new Watchlist({
         userid: userid,
-        moviename: moviename,
+        restaurantname: restaurantname,
       });
       watchlist
         .save()
         .then((watchlist) => {
-          return res.status(200).json({ message: "movie added to watchlist" });
+          return res
+            .status(200)
+            .json({ message: "restaurant added to watchlist" });
         })
         .catch((err) => {
           console.log(err);
@@ -70,20 +72,20 @@ router.post("/add", (req, res) => {
 router.delete("/delete/", (req, res) => {
   Watchlist.find({
     userid: req.body.userid,
-    moviename: req.body.moviename,
+    restaurantname: req.body.restaurantname,
   })
     .then((watchlist) => {
       if (!watchlist) {
-        return res.status(200).json({ error: "movie not in watchlist" });
+        return res.status(200).json({ error: "restaurant not in watchlist" });
       }
       Watchlist.deleteOne({
         userid: req.body.userid,
-        moviename: req.body.moviename,
+        restaurantname: req.body.restaurantname,
       })
         .then((watchlist) => {
           return res
             .status(200)
-            .json({ message: "movie removed from watchlist" });
+            .json({ message: "restaurant removed from watchlist" });
         })
         .catch((err) => {
           console.log(err);

@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const movieSchema = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
   name: {
-    type: String,
-  },
-  directorname: {
     type: String,
   },
   posterUrl: {
@@ -16,7 +13,13 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  locationname: {
+    type: String,
+  },
+  overallrating: {
+    type: Number,
+  },
   favouriteCount: { type: Number },
-  genre: { type: [String] },
+  cuisine: { type: [String] },
 });
-mongoose.model("Movies", movieSchema);
+mongoose.model("Restaurants", restaurantSchema);
