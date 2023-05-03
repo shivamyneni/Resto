@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router";
 import axios from "axios";
 import check from "../images/check.png";
 import edit from "../images/edit.png";
+import QueryOne from "./QueryOne";
 
 const EditRestaurant = () => {
   const [formData, setFormData] = useState({
@@ -53,7 +54,9 @@ const EditRestaurant = () => {
       name: locationname.state.name,
       locationname: locationname.state.locationname,
       description: locationname.state.description,
+
       cuisine: locationname.state.cuisine + ",",
+
       posterUrl: locationname.state.posterUrl,
     });
   }, [locationname]);

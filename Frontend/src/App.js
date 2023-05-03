@@ -15,6 +15,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import CustomerView from "./pages/CustomerView";
 import VenueDetailsUser from "./pages/VenueDetailsUser";
+import QueryOne from "./pages/QueryOne";
+import QueryTwo from "./pages/QueryTwo";
+import QueryThree from "./pages/QueryThree";
 import BookSlot from "./pages/BookSlot";
 import Chat from "./pages/Chat";
 import Home from "./pages/Home";
@@ -48,6 +51,9 @@ export default function App() {
         <Route path="restaurants/add" element={<AddRestaurant />} />
         <Route path="restaurants/update" element={<EditRestaurant />} />
         <Route path="restaurants/delete" element={<DeleteRestaurant />} />
+        <Route path="restaurants/query1" element={<QueryOne />} />
+        <Route path="restaurants/query2" element={<QueryTwo />} />
+        <Route path="restaurants/query3" element={<QueryThree />} />
         <Route path="favourite/:userid" element={<Favourite />} />
         <Route path="signin" element={<SignIn />} />
 

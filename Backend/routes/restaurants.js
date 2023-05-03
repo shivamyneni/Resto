@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
       if (!restaurants) {
         return res.status(200).json({ 404: "restaurants not available" });
       }
-      console.log(restaurants);
+      //console.log(restaurants);
       return res.send({ restaurants: restaurants });
     })
     .catch((err) => {
@@ -351,6 +351,131 @@ router.post("/:name/updateOverallRating", (req, res) => {
     });
 });
 
+router.get("/query1/:name", (req, res) => {
+  User.find({ name: { $regex: req.params.name, $options: "i" } })
+    .then((users) => {
+      console.log(users);
+
+      if (!users) {
+        return res.status(200).json({ error: "user not available" });
+      }
+
+      Favourite.find({ userid: users[0].uid })
+        .then((watchlistEntries) => {
+          if (watchlistEntries.length === 0) {
+            // handle case where user has no watchlist entries
+            console.log("User has no watchlist entries");
+          }
+
+          const restaurantIds = watchlistEntries.map(
+            (entry) => entry.restaurantname
+          );
+          console.log(restaurantIds);
+          // find all restaurants with matching ids
+          Restaurants.find({ name: { $in: restaurantIds } })
+            .then((restaurants) => {
+              // console.log("Restaurants watchlisted by user:");
+              // console.log(restaurants);
+              res.status(200).json(restaurants);
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/query2/:name/:rating", (req, res) => {
+  User.find({ name: { $regex: req.params.name, $options: "i" } })
+    .then((users) => {
+      console.log(users);
+
+      if (!users) {
+        return res.status(200).json({ error: "user not available" });
+      }
+
+      Ratings.find({ userid: users[0].uid })
+        .then((watchlistEntries) => {
+          if (watchlistEntries.length === 0) {
+            // handle case where user has no watchlist entries
+            console.log("User has no watchlist entries");
+          }
+
+          const restaurantIds = watchlistEntries.map(
+            (entry) => entry.restaurantname
+          );
+          console.log(restaurantIds);
+          // find all restaurants with matching ids
+          Restaurants.find({
+            name: { $in: restaurantIds },
+            overallrating: { $gt: req.params.rating },
+          })
+            .then((restaurants) => {
+              // console.log("Restaurants watchlisted by user:");
+              // console.log(restaurants);
+              res.status(200).json(restaurants);
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/query3/:name/:rating/:cuisine", (req, res) => {
+  User.find({ name: { $regex: req.params.name, $options: "i" } })
+    .then((users) => {
+      console.log(users);
+
+      if (!users) {
+        return res.status(200).json({ error: "user not available" });
+      }
+
+      Ratings.find({ userid: users[0].uid })
+        .then((ratingEntries) => {
+          if (ratingEntries.length === 0) {
+            // handle case where user has no watchlist entries
+            console.log("User has no watchlist entries");
+          }
+          const restaurantcuisines = ratingEntries.map(
+            (entry) => entry.cuisine
+          );
+          console.log(restaurantcuisines);
+          const restaurantIds = ratingEntries.map(
+            (entry) => entry.restaurantname
+          );
+          console.log(restaurantIds);
+          // find all restaurants with matching ids
+          Favourite.find({
+            userid: users[0].uid,
+            restaurantname: { $in: restaurantIds },
+          }).then((watchlistEntries) => {
+            const favouriterestaurantIds = watchlistEntries.map(
+              (entry) => entry.restaurantname
+            );
+            Restaurants.find({
+              name: { $in: favouriterestaurantIds },
+              cuisine: req.params.cuisine,
+              overallrating: { $gt: req.params.rating },
+            })
+              .then((restaurants) => {
+                // console.log("Restaurants watchlisted by user:");
+                // console.log(restaurants);
+                res.status(200).json(restaurants);
+              })
+              .catch((error) => console.log(error));
+          });
+        })
+        .catch((error) => console.log(error));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 //Find all the restaurants with a particular cuisine in a particular location and having an overall rating greater than a particular value
 // router.get("/complex1", (req, res) => {
 //   Restaurants.aggregate([
@@ -450,39 +575,52 @@ router.get("/reviews/:name", (req, res) => {
 //     });
 // });
 
-router.get("/complex", (req, res) => {
-  User.findOne({ name: "dummy1" })
-    .then((user) => {
-      return res.status(200).json({ user });
-
-      //return res.status(200).json({ watchlist: user });
-
-      // // find all watchlist entries for the user
-      // Favourite.find({ userid: req.body.userid })
-      //   .then((watchlistEntries) => {
-      //     if (watchlistEntries.length === 0) {
-      //       // handle case where user has no watchlist entries
-      //       console.log("User has no watchlist entries");
-      //       return;
-      //     }
-
-      //     // get an array of restaurant ids from the watchlist entries
-      //     const restaurantIds = watchlistEntries.map(
-      //       (entry) => entry.restaurantname
-      //     );
-      //     console.log(restaurantIds);
-
-      //     // find all restaurants with matching ids
-      //     Restaurants.find({ name: { $in: restaurantIds } })
-      //       .then((restaurants) => {
-      //         console.log("Restaurants watchlisted by user:");
-      //         console.log(restaurants);
-      //       })
-      //       .catch((error) => console.log(error));
-      //   })
-      //   .catch((error) => console.log(error));
-    })
-    .catch((error) => console.log(error));
+router.get("/query1", (req, res) => {
+  res.send("hello shiva");
 });
+
+router.get("/query", (req, res) => {
+  return res.send("hello");
+  // User.find({ name: "dummy1" })
+  //   .then((user) => {
+  //     if (!user) {
+  //       return res.status(200).json({ error: "user not available" });
+  //     }
+  //     return res.status(200).json({ watchlist: user });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+});
+
+//return res.status(200).json({ watchlist: user });
+
+// // find all watchlist entries for the user
+// Favourite.find({ userid: req.body.userid })
+//   .then((watchlistEntries) => {
+//     if (watchlistEntries.length === 0) {
+//       // handle case where user has no watchlist entries
+//       console.log("User has no watchlist entries");
+//       return;
+//     }
+
+//     // get an array of restaurant ids from the watchlist entries
+//     const restaurantIds = watchlistEntries.map(
+//       (entry) => entry.restaurantname
+//     );
+//     console.log(restaurantIds);
+
+//     // find all restaurants with matching ids
+//     Restaurants.find({ name: { $in: restaurantIds } })
+//       .then((restaurants) => {
+//         console.log("Restaurants watchlisted by user:");
+//         console.log(restaurants);
+//       })
+//       .catch((error) => console.log(error));
+//   })
+//   .catch((error) => console.log(error));
+//     })
+//     .catch((error) => console.log(error));
+// });
 
 module.exports = router;
