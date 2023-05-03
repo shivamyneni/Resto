@@ -92,10 +92,7 @@ const EditRestaurant = () => {
 
   return (
     <div className="w-screen h-screen flex flex-row items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-1/3 p-[50px] flex flex-col mx-auto"
-      >
+      <form className="w-1/3 p-[50px] flex flex-col mx-auto">
         <div className="mb-4 w-full ">
           <h2 className="text-md text-start mb-[13px] mt-[25px] font-bold font-Pathway">
             Restaurant Name:
@@ -188,7 +185,7 @@ const EditRestaurant = () => {
           </div>
         </div>
         <button
-          type="submit"
+          onClick={handleSubmit}
           className="w-fit h-fit bg-[#2E8B57] text-white rounded-md px-[20px] py-[10px] font-bold font-Pathway"
         >
           Update Restaurant
